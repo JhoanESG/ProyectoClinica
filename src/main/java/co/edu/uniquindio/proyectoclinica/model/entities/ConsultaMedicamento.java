@@ -1,4 +1,4 @@
-package co.edu.uniquindio.proyectoclinica.modeloentidades;
+package co.edu.uniquindio.proyectoclinica.model.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

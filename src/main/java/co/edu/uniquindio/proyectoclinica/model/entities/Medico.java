@@ -1,10 +1,9 @@
-package co.edu.uniquindio.proyectoclinica.modeloentidades;
+package co.edu.uniquindio.proyectoclinica.model.entities;
 
+import co.edu.uniquindio.proyectoclinica.model.enums.Especialidad;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jdk.dynalink.linker.LinkerServices;
 import lombok.Data;
 
 import java.io.Serializable;

@@ -1,5 +1,7 @@
-package co.edu.uniquindio.proyectoclinica.modeloentidades;
+package co.edu.uniquindio.proyectoclinica.model.entities;
 
+import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
+import co.edu.uniquindio.proyectoclinica.model.enums.TipoPQRS;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;

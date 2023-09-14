@@ -1,9 +1,8 @@
-package co.edu.uniquindio.proyectoclinica.modeloentidades;
+package co.edu.uniquindio.proyectoclinica.model.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.OneToOne;
 import lombok.Data;
 
 import java.io.Serializable;

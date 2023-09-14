@@ -1,5 +1,7 @@
-package co.edu.uniquindio.proyectoclinica.modeloentidades;
+package co.edu.uniquindio.proyectoclinica.model.entities;
 
+import co.edu.uniquindio.proyectoclinica.model.enums.Especialidad;
+import co.edu.uniquindio.proyectoclinica.model.enums.EstadoCita;
 import jakarta.persistence.*;
 import lombok.Data;
 
