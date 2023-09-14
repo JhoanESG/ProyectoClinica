@@ -1,8 +1,7 @@
 package co.edu.uniquindio.proyectoclinica.modeloentidades;
 
 
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
@@ -18,7 +17,6 @@ public class Usuario {
     private String cedula;
     private String email;
     private String contrasena;
-
 
 }
 
