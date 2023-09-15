@@ -10,11 +10,6 @@ import java.util.List;
 @Data
 public class Administrador extends Usuario implements Serializable {
 
-    @Id
-    private String idUsuario;
-
-
-
     @OneToMany(mappedBy = "administrador")
     private List<Mensaje> listaMensajes;
 

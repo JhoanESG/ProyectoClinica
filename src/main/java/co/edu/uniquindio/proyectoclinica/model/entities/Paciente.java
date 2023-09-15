@@ -1,8 +1,9 @@
 package co.edu.uniquindio.proyectoclinica.model.entities;
 
 import co.edu.uniquindio.proyectoclinica.model.enums.TipoSangre;
+import co.edu.uniquindio.proyectoclinica.model.enums.Eps;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,11 +17,10 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Paciente extends DetalleUsuario implements Serializable {
 
-    @Id
-    private String cedulaDetalle;
+
     private LocalDateTime fechaNacimiento;
     private String alergias;
-    private co.edu.uniquindio.proyectoclinica.model.enums.Eps Eps;
+    private  Eps eps;
     private TipoSangre tipoSangre;
 
     @OneToMany(mappedBy = "paciente")

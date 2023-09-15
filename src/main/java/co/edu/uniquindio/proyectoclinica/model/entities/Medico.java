@@ -14,8 +14,6 @@ import java.util.List;
 @Data
 public class Medico extends DetalleUsuario implements Serializable {
 
-    @Id
-    private String cedula;
     private Especialidad especialidad;
     private LocalDateTime horaInicio;
     private LocalDateTime horaFin;
