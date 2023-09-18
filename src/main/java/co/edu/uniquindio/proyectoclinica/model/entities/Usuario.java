@@ -14,8 +14,13 @@ public class Usuario {
 
     @Id
     @EqualsAndHashCode.Include
+    @Column(nullable = false, length = 10)
     private String cedula;
+
+    @Column(nullable = false, length = 50)
     private String email;
+
+    @Column(nullable = false)
     private String contrasena;
 
 }
