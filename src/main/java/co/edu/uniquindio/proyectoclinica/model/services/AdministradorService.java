@@ -1,18 +1,26 @@
 package co.edu.uniquindio.proyectoclinica.model.services;
 
+import co.edu.uniquindio.proyectoclinica.model.dto.*;
+
+import java.util.List;
+
+
 public interface AdministradorService {
 
-    void crearMedico();
+    String crearMedico(MedicoCrearDto medicoCrearDto) throws Exception;
 
-    void actualizarMedico();
+    String actualizarMedico(MedicoCrearDto medicoCrearDto) throws Exception;
 
-    void eliminarMedico();
+    String eliminarMedico(String cedula) throws Exception;
 
-    void listarMedicos();
+    List<MedicoListarDto> listarMedicos();
 
     void obtenerMedico();
 
-    void listarPQRS();
+    List<PQRSAdminDto> listarPQRS();
 
-    void responderPQRS();
+    String responderPQRS(RespuestaPQRSDto respuestaPQRSDto) throws Exception;
+
+    DetallePQRS verDetallePQRS(String codigo) throws Exception;
+
 }
