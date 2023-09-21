@@ -4,5 +4,6 @@ public record DetallePQRS(
         String idPQRS
 
 
+
 ) {
 }
