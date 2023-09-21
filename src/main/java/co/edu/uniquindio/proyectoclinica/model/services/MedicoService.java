@@ -16,6 +16,7 @@ public interface MedicoService {
 
     void atencerCita();
 
+
     List<HistorialPacientesAtendidosDto> listarCitasAtendidas ();
 
     void listarCitasPaciente(); //Historial medico
