@@ -1,15 +1,17 @@
 package co.edu.uniquindio.proyectoclinica.model.dto;
 
-import co.edu.uniquindio.proyectoclinica.model.enums.Especialidad;
-
 import java.time.LocalDateTime;
 
-public record MedicoListarDto(
+public record MedicoDto(
         String codigo,
         String nombre,
         String apellido,
-        Especialidad especialidad
+        String telefono,
+        String ciudad,
+        LocalDateTime inicioJornada,
+        LocalDateTime finJornada
+) {
 
-)
-{
 }
+
+

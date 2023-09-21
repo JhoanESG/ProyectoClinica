@@ -1,21 +1,20 @@
 package co.edu.uniquindio.proyectoclinica.model.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Consulta implements Serializable {
 
     @Id
     private String id;
-    private String idCita;
+
     private String sintomas;
     private String diagnostico;
     private String tratamiento;
@@ -27,7 +26,7 @@ public class Consulta implements Serializable {
     @OneToMany(mappedBy = "consulta")
     private List<PQRS> listaPqrs;
 
-    @ManyToOne
+    @OneToOne
     private Cita cita;
 
 }

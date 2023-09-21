@@ -15,7 +15,7 @@ public interface AdministradorService {
 
     List<MedicoListarDto> listarMedicos();
 
-    void obtenerMedico();
+    MedicoDto obtenerMedico(String codigo);
 
     List<PQRSAdminDto> listarPQRS();
 
