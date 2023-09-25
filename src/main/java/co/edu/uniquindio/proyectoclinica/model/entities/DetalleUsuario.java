@@ -13,6 +13,12 @@ import java.io.Serializable;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class DetalleUsuario extends Usuario implements Serializable {
 
+    @Column(nullable = false, length = 50)
+    private String nombre;
+
+    @Column(nullable = false,length = 50)
+    private String apellido;
+
     @Column(nullable = false, length = 10)
     private String telefono;
 
