@@ -1,26 +1,22 @@
 package co.edu.uniquindio.proyectoclinica.model.services;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
-import co.edu.uniquindio.proyectoclinica.model.enums.EstadoCita;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface MedicoService {
 
-    List<CitaMedicoDTo> verCitasPendientes(String codigoMedico);
-    DetalleCitaDto obtenerCita(String codigoCita);
-    atenderCitaDto atencerCita(String codigoCita);
-
-    DatosVistaPrevia vistaPreviaCita(String id);
-
-    List<HistorialPacientesAtendidosDto> listarCitasAtendidas ();
+    List<CitaMedicoDTo> verCitasPendientes(String codigoMedico) throws Exception;
+    DetalleCitaDto obtenerCita(String codigoCita) throws Exception;
+    AtenderCitaDto atencerCita(String codigoCita) throws Exception;
+    DatosVistaPrevia vistaPreviaCita(String id) throws Exception;
+    List<HistorialPacientesAtendidosDto> listarCitasAtendidas () throws Exception;
 
     void listarCitasPaciente(); //Historial medico
 
     void agendarDiaLibre();
 
-    List<CitasMedicoDto> listarCitasMedico();
+    List<CitasMedicoDto> listarCitasMedico() throws Exception;
 
 
 }

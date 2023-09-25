@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyectoclinica.model.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -20,5 +21,6 @@ public class ConsultaMedicamento implements Serializable {
     @ManyToOne
     private Medicamento medicamento;
 
+    @Column(nullable = false)
     private int cantidad;
 }

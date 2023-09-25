@@ -2,10 +2,7 @@ package co.edu.uniquindio.proyectoclinica.model.entities;
 
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
 import co.edu.uniquindio.proyectoclinica.model.enums.TipoPQRS;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,15 +15,25 @@ import java.util.List;
 @NoArgsConstructor
 public class PQRS implements Serializable {
     @Id
+    @Column(nullable = false)
     private String id;
 
     @ManyToOne
     private Consulta consulta;
 
+    @Column(nullable = false)
     private LocalDateTime fechaCreacion;
+
+    @Column(nullable = false)
     private EstadoPQRS estado;
+
+    @Column(nullable = false)
     private TipoPQRS tipoPQRS;
+
+    @Column(nullable = false)
     private String asunto;
+
+    @Column(nullable = false)
     private String descripcion;
 
     @OneToMany(mappedBy = "pqrs")

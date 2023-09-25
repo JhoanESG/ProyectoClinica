@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 public record MedicoCrearDto(
         String cedula,
         String nombre,
+        String apellido,
         String telefono,
         String ciudad,
         String email,

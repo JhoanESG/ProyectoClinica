@@ -19,13 +19,20 @@ public class Cita implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @EqualsAndHashCode.Include
+    @Column(nullable = false)
     private int id;
 
+    @Column(nullable = false, updatable = false)
     private LocalDateTime fechaCreacion;
+
+    @Column(nullable = false)
     private LocalDateTime fechaCita;
+
+    @Column(nullable = false, updatable = false)
     private String motivo;
+
+    @Column(nullable = false)
     private EstadoCita estado;
 
     @ManyToOne
@@ -34,7 +41,10 @@ public class Cita implements Serializable {
     @ManyToOne
     private Medico medico;
 
+    @Column(nullable = false)
     private Especialidad especialidadMedico;
+
+    @Column(nullable = false)
     private EstadoCita estadoCita;
 
     @OneToOne(mappedBy = "cita")
