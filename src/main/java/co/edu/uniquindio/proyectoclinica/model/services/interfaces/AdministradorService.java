@@ -21,6 +21,6 @@ public interface AdministradorService {
 
     String responderPQRS(RespuestaPQRSDto respuestaPQRSDto) throws Exception;
 
-    DetallePQRS verDetallePQRS(String codigo) throws Exception;
+    DetallePQRSdto verDetallePQRS(Integer codigo) throws Exception;
 
 }

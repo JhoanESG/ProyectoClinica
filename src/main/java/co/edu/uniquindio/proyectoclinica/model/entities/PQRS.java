@@ -16,7 +16,7 @@ import java.util.List;
 public class PQRS implements Serializable {
     @Id
     @Column(nullable = false)
-    private String id;
+    private int id;
 
     @ManyToOne
     private Consulta consulta;

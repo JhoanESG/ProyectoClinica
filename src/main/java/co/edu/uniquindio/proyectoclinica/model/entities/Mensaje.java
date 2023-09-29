@@ -31,4 +31,5 @@ public class Mensaje implements Serializable {
     @ManyToOne
     private Administrador administrador;
 
+
 }
