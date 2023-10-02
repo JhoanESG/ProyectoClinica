@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyectoclinica.model.entities;
 
 
+import co.edu.uniquindio.proyectoclinica.model.enums.EstadoUsuario;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,9 @@ public class Usuario {
 
     @Column(nullable = false)
     private String contrasena;
+
+    @Column(nullable = false)
+    private EstadoUsuario estado;
 
 }
 
