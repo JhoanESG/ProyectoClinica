@@ -1,4 +1,4 @@
-package co.edu.uniquindio.proyectoclinica.model.services;
+package co.edu.uniquindio.proyectoclinica.model.services.interfaces;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
 
@@ -13,14 +13,14 @@ public interface AdministradorService {
 
     String eliminarMedico(String cedula) throws Exception;
 
-    List<MedicoListarDto> listarMedicos();
+    List<MedicoListarDto> listarMedicos() throws Exception;
 
-    MedicoDto obtenerMedico(String codigo);
+    MedicoDto obtenerMedico(String codigo) throws Exception;
 
-    List<PQRSAdminDto> listarPQRS();
+    List<PQRSAdminDto> listarPQRS() throws Exception;
 
     String responderPQRS(RespuestaPQRSDto respuestaPQRSDto) throws Exception;
 
-    DetallePQRS verDetallePQRS(String codigo) throws Exception;
+    DetallePQRSdto verDetallePQRS(Integer codigo) throws Exception;
 
 }

@@ -1,6 +1,7 @@
-package co.edu.uniquindio.proyectoclinica.model.services;
+package co.edu.uniquindio.proyectoclinica.model.services.interfaces;
 
 public interface ImageService {
 
-    void subirImagen();
+    void subirImagen() throws Exception;
+
 }
