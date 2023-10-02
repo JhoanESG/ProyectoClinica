@@ -1,15 +1,15 @@
 package co.edu.uniquindio.proyectoclinica.model.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@Data
+//@Data
+@Setter
+@Getter
 @NoArgsConstructor
 public class Mensaje implements Serializable {
 
@@ -17,7 +17,7 @@ public class Mensaje implements Serializable {
     @Column(nullable = false)
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private int id;
 
     @Column(nullable = false)
     private String texto;
