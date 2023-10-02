@@ -5,6 +5,7 @@ import co.edu.uniquindio.proyectoclinica.model.entities.Medico;
 import co.edu.uniquindio.proyectoclinica.model.entities.Mensaje;
 import co.edu.uniquindio.proyectoclinica.model.entities.PQRS;
 import co.edu.uniquindio.proyectoclinica.model.enums.Especialidad;
+import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoUsuario;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.AdministradorService;
 import co.edu.uniquindio.proyectoclinica.repositorios.CuentaRepositorio;
@@ -182,7 +183,7 @@ public class AdministradorServiceImp implements AdministradorService {
             throw new Exception("No existe este pqrs");
         }
 
-        Optional<PQRS> opcionalUsuario= pqrsRepo.findById(respuestaPQRSDto.usuario());
+        Optional<PQRS> opcionalUsuario= pqrsRepo.findById(Integer.parseInt( respuestaPQRSDto.usuario().getCedula()));
         if (opcionalUsuario.isEmpty()){
             throw new Exception("No existe este ");
         }
@@ -207,5 +208,16 @@ public class AdministradorServiceImp implements AdministradorService {
         return new DetallePQRSdto(
                 buscado.getId(),
                 buscado.getEstado());
+    }
+
+    @Override
+    public void cambiarEstadoPqrs(int codigoPqrs, EstadoPQRS estadoPQRS) throws Exception {
+         Optional<PQRS> opcional =pqrsRepo.findById(codigoPqrs);
+         if (opcional.isEmpty()){
+             throw new Exception("No existe un PQRS con el codigo "+ codigoPqrs);
+         }
+         PQRS pqrs = opcional.get();
+         pqrs.setEstado(estadoPQRS);
+         pqrsRepo.save(pqrs);
     }
 }
