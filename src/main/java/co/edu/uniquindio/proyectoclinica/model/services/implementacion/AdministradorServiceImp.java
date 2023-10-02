@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyectoclinica.model.services.implementacion;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
+import co.edu.uniquindio.proyectoclinica.model.entities.Cita;
 import co.edu.uniquindio.proyectoclinica.model.entities.Medico;
 import co.edu.uniquindio.proyectoclinica.model.entities.Mensaje;
 import co.edu.uniquindio.proyectoclinica.model.entities.PQRS;
@@ -8,10 +9,7 @@ import co.edu.uniquindio.proyectoclinica.model.enums.Especialidad;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoUsuario;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.AdministradorService;
-import co.edu.uniquindio.proyectoclinica.repositorios.CuentaRepositorio;
-import co.edu.uniquindio.proyectoclinica.repositorios.MedicoRepositorio;
-import co.edu.uniquindio.proyectoclinica.repositorios.MensajeRepositorio;
-import co.edu.uniquindio.proyectoclinica.repositorios.PQRSRepo;
+import co.edu.uniquindio.proyectoclinica.repositorios.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +26,7 @@ public class AdministradorServiceImp implements AdministradorService {
     private final PQRSRepo pqrsRepo;
     private final CuentaRepositorio cuentaRepositorio;
     private final MensajeRepositorio mensajeRepositorio;
+    private final CitaRepo citaRepo;
 
     @Override
     public String crearMedico(MedicoCrearDto medicoDto) throws Exception {
@@ -219,5 +218,25 @@ public class AdministradorServiceImp implements AdministradorService {
          PQRS pqrs = opcional.get();
          pqrs.setEstado(estadoPQRS);
          pqrsRepo.save(pqrs);
+    }
+
+    @Override
+    public List<CitasMedicoDto> listarCitasMedico() throws Exception {
+        List<Cita> citas = citaRepo.findAll();
+        List<CitasMedicoDto> respuesta= new ArrayList<>();
+
+        if (citas.isEmpty()){
+            throw new Exception("No existen citas creadas");
+        }
+
+        for(Cita c : citas){
+            respuesta.add(new CitasMedicoDto(
+                    c.getPaciente().getNombre(),
+                    c.getPaciente().getCedula(),
+                    c.getFechaCita(),
+                    c.getMotivo()
+            ));
+        }
+        return respuesta;
     }
 }
