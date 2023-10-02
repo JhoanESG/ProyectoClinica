@@ -4,6 +4,7 @@ import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
 import co.edu.uniquindio.proyectoclinica.model.enums.TipoPQRS;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
@@ -13,6 +14,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PQRS implements Serializable {
     @Id
     @Column(nullable = false)
