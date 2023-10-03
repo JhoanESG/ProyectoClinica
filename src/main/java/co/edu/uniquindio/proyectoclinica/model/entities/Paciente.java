@@ -6,18 +6,18 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 import jakarta.persistence.OneToMany;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Data
+//@
+@Setter
+@Getter
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+//@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Paciente extends DetalleUsuario implements Serializable {
 
 

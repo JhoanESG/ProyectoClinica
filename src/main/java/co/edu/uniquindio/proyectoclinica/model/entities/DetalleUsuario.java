@@ -2,14 +2,18 @@ package co.edu.uniquindio.proyectoclinica.model.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 
 
-@Data
+//@Data
 @MappedSuperclass
 @NoArgsConstructor
+@Setter
+@Getter
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class DetalleUsuario extends Usuario implements Serializable {
 

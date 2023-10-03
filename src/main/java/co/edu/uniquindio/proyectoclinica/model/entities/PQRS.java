@@ -3,16 +3,16 @@ package co.edu.uniquindio.proyectoclinica.model.entities;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
 import co.edu.uniquindio.proyectoclinica.model.enums.TipoPQRS;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Data
+//@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PQRS implements Serializable {
