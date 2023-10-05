@@ -24,7 +24,7 @@ public class AdministradorServiceImp implements AdministradorService {
 
     private final MedicoRepositorio medicoRepositorio;
     private final PQRSRepo pqrsRepo;
-    private final CuentaRepositorio cuentaRepositorio;
+    private final UsuarioRepositorio usuarioRepositorio;
     private final MensajeRepositorio mensajeRepositorio;
     private final CitaRepo citaRepo;
 
@@ -32,7 +32,7 @@ public class AdministradorServiceImp implements AdministradorService {
     public String crearMedico(MedicoCrearDto medicoDto) throws Exception {
 
         if ( estaRepetidoCorreo(medicoDto.email()) ){
-            throw new Exception("EL correo "+ medicoDto.email() +" ya esta en uso");
+            throw new Exception("El correo "+ medicoDto.email() +" ya esta en uso");
         }
 
         if (estaRepetidoCedula(medicoDto.cedula())){
