@@ -23,26 +23,20 @@ public class Cita implements Serializable {
     @Column(nullable = false)
     private int id;
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false)
     private LocalDateTime fechaCreacion;
 
     @Column(nullable = false)
     private LocalDateTime fechaCita;
 
-    @Column(nullable = false, updatable = false)
-    private String motivo;
-
     @Column(nullable = false)
-    private EstadoCita estado;
+    private String motivo;
 
     @ManyToOne
     private Paciente paciente;
 
     @ManyToOne
     private Medico medico;
-
-    @Column(nullable = false)
-    private Especialidad especialidadMedico;
 
     @Column(nullable = false)
     private EstadoCita estadoCita;

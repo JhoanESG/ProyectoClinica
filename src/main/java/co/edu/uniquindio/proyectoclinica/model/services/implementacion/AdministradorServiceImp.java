@@ -11,6 +11,7 @@ import co.edu.uniquindio.proyectoclinica.model.services.interfaces.Administrador
 import co.edu.uniquindio.proyectoclinica.repositorios.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class AdministradorServiceImp implements AdministradorService {
 
@@ -142,6 +144,10 @@ public class AdministradorServiceImp implements AdministradorService {
         }
         Medico buscado = opcional.get();
 
+        if (buscado.getEstado() == EstadoUsuario.INACTIVO){
+            throw new Exception("El usuario "+cedula+" se encuentra inactivo");
+        }
+
         return new MedicoDto(
                 buscado.getCedula(),
                 buscado.getNombre(),
@@ -160,6 +166,10 @@ public class AdministradorServiceImp implements AdministradorService {
     public List<PQRSAdminDto> listarPQRS() throws Exception {
         List<PQRS> listaPqrs= pqrsRepo.findAll();
 
+        if (listaPqrs.isEmpty()){
+            throw new Exception("No hay PQRS");
+        }
+
         List<PQRSAdminDto> respuesta = new ArrayList<>();
         for (PQRS p: listaPqrs){
             respuesta.add(new PQRSAdminDto(
@@ -170,10 +180,9 @@ public class AdministradorServiceImp implements AdministradorService {
                     p.getTipoPQRS(),
                     p.getEstado()
             ));
-            return respuesta;
-        }
 
-        return null;
+        }
+        return respuesta;
     }
 
     @Override
@@ -235,7 +244,7 @@ public class AdministradorServiceImp implements AdministradorService {
 
 
     @Override
-    public void cambiarEstadoPqrs(int codigoPqrs, EstadoPQRS estadoPQRS) throws Exception {
+    public int cambiarEstadoPqrs(int codigoPqrs, EstadoPQRS estadoPQRS) throws Exception {
          Optional<PQRS> opcional =pqrsRepo.findById(codigoPqrs);
          if (opcional.isEmpty()){
              throw new Exception("No existe un PQRS con el codigo "+ codigoPqrs);
@@ -243,6 +252,7 @@ public class AdministradorServiceImp implements AdministradorService {
          PQRS pqrs = opcional.get();
          pqrs.setEstado(estadoPQRS);
          pqrsRepo.save(pqrs);
+         return pqrs.getId();
     }
 
     @Override

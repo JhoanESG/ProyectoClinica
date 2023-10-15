@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-//@Data
 @Setter
 @Getter
 @NoArgsConstructor

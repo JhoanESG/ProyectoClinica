@@ -28,7 +28,7 @@ public interface AdministradorService {
     List<RespuestaDto> convertirRespuestasDto(List<Mensaje> mensajes)throws Exception;
     int responderPQRS(RespuestaPQRSDto respuestaPQRSDto) throws Exception;
 
-    void cambiarEstadoPqrs(int codigoPqrs, EstadoPQRS estadoPQRS) throws Exception;
+    int cambiarEstadoPqrs(int codigoPqrs, EstadoPQRS estadoPQRS) throws Exception;
 
     List<CitasMedicoDto> listarCitasMedico () throws Exception;
 
