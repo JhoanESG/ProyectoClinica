@@ -1,6 +1,8 @@
 package co.edu.uniquindio.proyectoclinica.model.services.interfaces;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
+import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoCrearDto;
+import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
 
 import java.util.List;
@@ -10,7 +12,7 @@ public interface AdministradorService {
 
     String crearMedico(MedicoCrearDto medicoCrearDto) throws Exception;
 
-    String actualizarMedico(MedicoCrearDto medicoCrearDto) throws Exception;
+    String actualizarMedico(MedicoDto medicoDto) throws Exception;
 
     String eliminarMedico(String cedula) throws Exception;
 
@@ -20,9 +22,8 @@ public interface AdministradorService {
 
     List<PQRSAdminDto> listarPQRS() throws Exception;
 
+    DetallePQRSdto verDetallePQRS(int codigo) throws Exception;
     String responderPQRS(RespuestaPQRSDto respuestaPQRSDto) throws Exception;
-
-    DetallePQRSdto verDetallePQRS(Integer codigo) throws Exception;
 
     void cambiarEstadoPqrs(int codigoPqrs, EstadoPQRS estadoPQRS) throws Exception;
 

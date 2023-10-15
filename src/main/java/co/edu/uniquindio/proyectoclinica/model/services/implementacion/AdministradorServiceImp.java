@@ -1,10 +1,9 @@
 package co.edu.uniquindio.proyectoclinica.model.services.implementacion;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
-import co.edu.uniquindio.proyectoclinica.model.entities.Cita;
-import co.edu.uniquindio.proyectoclinica.model.entities.Medico;
-import co.edu.uniquindio.proyectoclinica.model.entities.Mensaje;
-import co.edu.uniquindio.proyectoclinica.model.entities.PQRS;
+import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoCrearDto;
+import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoDto;
+import co.edu.uniquindio.proyectoclinica.model.entities.*;
 import co.edu.uniquindio.proyectoclinica.model.enums.Especialidad;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoUsuario;
@@ -71,9 +70,8 @@ public class AdministradorServiceImp implements AdministradorService {
     }
 
 
-
     @Override
-    public String actualizarMedico(MedicoCrearDto medicoDto) throws Exception {
+    public String actualizarMedico(MedicoDto medicoDto) throws Exception {
 
         Optional<Medico> opcional = medicoRepositorio.findById(medicoDto.cedula());
         if (opcional.isEmpty()){
@@ -91,9 +89,9 @@ public class AdministradorServiceImp implements AdministradorService {
         buscado.setCiudad(medicoDto.ciudad());
         buscado.setFoto(medicoDto.foto());
 
-        buscado.setEspecialidad(Especialidad.values()[medicoDto.especialidad()]);
-        buscado.setHoraInicio(medicoDto.horaInicio());
-        buscado.setHoraFin(medicoDto.horaFin());
+        buscado.setEspecialidad(medicoDto.especialidad());
+        buscado.setHoraInicio(medicoDto.inicioJornada());
+        buscado.setHoraFin(medicoDto.finJornada());
 
         //Buscar que no se repita la cedula y el correo del medico
 
@@ -151,6 +149,8 @@ public class AdministradorServiceImp implements AdministradorService {
                 buscado.getTelefono(),
                 buscado.getCiudad(),
                 buscado.getEspecialidad(),
+                buscado.getEmail(),
+                buscado.getFoto(),
                 buscado.getHoraInicio(),
                 buscado.getHoraFin()
         );
@@ -167,6 +167,7 @@ public class AdministradorServiceImp implements AdministradorService {
                     p.getConsulta().getId(),
                     p.getAsunto(),
                     p.getConsulta().getCita().getPaciente().getNombre(),
+                    p.getTipoPQRS(),
                     p.getEstado()
             ));
             return respuesta;
@@ -176,38 +177,50 @@ public class AdministradorServiceImp implements AdministradorService {
     }
 
     @Override
-    public String responderPQRS(RespuestaPQRSDto respuestaPQRSDto) throws Exception {
-        Optional<PQRS> opcional= pqrsRepo.findById(respuestaPQRSDto.codigo());
+    public DetallePQRSdto verDetallePQRS(int codigo) throws Exception {
+
+        Optional<PQRS> opcional=  pqrsRepo.findById(codigo);
         if (opcional.isEmpty()){
-            throw new Exception("No existe este pqrs");
+            throw new Exception("No existe un PQRS con el codigo "+ codigo);
+        }
+        PQRS buscado = opcional.get();
+
+        // Separar fecha con hora
+        return new DetallePQRSdto(
+                buscado.getId(),
+                buscado.getConsulta().getCita().getPaciente().getCedula(),
+                buscado.getAsunto(),
+                buscado.getEstado(),
+                buscado.getTipoPQRS(),
+                buscado.getFechaCreacion(),
+                buscado.getFechaCreacion(),
+                buscado.getConsulta().getCita().getMedico().getNombre(),
+                buscado.getConsulta().getCita().getMedico().getEspecialidad(),
+                buscado.getFechaCreacion(),
+                buscado.getAsunto()
+                );
+    }
+
+    @Override
+    public String responderPQRS(RespuestaPQRSDto respuestaPQRSDto) throws Exception {
+        Optional<PQRS> opcional= pqrsRepo.findById(respuestaPQRSDto.codigoPqrs());
+        if (opcional.isEmpty()){
+            throw new Exception("No existe un PQRS con el codigo " +respuestaPQRSDto.codigoPqrs());
         }
 
-        Optional<PQRS> opcionalUsuario= pqrsRepo.findById(Integer.parseInt( respuestaPQRSDto.usuario().getCedula()));
+        Optional<Usuario> opcionalUsuario= usuarioRepositorio.findById(respuestaPQRSDto.usuario());
         if (opcionalUsuario.isEmpty()){
-            throw new Exception("No existe este ");
+            throw new Exception("No existe un usuario con esta cuenta "+ respuestaPQRSDto.usuario());
         }
 
         Mensaje mensajeNuevo= new Mensaje();
         mensajeNuevo.setPqrs(opcional.get());
         mensajeNuevo.setFecha(LocalDateTime.now());
         mensajeNuevo.setTexto(respuestaPQRSDto.descripcion());
-
+        mensajeNuevo.setUsuario(opcionalUsuario.get());
         return null;
     }
 
-    @Override
-    public DetallePQRSdto verDetallePQRS(Integer codigo) throws Exception {
-
-        Optional<PQRS> opcional=  pqrsRepo.findById(codigo);
-        if (opcional.isEmpty()){
-            throw new Exception("No existe un PQRs con el codigo "+ codigo);
-        }
-        PQRS buscado = opcional.get();
-
-        return new DetallePQRSdto(
-                buscado.getId(),
-                buscado.getEstado());
-    }
 
     @Override
     public void cambiarEstadoPqrs(int codigoPqrs, EstadoPQRS estadoPQRS) throws Exception {
