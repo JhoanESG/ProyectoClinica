@@ -29,7 +29,7 @@ public class Mensaje implements Serializable {
     private PQRS pqrs;
 
     @ManyToOne
-    private Administrador usuario;
+    private Usuario usuario;
 
     @OneToOne
     private Mensaje mensaje;

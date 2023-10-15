@@ -202,7 +202,17 @@ public class AdministradorServiceImp implements AdministradorService {
     }
 
     @Override
-    public String responderPQRS(RespuestaPQRSDto respuestaPQRSDto) throws Exception {
+    public List<RespuestaDto> convertirRespuestasDto(List<Mensaje> mensajes) throws Exception {
+        return mensajes.stream().map( m -> new RespuestaDto(
+                m.getId(),
+                m.getTexto(),
+                m.getUsuario().getCedula(),
+                m.getFecha()
+        )).toList();
+    }
+
+    @Override
+    public int responderPQRS(RespuestaPQRSDto respuestaPQRSDto) throws Exception {
         Optional<PQRS> opcional= pqrsRepo.findById(respuestaPQRSDto.codigoPqrs());
         if (opcional.isEmpty()){
             throw new Exception("No existe un PQRS con el codigo " +respuestaPQRSDto.codigoPqrs());
@@ -218,7 +228,9 @@ public class AdministradorServiceImp implements AdministradorService {
         mensajeNuevo.setFecha(LocalDateTime.now());
         mensajeNuevo.setTexto(respuestaPQRSDto.descripcion());
         mensajeNuevo.setUsuario(opcionalUsuario.get());
-        return null;
+
+        Mensaje respuesta = mensajeRepositorio.save(mensajeNuevo);
+        return respuesta.getId();
     }
 
 

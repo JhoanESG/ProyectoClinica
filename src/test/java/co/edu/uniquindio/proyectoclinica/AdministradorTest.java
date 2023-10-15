@@ -34,20 +34,7 @@ public class AdministradorTest {
 
     //@Test
     public void actualizarMedicoTest () throws Exception {
-        //Obtener medico
-        MedicoDto guardado = administradorService.obtenerMedico("2345678901");
 
-        //Se le modifica el numero de telefono
-        MedicoDto modificado = new MedicoDto(
-                guardado.codigo(),
-                guardado.nombre(), guardado.apellido(),
-                "32542155",
-                guardado.ciudad(),
-                guardado.especialidad(),
-                guardado.inicioJornada(),
-                guardado.finJornada()
-        );
-        administradorService.actualizarMedico(modificado);
     }
     //@Test
     public void eliminarMedicoTest (){
