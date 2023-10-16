@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyectoclinica.model.services.interfaces;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
+import co.edu.uniquindio.proyectoclinica.model.dto.paciente.CrearPacienteDto;
 
 public interface PacienteService {
 
@@ -8,14 +9,12 @@ public interface PacienteService {
 
     String editarPerfil(ActualizarPacienteDto actualizarPacienteDto) throws Exception;
 
-    void eliminarCuenta(int codigoPaciente) throws Exception;
+    void eliminarCuenta(String codigoPaciente) throws Exception;
 
     void enviarLinkRecuperacion(String email) throws Exception;
     void confirmarCodigo(String codigo)throws Exception; //Codigo para la recuperacion de la contrasena
 
-    void cambiarContrasena(CambiarContrasenaDto cambiarContrasenaDto) throws Exception;
-    void verPantallaInicio(PacienteInicioDto pacienteInicioDto) throws Exception;
-
+    void cambiarContrasena(String contrasena ,CambiarContrasenaDto cambiarContrasenaDto) throws Exception;
 
     void agendarCita(RegistroCitaDto registroCitaDto) throws Exception;
 

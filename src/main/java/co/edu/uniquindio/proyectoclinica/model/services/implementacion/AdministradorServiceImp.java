@@ -64,11 +64,11 @@ public class AdministradorServiceImp implements AdministradorService {
     }
 
     private boolean estaRepetidoCedula(String cedula) {
-        return medicoRepositorio.findByCedula(cedula) != null;
+        return usuarioRepositorio.findByCedula(cedula) != null;
     }
 
     private boolean estaRepetidoCorreo(String email) {
-        return medicoRepositorio.findByEmail(email) != null;
+        return usuarioRepositorio.findByEmail(email) != null;
     }
 
 
@@ -96,6 +96,9 @@ public class AdministradorServiceImp implements AdministradorService {
         buscado.setHoraFin(medicoDto.finJornada());
 
         //Buscar que no se repita la cedula y el correo del medico
+        if ( estaRepetidoCorreo(medicoDto.email()) ){
+            throw new Exception("El correo "+ medicoDto.email() +" ya esta en uso");
+        }
 
         medicoRepositorio.save(buscado);
 

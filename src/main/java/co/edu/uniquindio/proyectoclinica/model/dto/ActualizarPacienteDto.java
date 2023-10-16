@@ -15,6 +15,7 @@ public record ActualizarPacienteDto (
         String alergias,
         TipoSangre tipoSangre,
         Eps eps,
+        String foto,
         LocalDateTime fechaNacimiento
 ) {
 }
