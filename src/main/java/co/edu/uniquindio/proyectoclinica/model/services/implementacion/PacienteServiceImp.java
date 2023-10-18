@@ -7,6 +7,7 @@ import co.edu.uniquindio.proyectoclinica.model.entities.Medico;
 import co.edu.uniquindio.proyectoclinica.model.entities.Paciente;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoCita;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoUsuario;
+import co.edu.uniquindio.proyectoclinica.model.services.interfaces.EmailService;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.PacienteService;
 import co.edu.uniquindio.proyectoclinica.repositorios.CitaRepo;
 import co.edu.uniquindio.proyectoclinica.repositorios.MedicoRepositorio;
@@ -118,6 +119,16 @@ public class PacienteServiceImp implements PacienteService {
     @Override
     public void enviarLinkRecuperacion(String email) throws Exception {
 
+//        EmailService emailService = null;
+//        EmailDto emailDto = new EmailDto(email,"Recuperar Contraseña - TuCanic","A continuacion " +
+//                "encontrara un link para reestablecer su contraseña");
+//
+//        emailService.enviarEmail(emailDto);
+
+//        EmailService emailServicio = null;
+//        emailServicio.enviarEmail(new EmailDto(email, "Asunto mensaje", "Cuerpo destino"));
+
+//        EmailServiceImp email = new EmailServiceImp().enviarEmail();
     }
 
     @Override

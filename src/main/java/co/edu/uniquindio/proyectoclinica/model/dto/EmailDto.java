@@ -1,8 +1,7 @@
 package co.edu.uniquindio.proyectoclinica.model.dto;
 
 public record EmailDto(
-        String mensaje,
-        String para,
+        String destinatario,
         String asunto,
-        String de) {
+        String cuerpo) {
 }
