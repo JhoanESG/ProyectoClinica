@@ -1,17 +1,15 @@
 package co.edu.uniquindio.proyectoclinica.model.services.implementacion;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
+import co.edu.uniquindio.proyectoclinica.model.dto.paciente.ActualizarPacienteDto;
+import co.edu.uniquindio.proyectoclinica.model.dto.paciente.CrearPQRSdto;
 import co.edu.uniquindio.proyectoclinica.model.dto.paciente.CrearPacienteDto;
-import co.edu.uniquindio.proyectoclinica.model.entities.Cita;
-import co.edu.uniquindio.proyectoclinica.model.entities.Medico;
-import co.edu.uniquindio.proyectoclinica.model.entities.Paciente;
+import co.edu.uniquindio.proyectoclinica.model.entities.*;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoCita;
+import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoUsuario;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.PacienteService;
-import co.edu.uniquindio.proyectoclinica.repositorios.CitaRepo;
-import co.edu.uniquindio.proyectoclinica.repositorios.MedicoRepositorio;
-import co.edu.uniquindio.proyectoclinica.repositorios.PacienteRepositorio;
-import co.edu.uniquindio.proyectoclinica.repositorios.UsuarioRepositorio;
+import co.edu.uniquindio.proyectoclinica.repositorios.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +26,8 @@ public class PacienteServiceImp implements PacienteService {
     private final UsuarioRepositorio usuarioRepositorio;
     private final MedicoRepositorio medicoRepositorio;
     private final CitaRepo citaRepo;
+    private final ConsultaRepositorio consultaRepositorio;
+    private final PQRSRepo pqrsRepo;
 
     private boolean estaRepetidoCedula(String cedula) {
         return usuarioRepositorio.findByCedula(cedula) != null;
@@ -162,7 +162,22 @@ public class PacienteServiceImp implements PacienteService {
     }
 
     @Override
-    public void crearPQRS() throws Exception {
+    public void crearPQRS(CrearPQRSdto crearPQRSdto) throws Exception {
+        PQRS pqrs = new PQRS();
+
+        Consulta consulta = consultaRepositorio.findConsultaById(crearPQRSdto.idConsulta());
+
+        if (consulta == null) {
+            throw new Exception("consulta no encontrada");
+        }
+        pqrs.setConsulta(consulta);
+        pqrs.setFechaCreacion(LocalDateTime.now());
+        pqrs.setEstado(EstadoPQRS.Activo);
+        pqrs.setTipoPQRS(crearPQRSdto.tipoPQRS());
+        pqrs.setAsunto(crearPQRSdto.asunto());
+        pqrs.setDescripcion(crearPQRSdto.descripcion());
+
+        pqrsRepo.save(pqrs);
 
     }
 

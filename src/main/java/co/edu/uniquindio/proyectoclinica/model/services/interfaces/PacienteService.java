@@ -1,6 +1,8 @@
 package co.edu.uniquindio.proyectoclinica.model.services.interfaces;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
+import co.edu.uniquindio.proyectoclinica.model.dto.paciente.ActualizarPacienteDto;
+import co.edu.uniquindio.proyectoclinica.model.dto.paciente.CrearPQRSdto;
 import co.edu.uniquindio.proyectoclinica.model.dto.paciente.CrearPacienteDto;
 
 public interface PacienteService {
@@ -18,7 +20,7 @@ public interface PacienteService {
 
     void agendarCita(RegistroCitaDto registroCitaDto) throws Exception;
 
-    void crearPQRS() throws Exception;
+    void crearPQRS(CrearPQRSdto crearPQRSdto) throws Exception;
 
     void listarPQRSpaciente() throws Exception;
 
