@@ -1,4 +1,4 @@
-package co.edu.uniquindio.proyectoclinica.model.dto;
+package co.edu.uniquindio.proyectoclinica.model.dto.paciente;
 
 import co.edu.uniquindio.proyectoclinica.model.enums.Especialidad;
 import jakarta.validation.constraints.NotNull;

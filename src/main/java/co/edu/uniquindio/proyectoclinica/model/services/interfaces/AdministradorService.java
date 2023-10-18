@@ -3,6 +3,7 @@ package co.edu.uniquindio.proyectoclinica.model.services.interfaces;
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoCrearDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoDto;
+import co.edu.uniquindio.proyectoclinica.model.dto.admin.PQRSAdminDto;
 import co.edu.uniquindio.proyectoclinica.model.entities.Mensaje;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
 
@@ -23,7 +24,7 @@ public interface AdministradorService {
 
     List<PQRSAdminDto> listarPQRS() throws Exception;
 
-    DetallePQRSdto verDetallePQRS(int codigo) throws Exception;
+    DetallePQRSmedicoDto verDetallePQRS(int codigo) throws Exception;
 
     List<RespuestaDto> convertirRespuestasDto(List<Mensaje> mensajes)throws Exception;
     int responderPQRS(RespuestaPQRSDto respuestaPQRSDto) throws Exception;

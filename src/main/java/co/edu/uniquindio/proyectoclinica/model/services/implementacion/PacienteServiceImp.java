@@ -1,9 +1,7 @@
 package co.edu.uniquindio.proyectoclinica.model.services.implementacion;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
-import co.edu.uniquindio.proyectoclinica.model.dto.paciente.ActualizarPacienteDto;
-import co.edu.uniquindio.proyectoclinica.model.dto.paciente.CrearPQRSdto;
-import co.edu.uniquindio.proyectoclinica.model.dto.paciente.CrearPacienteDto;
+import co.edu.uniquindio.proyectoclinica.model.dto.paciente.*;
 import co.edu.uniquindio.proyectoclinica.model.entities.*;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoCita;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
@@ -14,7 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,6 +29,7 @@ public class PacienteServiceImp implements PacienteService {
     private final CitaRepo citaRepo;
     private final ConsultaRepositorio consultaRepositorio;
     private final PQRSRepo pqrsRepo;
+    private final MensajeRepositorio mensajeRepositorio;
 
     private boolean estaRepetidoCedula(String cedula) {
         return usuarioRepositorio.findByCedula(cedula) != null;
@@ -182,22 +184,152 @@ public class PacienteServiceImp implements PacienteService {
     }
 
     @Override
-    public void listarPQRSpaciente() throws Exception {
+    public DetallePQRSdto detallePQRS(int idPQRS) throws Exception {
+        Optional<PQRS> opcional=  pqrsRepo.findById(idPQRS);
+        if (opcional.isEmpty()){
+            throw new Exception("No existe un PQRS con el codigo "+ idPQRS);
+        }
+        PQRS buscado = opcional.get();
 
+
+        return new DetallePQRSdto(
+                buscado.getId(),
+                buscado.getConsulta().getId(),
+                buscado.getAsunto(),
+                buscado.getFechaCreacion(),
+                buscado.getTipoPQRS(),
+                buscado.getEstado(),
+                buscado.getAsunto()
+        );
     }
 
     @Override
-    public void responderPQRS() throws Exception {
+    public DetalleCitaPacienteDto detalleCita(int idCita) throws Exception {
+        Cita cita = citaRepo.findCitaById(idCita);
 
+        if (cita == null){
+            throw new Exception("No existe la cita con el codigo "+ idCita);
+        }
+
+        return new DetalleCitaPacienteDto(
+                cita.getId(),
+                cita.getFechaCita(),
+                cita.getMedico().getNombre(),
+                cita.getMedico().getEspecialidad(),
+                cita.getFechaCreacion(),
+                cita.getMotivo()
+
+        );
     }
 
     @Override
-    public void filtarCitasPorFecha() throws Exception {
+    public List<PQRSpacienteDto> listarPQRSpaciente(String idPaciente) throws Exception {
 
+        Paciente paciente =pacienteRepositorio.findByCedula(idPaciente);
+        if (paciente == null){
+            throw new Exception("No existe el paciente");
+        }
+        List<PQRS> pqrsList = pqrsRepo.findByConsultaCitaPacienteAndEstadoIn(paciente, Arrays.asList(EstadoPQRS.Activo,EstadoPQRS.Pendiente));
+
+        List<PQRSpacienteDto> resultado = pqrsList.stream()
+                .map(pqrs -> new PQRSpacienteDto(
+                        pqrs.getAsunto(),
+                        pqrs.getFechaCreacion(),
+                        pqrs.getEstado()
+                )).toList();
+        return resultado;
     }
 
     @Override
-    public void filtrarCitasPorFecha() throws Exception {
+    public List<CitaPacienteDto> listarCitasPaciente(String idPaciente) throws Exception {
 
+        Paciente paciente =pacienteRepositorio.findByCedula(idPaciente);
+        if (paciente == null){
+            throw new Exception("No existe el paciente");
+        }
+
+        List<Cita> citasHoy = paciente.getListaCitas().stream().filter(
+                cita ->{
+                    LocalDate fechaCita= cita.getFechaCita().toLocalDate();
+                    return fechaCita.equals(LocalDate.now()) && cita.getEstadoCita() == EstadoCita.Creada;
+                }).toList();
+
+        List<CitaPacienteDto> resultado = citasHoy.stream()
+                .map(cita -> new CitaPacienteDto(
+                        cita.getMedico().getEspecialidad(),
+                        cita.getFechaCita(),
+                        cita.getEstadoCita()
+                ) ).toList();
+
+        return resultado;
     }
+
+    @Override
+    public List<ConsultaPacienteDto> listarConsultasPaciente(String idPaciente) throws Exception {
+
+        Paciente paciente =pacienteRepositorio.findByCedula(idPaciente);
+        if (paciente == null){
+            throw new Exception("No existe el paciente");
+        }
+        List<Consulta> consultas = consultaRepositorio.findByCitaPaciente(paciente);
+
+        if (consultas == null){
+            throw new Exception("El paciente no tiene consultas");
+        }
+
+        List<ConsultaPacienteDto> resultado = consultas.stream().map(
+                consulta -> new ConsultaPacienteDto(
+                        consulta.getId(),
+                        consulta.getCita().getFechaCita(),
+                        consulta.getCita().getFechaCreacion(),
+                        consulta.getCita().getMedico().getEspecialidad()
+                )).toList();
+
+        return resultado;
+    }
+
+    //Arreglar medicamentos
+    @Override
+    public DetalleConsultaDto detalleConsulta(int idConsulta) throws Exception {
+
+        Consulta consulta = consultaRepositorio.findConsultaById(idConsulta);
+        if (consulta== null){
+            throw new Exception("No existe la consulta "+ idConsulta);
+        }
+
+        return new DetalleConsultaDto(
+                consulta.getId(),
+                consulta.getCita().getFechaCita(),
+                consulta.getCita().getFechaCreacion(),
+                consulta.getCita().getMedico().getEspecialidad(),
+                consulta.getCita().getMedico().getNombre(),
+                consulta.getCita().getMotivo(),
+                consulta.getDiagnostico(),
+                consulta.getTratamiento(),
+                consulta.getTratamiento()
+        ) ;
+    }
+
+    @Override
+    public int responderPQRS(RespuestaPQRSDto respuestaPQRSDto) throws Exception {
+        Optional<PQRS> opcional= pqrsRepo.findById(respuestaPQRSDto.codigoPqrs());
+        if (opcional.isEmpty()){
+            throw new Exception("No existe un PQRS con el codigo " +respuestaPQRSDto.codigoPqrs());
+        }
+
+        Optional<Usuario> opcionalUsuario= usuarioRepositorio.findById(respuestaPQRSDto.usuario());
+        if (opcionalUsuario.isEmpty()){
+            throw new Exception("No existe un usuario con esta cuenta "+ respuestaPQRSDto.usuario());
+        }
+
+        Mensaje mensajeNuevo= new Mensaje();
+        mensajeNuevo.setPqrs(opcional.get());
+        mensajeNuevo.setFecha(LocalDateTime.now());
+        mensajeNuevo.setTexto(respuestaPQRSDto.descripcion());
+        mensajeNuevo.setUsuario(opcionalUsuario.get());
+
+        Mensaje respuesta = mensajeRepositorio.save(mensajeNuevo);
+        return respuesta.getId();
+    }
+
 }
