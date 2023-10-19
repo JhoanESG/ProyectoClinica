@@ -14,6 +14,7 @@ import co.edu.uniquindio.proyectoclinica.repositorios.MedicoRepositorio;
 import co.edu.uniquindio.proyectoclinica.repositorios.PacienteRepositorio;
 import co.edu.uniquindio.proyectoclinica.repositorios.UsuarioRepositorio;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,9 @@ import java.util.Optional;
 @Transactional
 @RequiredArgsConstructor
 public class PacienteServiceImp implements PacienteService {
+
+//    @Autowired
+    private final EmailServiceImp emailServiceImp;
 
     private final PacienteRepositorio pacienteRepositorio;
     private final UsuarioRepositorio usuarioRepositorio;
@@ -119,16 +123,10 @@ public class PacienteServiceImp implements PacienteService {
     @Override
     public void enviarLinkRecuperacion(String email) throws Exception {
 
-//        EmailService emailService = null;
-//        EmailDto emailDto = new EmailDto(email,"Recuperar Contraseña - TuCanic","A continuacion " +
-//                "encontrara un link para reestablecer su contraseña");
-//
-//        emailService.enviarEmail(emailDto);
+        EmailDto emailDto = new EmailDto(email,"Recuperar Contraseña - TuCanic","A continuacion " +
+                "encontrara un link para reestablecer su contraseña");
 
-//        EmailService emailServicio = null;
-//        emailServicio.enviarEmail(new EmailDto(email, "Asunto mensaje", "Cuerpo destino"));
-
-//        EmailServiceImp email = new EmailServiceImp().enviarEmail();
+        emailServiceImp.enviarEmail(emailDto);
     }
 
     @Override
