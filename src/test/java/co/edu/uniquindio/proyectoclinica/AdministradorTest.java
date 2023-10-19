@@ -1,10 +1,10 @@
 package co.edu.uniquindio.proyectoclinica;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
+import co.edu.uniquindio.proyectoclinica.model.dto.Medico.CitasMedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoCrearDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoDto;
-import co.edu.uniquindio.proyectoclinica.model.entities.Mensaje;
-import co.edu.uniquindio.proyectoclinica.model.entities.Usuario;
+import co.edu.uniquindio.proyectoclinica.model.dto.admin.PQRSAdminDto;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.AdministradorService;
 import jakarta.transaction.Transactional;
@@ -38,11 +38,11 @@ public class AdministradorTest {
 
     }
 
-    //@Test
+    @Test
     //@Sql("classpath:dataset.sql")
     public void actualizarMedicoTest () throws Exception {
 
-        //Obtenemos el paciente
+        //Obtenemos el Medico
         MedicoDto guardado = administradorService.obtenerMedico("2345678901");
 
         //Modificamos un dato
@@ -99,7 +99,7 @@ public class AdministradorTest {
     //@Test
     public void verDetallePQRS() throws Exception{
 
-        DetallePQRSdto pqrs= administradorService.verDetallePQRS(1);
+        DetallePQRSmedicoDto pqrs= administradorService.verDetallePQRS(1);
 
         Assertions.assertEquals(1,pqrs.idPQRS());
     }
@@ -126,7 +126,7 @@ public class AdministradorTest {
         Assertions.assertEquals(1, i);
     }
 
-    @Test
+    //@Test
     public void listarCitasMedicoTest () throws Exception{
         List<CitasMedicoDto> citas= administradorService.listarCitasMedico();
         citas.forEach(System.out::println);

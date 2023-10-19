@@ -1,8 +1,10 @@
 package co.edu.uniquindio.proyectoclinica.model.services.implementacion;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
+import co.edu.uniquindio.proyectoclinica.model.dto.Medico.CitasMedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoCrearDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoDto;
+import co.edu.uniquindio.proyectoclinica.model.dto.admin.PQRSAdminDto;
 import co.edu.uniquindio.proyectoclinica.model.entities.*;
 import co.edu.uniquindio.proyectoclinica.model.enums.Especialidad;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
@@ -28,6 +30,7 @@ public class AdministradorServiceImp implements AdministradorService {
     private final UsuarioRepositorio usuarioRepositorio;
     private final MensajeRepositorio mensajeRepositorio;
     private final CitaRepo citaRepo;
+    private final AdministradorRepositorio administradorRepositorio;
 
     @Override
     public String crearMedico(MedicoCrearDto medicoDto) throws Exception {
@@ -68,7 +71,7 @@ public class AdministradorServiceImp implements AdministradorService {
     }
 
     private boolean estaRepetidoCorreo(String email) {
-        return usuarioRepositorio.findByEmail(email) != null;
+        return administradorRepositorio.findByEmail(email)!= null;
     }
 
 
@@ -189,7 +192,7 @@ public class AdministradorServiceImp implements AdministradorService {
     }
 
     @Override
-    public DetallePQRSdto verDetallePQRS(int codigo) throws Exception {
+    public DetallePQRSmedicoDto verDetallePQRS(int codigo) throws Exception {
 
         Optional<PQRS> opcional=  pqrsRepo.findById(codigo);
         if (opcional.isEmpty()){
@@ -198,7 +201,7 @@ public class AdministradorServiceImp implements AdministradorService {
         PQRS buscado = opcional.get();
 
         // Separar fecha con hora
-        return new DetallePQRSdto(
+        return new DetallePQRSmedicoDto(
                 buscado.getId(),
                 buscado.getConsulta().getCita().getPaciente().getCedula(),
                 buscado.getAsunto(),
@@ -209,7 +212,7 @@ public class AdministradorServiceImp implements AdministradorService {
                 buscado.getConsulta().getCita().getMedico().getNombre(),
                 buscado.getConsulta().getCita().getMedico().getEspecialidad(),
                 buscado.getFechaCreacion(),
-                buscado.getAsunto()
+                buscado.getDescripcion()
                 );
     }
 

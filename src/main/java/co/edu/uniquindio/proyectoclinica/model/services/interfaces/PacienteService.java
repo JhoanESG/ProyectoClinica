@@ -1,13 +1,17 @@
 package co.edu.uniquindio.proyectoclinica.model.services.interfaces;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
-import co.edu.uniquindio.proyectoclinica.model.dto.paciente.CrearPacienteDto;
+import co.edu.uniquindio.proyectoclinica.model.dto.paciente.*;
+
+import java.util.List;
 
 public interface PacienteService {
 
     String registrar(CrearPacienteDto crearPacienteDto) throws Exception;
 
     String editarPerfil(ActualizarPacienteDto actualizarPacienteDto) throws Exception;
+
+    ActualizarPacienteDto obtenerPaciente (String id) throws Exception;
 
     void eliminarCuenta(String codigoPaciente) throws Exception;
 
@@ -18,14 +22,18 @@ public interface PacienteService {
 
     void agendarCita(RegistroCitaDto registroCitaDto) throws Exception;
 
-    void crearPQRS() throws Exception;
+    void crearPQRS(CrearPQRSdto crearPQRSdto) throws Exception;
 
-    void listarPQRSpaciente() throws Exception;
+    DetallePQRSdto detallePQRS(int idPQRS) throws Exception;
 
-    void responderPQRS() throws Exception;
+    DetalleCitaPacienteDto detalleCita(int idCita) throws Exception;
+    List<PQRSpacienteDto> listarPQRSpaciente(String idPaciente) throws Exception;
 
-    //Los metodos filtrar se pueden tener como solo uno que se interpreta con distintos parametros
-    void filtarCitasPorFecha() throws Exception;
+    List<CitaPacienteDto> listarCitasPaciente(String idPaciente) throws Exception;
 
-    void filtrarCitasPorFecha() throws Exception;
+    List<ConsultaPacienteDto> listarConsultasPaciente(String idPaciente)throws Exception;
+
+    DetalleConsultaDto detalleConsulta(int idConsulta)throws Exception;
+    int responderPQRS(RespuestaPQRSDto respuestaPQRSDto) throws Exception;
+
 }

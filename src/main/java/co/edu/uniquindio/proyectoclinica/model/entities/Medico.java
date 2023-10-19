@@ -32,5 +32,8 @@ public class Medico extends DetalleUsuario implements Serializable {
     @OneToMany(mappedBy = "medico")
     private List<Cita> listaCitas;
 
+    @OneToMany(mappedBy = "medico")
+    private List<DiaLibre> diaLibre;
+
 
 }

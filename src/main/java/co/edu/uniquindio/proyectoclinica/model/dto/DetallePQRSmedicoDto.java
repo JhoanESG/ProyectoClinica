@@ -5,9 +5,8 @@ import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
 import co.edu.uniquindio.proyectoclinica.model.enums.TipoPQRS;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
-public record DetallePQRSdto(
+public record DetallePQRSmedicoDto(
         int idPQRS,
         String ccPaciente,
         String asunto,
