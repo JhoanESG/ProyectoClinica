@@ -1,5 +1,5 @@
 package co.edu.uniquindio.proyectoclinica.model.services.interfaces;
-import co.edu.uniquindio.proyectoclinica.model.dto.Medico.*;
+import co.edu.uniquindio.proyectoclinica.model.dto.medico.*;
 import co.edu.uniquindio.proyectoclinica.model.dto.DetalleCitaDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
 import java.util.List;

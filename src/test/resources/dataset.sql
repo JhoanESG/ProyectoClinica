@@ -16,7 +16,7 @@ INSERT INTO Paciente (cedula, apellido, ciudad, foto, nombre, telefono, alergias
 VALUES
     ('3456789012', 'Paciente1', 'Ciudad2', 'paciente1.jpg', 'Paciente 1', '9876543210', 'Alergia1', 1, '2000-01-01 00:00:00', 1);
 
--- Inserción de registros en la tabla Medico
+-- Inserción de registros en la tabla medico
 INSERT INTO Medico (cedula, apellido, ciudad, foto, nombre, telefono, especialidad, hora_fin, hora_inicio)
 VALUES
     ('2345678901', 'Medico1', 'Ciudad1', 'medico1.jpg', 'Dr. Medico1', '1234567890', 1, '2023-10-14 18:00:00', '2023-10-14 09:00:00');

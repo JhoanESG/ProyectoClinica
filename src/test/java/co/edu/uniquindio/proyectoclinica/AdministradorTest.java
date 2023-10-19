@@ -1,7 +1,7 @@
 package co.edu.uniquindio.proyectoclinica;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
-import co.edu.uniquindio.proyectoclinica.model.dto.Medico.CitasMedicoDto;
+import co.edu.uniquindio.proyectoclinica.model.dto.medico.CitasMedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoCrearDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.PQRSAdminDto;
@@ -42,7 +42,7 @@ public class AdministradorTest {
     //@Sql("classpath:dataset.sql")
     public void actualizarMedicoTest () throws Exception {
 
-        //Obtenemos el Medico
+        //Obtenemos el medico
         MedicoDto guardado = administradorService.obtenerMedico("2345678901");
 
         //Modificamos un dato

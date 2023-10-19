@@ -1,7 +1,7 @@
 package co.edu.uniquindio.proyectoclinica.model.services.implementacion;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
-import co.edu.uniquindio.proyectoclinica.model.dto.Medico.*;
+import co.edu.uniquindio.proyectoclinica.model.dto.medico.*;
 import co.edu.uniquindio.proyectoclinica.model.entities.*;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoCita;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.MedicoService;
@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service

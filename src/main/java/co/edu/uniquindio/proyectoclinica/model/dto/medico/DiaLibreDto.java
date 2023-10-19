@@ -1,6 +1,5 @@
-package co.edu.uniquindio.proyectoclinica.model.dto.Medico;
+package co.edu.uniquindio.proyectoclinica.model.dto.medico;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record DiaLibreDto(

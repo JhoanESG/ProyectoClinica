@@ -1,4 +1,4 @@
-package co.edu.uniquindio.proyectoclinica.model.dto.Medico;
+package co.edu.uniquindio.proyectoclinica.model.dto.medico;
 
 import java.time.LocalDateTime;
 
