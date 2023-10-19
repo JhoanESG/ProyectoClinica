@@ -11,6 +11,8 @@ public interface PacienteService {
 
     String editarPerfil(ActualizarPacienteDto actualizarPacienteDto) throws Exception;
 
+    ActualizarPacienteDto obtenerPaciente (String id) throws Exception;
+
     void eliminarCuenta(String codigoPaciente) throws Exception;
 
     void enviarLinkRecuperacion(String email) throws Exception;

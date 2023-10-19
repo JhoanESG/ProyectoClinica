@@ -1,4 +1,4 @@
-package co.edu.uniquindio.proyectoclinica.model.dto;
+package co.edu.uniquindio.proyectoclinica.model.dto.Medico;
 
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoCita;
 

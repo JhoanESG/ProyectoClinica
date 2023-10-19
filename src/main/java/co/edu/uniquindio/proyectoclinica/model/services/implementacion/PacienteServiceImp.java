@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyectoclinica.model.services.implementacion;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
+import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.paciente.*;
 import co.edu.uniquindio.proyectoclinica.model.entities.*;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoCita;
@@ -36,7 +37,7 @@ public class PacienteServiceImp implements PacienteService {
     }
 
     private boolean estaRepetidoCorreo(String email) {
-        return usuarioRepositorio.findByEmail(email) != null;
+        return pacienteRepositorio.findByEmail(email)!= null;
     }
 
     @Override
@@ -92,15 +93,41 @@ public class PacienteServiceImp implements PacienteService {
         buscado.setAlergias(actualizarPacienteDto.alergias());
         buscado.setTipoSangre(actualizarPacienteDto.tipoSangre());
         buscado.setEps(actualizarPacienteDto.eps());
-        buscado.setFechaNacimiento(actualizarPacienteDto.fechaNacimiento());
 
-        if (estaRepetidoCorreo(buscado.getEmail())){
-            throw new Exception("El correo "+  buscado.getEmail()+" ya esta en uso");
+        if (estaRepetidoCorreo(actualizarPacienteDto.email())){
+            throw new Exception("El correo "+  actualizarPacienteDto.email()+" ya esta en uso");
         }
         pacienteRepositorio.save(buscado);
 
         return buscado.getCedula();
 
+    }
+
+    @Override
+    public ActualizarPacienteDto obtenerPaciente(String id) throws Exception {
+        Optional<Paciente> opcional = pacienteRepositorio.findById(id);
+        if (opcional.isEmpty()){
+            throw new Exception("No existe un paciente con el codigo "+id);
+        }
+        Paciente buscado = opcional.get();
+
+        if (buscado.getEstado() == EstadoUsuario.INACTIVO){
+            throw new Exception("El usuario "+id+" se encuentra inactivo");
+        }
+
+        return new ActualizarPacienteDto(
+                buscado.getCedula(),
+                buscado.getNombre(),
+                buscado.getApellido(),
+                buscado.getTelefono(),
+                buscado.getCiudad(),
+                buscado.getEmail(),
+                buscado.getContrasena(),
+                buscado.getAlergias(),
+                buscado.getTipoSangre(),
+                buscado.getEps(),
+                buscado.getFoto()
+        );
     }
 
     @Override
@@ -137,7 +164,6 @@ public class PacienteServiceImp implements PacienteService {
         paciente.setContrasena(contrasena);
         pacienteRepositorio.save(paciente);
     }
-
 
     @Override
     public void agendarCita(RegistroCitaDto registroCitaDto) throws Exception {
@@ -248,11 +274,10 @@ public class PacienteServiceImp implements PacienteService {
             throw new Exception("No existe el paciente");
         }
 
-        List<Cita> citasHoy = paciente.getListaCitas().stream().filter(
-                cita ->{
-                    LocalDate fechaCita= cita.getFechaCita().toLocalDate();
-                    return fechaCita.equals(LocalDate.now()) && cita.getEstadoCita() == EstadoCita.Creada;
-                }).toList();
+        List<Cita> citasHoy = citaRepo.findByPacienteAndAndEstadoCita(paciente,EstadoCita.Creada);
+        if (citasHoy.isEmpty()){
+            throw new Exception("No hay citas");
+        }
 
         List<CitaPacienteDto> resultado = citasHoy.stream()
                 .map(cita -> new CitaPacienteDto(

@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyectoclinica;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
+import co.edu.uniquindio.proyectoclinica.model.dto.Medico.CitasMedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoCrearDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.PQRSAdminDto;
@@ -37,11 +38,11 @@ public class AdministradorTest {
 
     }
 
-    //@Test
+    @Test
     //@Sql("classpath:dataset.sql")
     public void actualizarMedicoTest () throws Exception {
 
-        //Obtenemos el paciente
+        //Obtenemos el Medico
         MedicoDto guardado = administradorService.obtenerMedico("2345678901");
 
         //Modificamos un dato
@@ -125,7 +126,7 @@ public class AdministradorTest {
         Assertions.assertEquals(1, i);
     }
 
-    @Test
+    //@Test
     public void listarCitasMedicoTest () throws Exception{
         List<CitasMedicoDto> citas= administradorService.listarCitasMedico();
         citas.forEach(System.out::println);

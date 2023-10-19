@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyectoclinica.model.services.interfaces;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
+import co.edu.uniquindio.proyectoclinica.model.dto.Medico.CitasMedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoCrearDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.PQRSAdminDto;

@@ -2,7 +2,8 @@ INSERT INTO Usuario (cedula, contrasena, email, estado)
 VALUES
     ('1234567890', 'password1', 'usuario1@example.com', 0),
     ('2345678901', 'password2', 'usuario2@example.com', 0),
-    ('3456789012', 'password3', 'usuario3@example.com', 0);
+    ('3456789012', 'password3', 'paciente1@example.com', 0);
+
 
 
 --Inserccion en la tabla administrador
@@ -22,7 +23,7 @@ VALUES
 
 INSERT INTO Cita ( estado_cita, fecha_cita, fecha_creacion, motivo, medico_cedula, paciente_cedula)
 VALUES
-    (1, '2023-10-15 10:00:00', '2023-10-14 12:00:00', 'Consulta de rutina', '2345678901', '3456789012');
+    (0, '2023-10-31 10:00:00', '2023-10-19 12:00:00', 'Consulta de rutina', '2345678901', '3456789012');
 
 
 INSERT INTO Consulta (diagnostico, notas, sintomas, tratamiento, cita_id)

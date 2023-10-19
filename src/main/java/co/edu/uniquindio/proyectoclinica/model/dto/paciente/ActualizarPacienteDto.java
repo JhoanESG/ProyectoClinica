@@ -12,10 +12,10 @@ public record ActualizarPacienteDto (
         String telefono,
         String ciudad,
         String email,
+        String contrasena,
         String alergias,
         TipoSangre tipoSangre,
         Eps eps,
-        String foto,
-        LocalDateTime fechaNacimiento
+        String foto
 ) {
 }

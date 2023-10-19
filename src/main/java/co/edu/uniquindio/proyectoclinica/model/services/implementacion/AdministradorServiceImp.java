@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyectoclinica.model.services.implementacion;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
+import co.edu.uniquindio.proyectoclinica.model.dto.Medico.CitasMedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoCrearDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.PQRSAdminDto;
@@ -29,6 +30,7 @@ public class AdministradorServiceImp implements AdministradorService {
     private final UsuarioRepositorio usuarioRepositorio;
     private final MensajeRepositorio mensajeRepositorio;
     private final CitaRepo citaRepo;
+    private final AdministradorRepositorio administradorRepositorio;
 
     @Override
     public String crearMedico(MedicoCrearDto medicoDto) throws Exception {
@@ -69,7 +71,7 @@ public class AdministradorServiceImp implements AdministradorService {
     }
 
     private boolean estaRepetidoCorreo(String email) {
-        return usuarioRepositorio.findByEmail(email) != null;
+        return administradorRepositorio.findByEmail(email)!= null;
     }
 
 
