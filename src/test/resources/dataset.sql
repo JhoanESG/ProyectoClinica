@@ -89,10 +89,12 @@ VALUES
     ('2023-10-15 16:00:00', 'Fin del mensaje', 4, 3, '3647856424'),
     ('2023-10-15 16:00:00', 'Muy buen trabjo en el aseo', 1, 1, '3647856424'),
     ('2023-10-15 16:00:00', 'Fin del mensaje', 7, 1, '3647856424');
+ 
 
 INSERT INTO Dia_libre (dia,medico_cedula )
 VALUES
     ('2023-10-20', '2345678901');
+
 
 
 
