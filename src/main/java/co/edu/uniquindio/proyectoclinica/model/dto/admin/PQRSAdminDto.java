@@ -1,12 +1,14 @@
-package co.edu.uniquindio.proyectoclinica.model.dto;
+package co.edu.uniquindio.proyectoclinica.model.dto.admin;
 
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
+import co.edu.uniquindio.proyectoclinica.model.enums.TipoPQRS;
 
 public record PQRSAdminDto(
         int id,
         int cita,
         String asunto,
         String ccPaciente,
+        TipoPQRS tipoPQRS,
         EstadoPQRS estadoPQRS
 
 ) {

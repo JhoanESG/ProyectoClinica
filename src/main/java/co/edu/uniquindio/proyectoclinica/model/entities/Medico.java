@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-//@Data
 @Setter
 @Getter
 @NoArgsConstructor
@@ -32,6 +31,9 @@ public class Medico extends DetalleUsuario implements Serializable {
 
     @OneToMany(mappedBy = "medico")
     private List<Cita> listaCitas;
+
+    @OneToMany(mappedBy = "medico")
+    private List<DiaLibre> diaLibre;
 
 
 }

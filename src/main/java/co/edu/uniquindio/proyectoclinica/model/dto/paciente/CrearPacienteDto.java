@@ -1,4 +1,4 @@
-package co.edu.uniquindio.proyectoclinica.model.dto;
+package co.edu.uniquindio.proyectoclinica.model.dto.paciente;
 
 import co.edu.uniquindio.proyectoclinica.model.enums.Eps;
 import co.edu.uniquindio.proyectoclinica.model.enums.Especialidad;
@@ -16,6 +16,7 @@ public record CrearPacienteDto (
         String email,
         String contrasena,
         String alergias,
+        String foto,
         TipoSangre tipoSangre,
         Eps eps,
         LocalDateTime fechaNacimiento

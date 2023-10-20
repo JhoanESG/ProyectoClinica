@@ -1,5 +1,11 @@
 package co.edu.uniquindio.proyectoclinica.model.enums;
 
 public enum Eps {
-    Sanitas
+    SaludColmena,
+    SaludTotal,
+    Cafesalud,
+    Sanitas,
+    Compensar,
+    Colseguros,
+    Coomeva
 }

@@ -1,4 +1,4 @@
-package co.edu.uniquindio.proyectoclinica.model.dto;
+package co.edu.uniquindio.proyectoclinica.model.dto.paciente;
 
 import co.edu.uniquindio.proyectoclinica.model.enums.Eps;
 import co.edu.uniquindio.proyectoclinica.model.enums.TipoSangre;
@@ -12,9 +12,10 @@ public record ActualizarPacienteDto (
         String telefono,
         String ciudad,
         String email,
+        String contrasena,
         String alergias,
         TipoSangre tipoSangre,
         Eps eps,
-        LocalDateTime fechaNacimiento
+        String foto
 ) {
 }

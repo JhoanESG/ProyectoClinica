@@ -1,11 +1,10 @@
-package co.edu.uniquindio.proyectoclinica.model.dto;
+package co.edu.uniquindio.proyectoclinica.model.dto.medico;
 
 import java.time.LocalDateTime;
 
-public record HistorialPacientesAtendidosDto(
+public record CitasMedicoDto(
         String nombrePaciente,
         String idPaciente,
-        LocalDateTime fecha,
         LocalDateTime hora,
         String motivo
 ) {

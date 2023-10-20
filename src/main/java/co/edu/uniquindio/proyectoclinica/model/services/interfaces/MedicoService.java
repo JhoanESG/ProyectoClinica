@@ -1,17 +1,18 @@
 package co.edu.uniquindio.proyectoclinica.model.services.interfaces;
-import co.edu.uniquindio.proyectoclinica.model.dto.CitaMedicoDTo;
-import co.edu.uniquindio.proyectoclinica.model.dto.CitasMedicoDto;
+import co.edu.uniquindio.proyectoclinica.model.dto.medico.*;
 import co.edu.uniquindio.proyectoclinica.model.dto.DetalleCitaDto;
-import co.edu.uniquindio.proyectoclinica.model.dto.HistorialPacientesAtendidosDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
-import java.util.List;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
+@Service
 public interface MedicoService {
     List<CitaMedicoDTo> verCitasPendientes(String codigoMedico) throws Exception;
-    DetalleCitaDto obtenerCita(String codigoCita) throws Exception;
-    AtenderCitaDto atencerCita(String codigoCita) throws Exception;
-    DatosVistaPrevia vistaPreviaCita(String id) throws Exception;
-    List<HistorialPacientesAtendidosDto> listarCitasAtendidas () throws Exception;
-    List<CitasMedicoDto> listarCitasMedico() throws Exception;
+    List<CitasMedicoDto> listarCitasMedico(String codigoMedico)throws Exception;
+    DetalleCitaDto obtenerCita(int codigoCita) throws Exception;
+    int radicarConsulta(AtenderCitaDto atenderCitaDto) throws Exception;
+    List<HistorialPacientesAtendidosDto> listarCitasAtendidas (String idMedico) throws Exception;
+    int asignarDiaLibre(DiaLibreDto diaLibreDto) throws Exception;
+    List<DiaLibreDto> listaDiasLibresMedico(String idMedico) throws Exception;
 
 }

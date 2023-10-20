@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-//@Data
 @Setter
 @Getter
 @NoArgsConstructor
@@ -29,7 +28,7 @@ public class Mensaje implements Serializable {
     private PQRS pqrs;
 
     @ManyToOne
-    private Administrador administrador;
+    private Usuario usuario;
 
     @OneToOne
     private Mensaje mensaje;

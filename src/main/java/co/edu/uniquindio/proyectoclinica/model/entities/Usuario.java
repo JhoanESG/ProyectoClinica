@@ -5,13 +5,14 @@ import co.edu.uniquindio.proyectoclinica.model.enums.EstadoUsuario;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@ToString
-@MappedSuperclass
-//@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Usuario {
 
     @Id
@@ -27,6 +28,9 @@ public class Usuario {
 
     @Column(nullable = false)
     private EstadoUsuario estado;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Mensaje> mensajes;
 
 }
 

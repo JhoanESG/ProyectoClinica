@@ -17,6 +17,7 @@ import java.util.List;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PQRS implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
     private int id;
 

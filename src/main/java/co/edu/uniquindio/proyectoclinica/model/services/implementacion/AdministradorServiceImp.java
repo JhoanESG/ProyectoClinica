@@ -1,17 +1,20 @@
 package co.edu.uniquindio.proyectoclinica.model.services.implementacion;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
-import co.edu.uniquindio.proyectoclinica.model.entities.Cita;
-import co.edu.uniquindio.proyectoclinica.model.entities.Medico;
-import co.edu.uniquindio.proyectoclinica.model.entities.Mensaje;
-import co.edu.uniquindio.proyectoclinica.model.entities.PQRS;
+import co.edu.uniquindio.proyectoclinica.model.dto.medico.CitasMedicoDto;
+import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoCrearDto;
+import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoDto;
+import co.edu.uniquindio.proyectoclinica.model.dto.admin.PQRSAdminDto;
+import co.edu.uniquindio.proyectoclinica.model.entities.*;
 import co.edu.uniquindio.proyectoclinica.model.enums.Especialidad;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoUsuario;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.AdministradorService;
 import co.edu.uniquindio.proyectoclinica.repositorios.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,20 +22,22 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class AdministradorServiceImp implements AdministradorService {
 
     private final MedicoRepositorio medicoRepositorio;
     private final PQRSRepo pqrsRepo;
-    private final CuentaRepositorio cuentaRepositorio;
+    private final UsuarioRepositorio usuarioRepositorio;
     private final MensajeRepositorio mensajeRepositorio;
     private final CitaRepo citaRepo;
+    private final AdministradorRepositorio administradorRepositorio;
 
     @Override
     public String crearMedico(MedicoCrearDto medicoDto) throws Exception {
 
         if ( estaRepetidoCorreo(medicoDto.email()) ){
-            throw new Exception("EL correo "+ medicoDto.email() +" ya esta en uso");
+            throw new Exception("El correo "+ medicoDto.email() +" ya esta en uso");
         }
 
         if (estaRepetidoCedula(medicoDto.cedula())){
@@ -43,7 +48,11 @@ public class AdministradorServiceImp implements AdministradorService {
 
         medicoNuevo.setCedula(medicoDto.cedula());
         medicoNuevo.setEmail(medicoDto.email());
-        medicoNuevo.setContrasena(medicoDto.contrasena());
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String passwordEncriptada = passwordEncoder.encode(medicoDto.contrasena());
+        medicoNuevo.setContrasena(passwordEncriptada);
+
         medicoNuevo.setEstado(EstadoUsuario.ACTIVO);
 
         medicoNuevo.setNombre(medicoDto.nombre());
@@ -63,17 +72,16 @@ public class AdministradorServiceImp implements AdministradorService {
     }
 
     private boolean estaRepetidoCedula(String cedula) {
-        return medicoRepositorio.findByCedula(cedula) != null;
+        return usuarioRepositorio.findByCedula(cedula) != null;
     }
 
     private boolean estaRepetidoCorreo(String email) {
-        return medicoRepositorio.findByEmail(email) != null;
+        return administradorRepositorio.findByEmail(email)!= null;
     }
 
 
-
     @Override
-    public String actualizarMedico(MedicoCrearDto medicoDto) throws Exception {
+    public String actualizarMedico(MedicoDto medicoDto) throws Exception {
 
         Optional<Medico> opcional = medicoRepositorio.findById(medicoDto.cedula());
         if (opcional.isEmpty()){
@@ -91,11 +99,14 @@ public class AdministradorServiceImp implements AdministradorService {
         buscado.setCiudad(medicoDto.ciudad());
         buscado.setFoto(medicoDto.foto());
 
-        buscado.setEspecialidad(Especialidad.values()[medicoDto.especialidad()]);
-        buscado.setHoraInicio(medicoDto.horaInicio());
-        buscado.setHoraFin(medicoDto.horaFin());
+        buscado.setEspecialidad(medicoDto.especialidad());
+        buscado.setHoraInicio(medicoDto.inicioJornada());
+        buscado.setHoraFin(medicoDto.finJornada());
 
         //Buscar que no se repita la cedula y el correo del medico
+        if ( estaRepetidoCorreo(medicoDto.email()) ){
+            throw new Exception("El correo "+ medicoDto.email() +" ya esta en uso");
+        }
 
         medicoRepositorio.save(buscado);
 
@@ -144,6 +155,10 @@ public class AdministradorServiceImp implements AdministradorService {
         }
         Medico buscado = opcional.get();
 
+        if (buscado.getEstado() == EstadoUsuario.INACTIVO){
+            throw new Exception("El usuario "+cedula+" se encuentra inactivo");
+        }
+
         return new MedicoDto(
                 buscado.getCedula(),
                 buscado.getNombre(),
@@ -151,6 +166,8 @@ public class AdministradorServiceImp implements AdministradorService {
                 buscado.getTelefono(),
                 buscado.getCiudad(),
                 buscado.getEspecialidad(),
+                buscado.getEmail(),
+                buscado.getFoto(),
                 buscado.getHoraInicio(),
                 buscado.getHoraFin()
         );
@@ -160,6 +177,10 @@ public class AdministradorServiceImp implements AdministradorService {
     public List<PQRSAdminDto> listarPQRS() throws Exception {
         List<PQRS> listaPqrs= pqrsRepo.findAll();
 
+        if (listaPqrs.isEmpty()){
+            throw new Exception("No hay PQRS");
+        }
+
         List<PQRSAdminDto> respuesta = new ArrayList<>();
         for (PQRS p: listaPqrs){
             respuesta.add(new PQRSAdminDto(
@@ -167,50 +188,74 @@ public class AdministradorServiceImp implements AdministradorService {
                     p.getConsulta().getId(),
                     p.getAsunto(),
                     p.getConsulta().getCita().getPaciente().getNombre(),
+                    p.getTipoPQRS(),
                     p.getEstado()
             ));
-            return respuesta;
-        }
 
-        return null;
+        }
+        return respuesta;
     }
 
     @Override
-    public String responderPQRS(RespuestaPQRSDto respuestaPQRSDto) throws Exception {
-        Optional<PQRS> opcional= pqrsRepo.findById(respuestaPQRSDto.codigo());
+    public DetallePQRSmedicoDto verDetallePQRS(int codigo) throws Exception {
+
+        Optional<PQRS> opcional=  pqrsRepo.findById(codigo);
         if (opcional.isEmpty()){
-            throw new Exception("No existe este pqrs");
+            throw new Exception("No existe un PQRS con el codigo "+ codigo);
+        }
+        PQRS buscado = opcional.get();
+
+        // Separar fecha con hora
+        return new DetallePQRSmedicoDto(
+                buscado.getId(),
+                buscado.getConsulta().getCita().getPaciente().getCedula(),
+                buscado.getAsunto(),
+                buscado.getEstado(),
+                buscado.getTipoPQRS(),
+                buscado.getFechaCreacion(),
+                buscado.getFechaCreacion(),
+                buscado.getConsulta().getCita().getMedico().getNombre(),
+                buscado.getConsulta().getCita().getMedico().getEspecialidad(),
+                buscado.getFechaCreacion(),
+                buscado.getDescripcion()
+                );
+    }
+
+    @Override
+    public List<RespuestaDto> convertirRespuestasDto(List<Mensaje> mensajes) throws Exception {
+        return mensajes.stream().map( m -> new RespuestaDto(
+                m.getId(),
+                m.getTexto(),
+                m.getUsuario().getCedula(),
+                m.getFecha()
+        )).toList();
+    }
+
+    @Override
+    public int responderPQRS(RespuestaPQRSDto respuestaPQRSDto) throws Exception {
+        Optional<PQRS> opcional= pqrsRepo.findById(respuestaPQRSDto.codigoPqrs());
+        if (opcional.isEmpty()){
+            throw new Exception("No existe un PQRS con el codigo " +respuestaPQRSDto.codigoPqrs());
         }
 
-        Optional<PQRS> opcionalUsuario= pqrsRepo.findById(Integer.parseInt( respuestaPQRSDto.usuario().getCedula()));
+        Optional<Usuario> opcionalUsuario= usuarioRepositorio.findById(respuestaPQRSDto.usuario());
         if (opcionalUsuario.isEmpty()){
-            throw new Exception("No existe este ");
+            throw new Exception("No existe un usuario con esta cuenta "+ respuestaPQRSDto.usuario());
         }
 
         Mensaje mensajeNuevo= new Mensaje();
         mensajeNuevo.setPqrs(opcional.get());
         mensajeNuevo.setFecha(LocalDateTime.now());
         mensajeNuevo.setTexto(respuestaPQRSDto.descripcion());
+        mensajeNuevo.setUsuario(opcionalUsuario.get());
 
-        return null;
+        Mensaje respuesta = mensajeRepositorio.save(mensajeNuevo);
+        return respuesta.getId();
     }
 
-    @Override
-    public DetallePQRSdto verDetallePQRS(Integer codigo) throws Exception {
-
-        Optional<PQRS> opcional=  pqrsRepo.findById(codigo);
-        if (opcional.isEmpty()){
-            throw new Exception("No existe un PQRs con el codigo "+ codigo);
-        }
-        PQRS buscado = opcional.get();
-
-        return new DetallePQRSdto(
-                buscado.getId(),
-                buscado.getEstado());
-    }
 
     @Override
-    public void cambiarEstadoPqrs(int codigoPqrs, EstadoPQRS estadoPQRS) throws Exception {
+    public int cambiarEstadoPqrs(int codigoPqrs, EstadoPQRS estadoPQRS) throws Exception {
          Optional<PQRS> opcional =pqrsRepo.findById(codigoPqrs);
          if (opcional.isEmpty()){
              throw new Exception("No existe un PQRS con el codigo "+ codigoPqrs);
@@ -218,6 +263,7 @@ public class AdministradorServiceImp implements AdministradorService {
          PQRS pqrs = opcional.get();
          pqrs.setEstado(estadoPQRS);
          pqrsRepo.save(pqrs);
+         return pqrs.getId();
     }
 
     @Override
