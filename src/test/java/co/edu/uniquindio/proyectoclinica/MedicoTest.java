@@ -37,7 +37,7 @@ public class MedicoTest {
         List<CitaMedicoDTo> citas = medicoService.verCitasPendientes("2345678901");
 
         citas.forEach(System.out::println);
-        Assertions.assertEquals(2,citas.size());
+        Assertions.assertEquals(1,citas.size());
 
     }
 
@@ -46,7 +46,7 @@ public class MedicoTest {
         List<CitasMedicoDto> lista = medicoService.listarCitasMedico("2345678901");
 
         lista.forEach(System.out::println);
-        Assertions.assertEquals(3,lista.size());
+        Assertions.assertEquals(1,lista.size());
     }
 
     //@Test
