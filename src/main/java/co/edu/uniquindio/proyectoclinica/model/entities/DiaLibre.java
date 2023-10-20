@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Setter
@@ -22,7 +21,7 @@ public class DiaLibre implements Serializable {
     private int id;
 
     @NotNull
-    private LocalDateTime dia;
+    private LocalDate dia;
 
     @ManyToOne
     private Medico medico;

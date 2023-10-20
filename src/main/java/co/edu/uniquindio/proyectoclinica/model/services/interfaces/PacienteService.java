@@ -2,9 +2,10 @@ package co.edu.uniquindio.proyectoclinica.model.services.interfaces;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
 import co.edu.uniquindio.proyectoclinica.model.dto.paciente.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public interface PacienteService {
 
     String registrar(CrearPacienteDto crearPacienteDto) throws Exception;

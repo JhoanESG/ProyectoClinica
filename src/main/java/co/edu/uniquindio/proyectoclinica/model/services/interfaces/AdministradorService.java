@@ -7,10 +7,11 @@ import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.PQRSAdminDto;
 import co.edu.uniquindio.proyectoclinica.model.entities.Mensaje;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+@Service
 public interface AdministradorService {
 
     String crearMedico(MedicoCrearDto medicoCrearDto) throws Exception;

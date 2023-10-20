@@ -34,12 +34,8 @@ public class MedicoServiceImp implements MedicoService {
         if (medico == null){
             throw new Exception("no existe ningun medico con el codigo "+codigoMedico);
         }
-        List<Cita> citasHoy = medico.getListaCitas().stream().filter(
-                cita -> {
-                    LocalDate fechaCita = cita.getFechaCita().toLocalDate();
-                    return fechaCita.equals(LocalDate.now()) && cita.getEstadoCita() == EstadoCita.Creada;
-                }
-        ).toList();
+
+        List<Cita> citasHoy = citaRepo.findByMedicoAndEstadoCita(medico,EstadoCita.Creada);
 
         if (citasHoy.isEmpty()){
             throw new Exception("No hay citas para hoy");
@@ -62,13 +58,8 @@ public class MedicoServiceImp implements MedicoService {
             throw new Exception("no existe ningun medico con el codigo "+codigoMedico);
         }
 
-        LocalDate fechaHoy = LocalDate.now();
-        List<Cita> citasHoy = medico.getListaCitas().stream().filter(
-                cita -> {
-                    LocalDate fechaCita = cita.getFechaCita().toLocalDate();
-                    return fechaCita.equals(fechaHoy) || fechaCita.isAfter(fechaHoy) && cita.getEstadoCita() == EstadoCita.Creada;
-                }
-        ).toList();
+        LocalDateTime fechaHoy = LocalDateTime.now();
+        List<Cita> citasHoy = citaRepo.findByFechaCitaAfterAndEstadoCita(fechaHoy,EstadoCita.Creada);
 
         List<CitasMedicoDto> resultado = citasHoy.stream().map(
                 cita -> new CitasMedicoDto(
@@ -101,7 +92,7 @@ public class MedicoServiceImp implements MedicoService {
         );
     }
     @Override
-    public void radicarConsulta (AtenderCitaDto atenderCitaDto) throws Exception {
+    public int radicarConsulta (AtenderCitaDto atenderCitaDto) throws Exception {
         Cita cita = citaRepo.findCitaById(atenderCitaDto.idCita());
         if (cita == null){
             throw new Exception("No existe la cita");
@@ -115,12 +106,13 @@ public class MedicoServiceImp implements MedicoService {
         consulta.setDiagnostico(atenderCitaDto.diagnostico());
         consulta.setTratamiento(atenderCitaDto.tratamiento());
         consulta.setNotas(atenderCitaDto.notas());
-        //asignarMedicamentosCita(cita,atenderCitaDto.medicamentos());
+        //consulta.setConsultaMedicamentos(atenderCitaDto.medicamentos());
         consultaRepositorio.save(consulta);
 
+        return consulta.getId();
     }
 
-    private void asignarMedicamentosCita (Cita cita, List<MedicamentosDto> medicamentos)throws Exception{
+    public void asignarMedicamentosCita (Cita cita, List<MedicamentosDto> medicamentos)throws Exception{
         for (MedicamentosDto m: medicamentos){
             //Medicamento medicamento= medicamentoRepositorio.findById(MedicamentosDto.)
         }
@@ -159,7 +151,7 @@ public class MedicoServiceImp implements MedicoService {
         }
         // Verificar si el médico tiene citas programadas en el día seleccionado
 
-        List<Cita> citasEnDia = citaRepo.findByMedicoAndFechaCita(medico, diaLibreDto.fecha());
+        List<Cita> citasEnDia = citaRepo.findByMedicoAndFechaCitaBetween(medico, diaLibreDto.fecha().atStartOfDay(),diaLibreDto.fecha().atStartOfDay().withHour(23).withMinute(59));
         if (!citasEnDia.isEmpty()) {
             throw new Exception("El médico tiene citas programadas en el día seleccionado. No se puede asignar un día libre.");
         }
@@ -180,7 +172,7 @@ public class MedicoServiceImp implements MedicoService {
         if (medico== null){
             throw new Exception("No existe un medico con el codigo "+ idMedico);
         }
-        List<DiaLibre> diaLibres= diaLibreRepositorio.findByMedicoAndDiaGreaterThanEqual(medico, LocalDateTime.now());
+        List<DiaLibre> diaLibres= diaLibreRepositorio.findByMedicoAndDiaGreaterThanEqual(medico, LocalDate.now());
 
         List<DiaLibreDto> resultado= diaLibres.stream().map(
                 diaLibre -> new DiaLibreDto(

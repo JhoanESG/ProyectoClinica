@@ -1,9 +1,9 @@
 package co.edu.uniquindio.proyectoclinica.model.dto.medico;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public record DiaLibreDto(
-        LocalDateTime fecha,
+        LocalDate fecha,
         String idMedico
 
 ) {
