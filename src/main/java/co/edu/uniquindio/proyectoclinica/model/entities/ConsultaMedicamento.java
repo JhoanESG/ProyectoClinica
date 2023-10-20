@@ -5,16 +5,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 
 @Entity
-@Data
+@Setter
+@Getter
+//@Data
 @NoArgsConstructor
 public class ConsultaMedicamento implements Serializable {
 
     @Id
+    private int codigo;
+
     @ManyToOne
     private Consulta consulta;
 

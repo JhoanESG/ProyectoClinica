@@ -1,22 +1,22 @@
 package co.edu.uniquindio.proyectoclinica.model.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Data
+//@Data
+@Setter
+@Getter
 @NoArgsConstructor
 public class Consulta implements Serializable {
 
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private int id;
 
     @Column(nullable = false)
     private String sintomas;
