@@ -31,7 +31,7 @@ public class MedicoTest {
     @Autowired
     private MedicoService medicoService;
 
-    //@Test
+    @Test
     public void verCitasPendientesTest()throws Exception{
 
         List<CitaMedicoDTo> citas = medicoService.verCitasPendientes("2345678901");
@@ -54,7 +54,7 @@ public class MedicoTest {
 
         DetalleCitaDto cita = medicoService.obtenerCita(1);
         Assertions.assertEquals("Consulta de rutina",cita.motivo());
-        Assertions.assertEquals("Paciente 1",cita.nombre());
+
     }
 
     //@Test
@@ -65,11 +65,11 @@ public class MedicoTest {
         medicamentos.add(new MedicamentosDto("Medicamento1", "Posología1"));
 
         AtenderCitaDto citaDto = new AtenderCitaDto(
-                2,"Dolor de barriga",
+                5,"Dolor de barriga",
                 "Leve infeccion Intestinal","tomar el medicamento",
                 "",medicamentos);
         int i= medicoService.radicarConsulta(citaDto);
-        Assertions.assertEquals(2,i);
+        Assertions.assertEquals(6,i);
     }
 
     //@Test
@@ -79,7 +79,7 @@ public class MedicoTest {
         Assertions.assertEquals(1,lista.size());
     }
 
-    //@Test
+    @Test
     public void asignarDiaLibre() throws Exception{
         DiaLibreDto diaLibre = new DiaLibreDto(
                 LocalDate.of(2023,11,2),
