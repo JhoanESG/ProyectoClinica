@@ -85,7 +85,7 @@ public class AdministradorTest {
         List<MedicoListarDto> medicos= administradorService.listarMedicos();
         medicos.forEach(System.out::println);
 
-        Assertions.assertEquals(1, medicos.size());
+        Assertions.assertEquals(5, medicos.size());
     }
 
     //@Test
@@ -93,7 +93,7 @@ public class AdministradorTest {
         List<PQRSAdminDto> listaPQRS = administradorService.listarPQRS();
         listaPQRS.forEach(System.out::println);
 
-        Assertions.assertEquals(1,listaPQRS.size());
+        Assertions.assertEquals(5,listaPQRS.size());
     }
 
     //@Test
@@ -131,7 +131,7 @@ public class AdministradorTest {
         List<CitasMedicoDto> citas= administradorService.listarCitasMedico();
         citas.forEach(System.out::println);
 
-        Assertions.assertEquals(1,citas.size());
+        Assertions.assertEquals(5,citas.size());
     }
 
 
