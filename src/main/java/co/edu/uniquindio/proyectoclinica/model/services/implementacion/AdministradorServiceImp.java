@@ -12,6 +12,7 @@ import co.edu.uniquindio.proyectoclinica.model.enums.EstadoUsuario;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.AdministradorService;
 import co.edu.uniquindio.proyectoclinica.repositorios.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,7 +48,11 @@ public class AdministradorServiceImp implements AdministradorService {
 
         medicoNuevo.setCedula(medicoDto.cedula());
         medicoNuevo.setEmail(medicoDto.email());
-        medicoNuevo.setContrasena(medicoDto.contrasena());
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String passwordEncriptada = passwordEncoder.encode(medicoDto.contrasena());
+        medicoNuevo.setContrasena(passwordEncriptada);
+
         medicoNuevo.setEstado(EstadoUsuario.ACTIVO);
 
         medicoNuevo.setNombre(medicoDto.nombre());

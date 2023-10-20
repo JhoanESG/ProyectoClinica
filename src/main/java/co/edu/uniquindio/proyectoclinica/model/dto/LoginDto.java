@@ -1,6 +1,6 @@
 package co.edu.uniquindio.proyectoclinica.model.dto;
 
-public record LoginDTO(
+public record LoginDto(
          String email,
          String contrasena
 ) {
