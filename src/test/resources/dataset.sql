@@ -1,6 +1,6 @@
 INSERT INTO Usuario (cedula, contrasena, email, estado)
 VALUES
-    ('1234567890', 'password1', 'juan@example.com', 0),
+    ('1234567890', 'password1', 'roberto@example.com', 0),
     ('2384736439', 'password2', 'pablo@example.com', 0),
     ('3456789012', 'password3', 'nora@example.com', 0),
     ('8945662776', 'password4', 'pepito@example.com', 0),
@@ -88,7 +88,7 @@ VALUES
     ('2023-10-15 16:00:00', 'Que complejo que no haya seguridad para las personas mayores de edad', 3, 3, '3647856424'),
     ('2023-10-15 16:00:00', 'Fin del mensaje', 4, 3, '3647856424'),
     ('2023-10-15 16:00:00', 'Muy buen trabjo en el aseo', 1, 1, '3647856424'),
-    ('2023-10-15 16:00:00', 'Fin del mensaje', 7, 1, '3647856424'),
+    ('2023-10-15 16:00:00', 'Fin del mensaje', 7, 1, '3647856424');
 
 
 
