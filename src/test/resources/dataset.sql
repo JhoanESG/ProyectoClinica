@@ -1,15 +1,33 @@
 INSERT INTO Usuario (cedula, contrasena, email, estado)
 VALUES
-    ('1234567890', 'password1', 'usuario1@example.com', 0),
-    ('2345678901', 'password2', 'usuario2@example.com', 0),
-    ('3456789012', 'password3', 'paciente1@example.com', 0);
+    ('1234567890', 'password1', 'juan@example.com', 0),
+    ('2345678901', 'password2', 'pablo@example.com', 0),
+    ('3456789012', 'password3', 'nora@example.com', 0),
+    ('8945662776', 'password4', 'pepito@example.com', 0),
+    ('6423645635', 'password5', 'ana@example.com', 0),
+
+    ('1287483633', 'password6', 'emilia@example.com', 0),
+    ('3647856424', 'password7', 'jhoan@example.com', 0),
+    ('7823684763', 'password8', 'juana@example.com', 0),
+    ('7623576456', 'password9', 'salome@example.com', 0),
+    ('9384838433', 'password10', 'santiago@example.com', 0),
+
+    ('7468763743', 'password11', 'aurora@example.com', 0),
+    ('2384736439', 'password12', 'juan@example.com', 0),
+    ('6748634453', 'password13', 'jose@example.com', 0),
+    ('4758634653', 'password14', 'johana@example.com', 0),
+    ('7623525453', 'password15', 'andres@example.com', 0),;
 
 
 
 --Inserccion en la tabla administrador
 INSERT INTO Administrador (cedula)
 VALUES
-    ('1234567890');
+    ('1234567890'),
+    ('2345678901'),
+    ('3456789012'),
+    ('8945662776'),
+    ('6423645635');
 
 -- Inserción de registros en la tabla Paciente
 INSERT INTO Paciente (cedula, apellido, ciudad, foto, nombre, telefono, alergias, eps, fecha_nacimiento, tipo_sangre)
