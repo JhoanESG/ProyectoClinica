@@ -25,7 +25,7 @@ public class AdministradorTest {
     @Autowired
     private AdministradorService administradorService;
 
-    //@Test
+    @Test
     public void crearMedicoTest () throws Exception{
 
         MedicoCrearDto medicoDTo = new MedicoCrearDto("12344","Juan", "Suarez", "36548534",
