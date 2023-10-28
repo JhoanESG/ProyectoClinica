@@ -5,7 +5,7 @@ import co.edu.uniquindio.proyectoclinica.model.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-@Service
+
 public interface MedicoService {
     List<CitaMedicoDTo> verCitasPendientes(String codigoMedico) throws Exception;
     List<CitasMedicoDto> listarCitasMedico(String codigoMedico)throws Exception;

@@ -3,13 +3,13 @@ package co.edu.uniquindio.proyectoclinica.utils;
 import co.edu.uniquindio.proyectoclinica.model.dto.MensajeDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import java.io.IOException;
-import java.security.SignatureException;
 
 @Component
 @RequiredArgsConstructor
@@ -51,7 +51,7 @@ public class FiltroToken implements Filter {
             }
 
         // | SignatureException e
-        }catch (MalformedJwtException e){
+        }catch (MalformedJwtException | SignatureException e){
             crearRespuestaError("El token es incorrecto", HttpServletResponse.SC_INTERNAL_SERVER_ERROR,res);
         }catch (ExpiredJwtException e){
             crearRespuestaError("El token está vencido", HttpServletResponse.SC_INTERNAL_SERVER_ERROR, res);

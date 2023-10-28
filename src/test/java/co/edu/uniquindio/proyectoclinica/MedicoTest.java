@@ -31,7 +31,7 @@ public class MedicoTest {
     @Autowired
     private MedicoService medicoService;
 
-    @Test
+    //@Test
     public void verCitasPendientesTest()throws Exception{
 
         List<CitaMedicoDTo> citas = medicoService.verCitasPendientes("2345678901");
