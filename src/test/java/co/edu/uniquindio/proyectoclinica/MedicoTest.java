@@ -96,8 +96,8 @@ public class MedicoTest {
     }
 
     @Test
-    public void listaDiasLibreTest () throws Exception{
-        List<DiaLibreDto> diasLibres = medicoService.listaDiasLibresMedico("2345678901");
+    public void listarDiasLibreTest () throws Exception{
+        List<DiaLibreDto> diasLibres = medicoService.listarDiasLibresMedico("2345678901");
 
         diasLibres.forEach(System.out::println);
         Assertions.assertEquals(1,diasLibres.size());

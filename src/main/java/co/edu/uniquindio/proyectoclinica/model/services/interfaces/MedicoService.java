@@ -13,6 +13,6 @@ public interface MedicoService {
     int radicarConsulta(AtenderCitaDto atenderCitaDto) throws Exception;
     List<HistorialPacientesAtendidosDto> listarCitasAtendidas (String idMedico) throws Exception;
     int asignarDiaLibre(DiaLibreDto diaLibreDto) throws Exception;
-    List<DiaLibreDto> listaDiasLibresMedico(String idMedico) throws Exception;
+    List<DiaLibreDto> listarDiasLibresMedico(String idMedico) throws Exception;
 
 }
