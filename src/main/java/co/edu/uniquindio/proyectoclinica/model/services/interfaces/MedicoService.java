@@ -5,7 +5,7 @@ import co.edu.uniquindio.proyectoclinica.model.dto.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-@Service
+
 public interface MedicoService {
     List<CitaMedicoDTo> verCitasPendientes(String codigoMedico) throws Exception;
     List<CitasMedicoDto> listarCitasMedico(String codigoMedico)throws Exception;
@@ -13,6 +13,6 @@ public interface MedicoService {
     int radicarConsulta(AtenderCitaDto atenderCitaDto) throws Exception;
     List<HistorialPacientesAtendidosDto> listarCitasAtendidas (String idMedico) throws Exception;
     int asignarDiaLibre(DiaLibreDto diaLibreDto) throws Exception;
-    List<DiaLibreDto> listaDiasLibresMedico(String idMedico) throws Exception;
+    List<DiaLibreDto> listarDiasLibresMedico(String idMedico) throws Exception;
 
 }

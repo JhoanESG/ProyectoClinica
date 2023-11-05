@@ -38,7 +38,7 @@ public class AdministradorTest {
 
     }
 
-    //@Test
+    @Test
     //@Sql("classpath:dataset.sql")
     public void actualizarMedicoTest () throws Exception {
 
