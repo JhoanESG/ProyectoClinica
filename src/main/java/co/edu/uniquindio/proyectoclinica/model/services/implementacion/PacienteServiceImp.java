@@ -42,14 +42,15 @@ public class PacienteServiceImp implements PacienteService {
         return usuarioRepositorio.findByCedula(cedula) != null;
     }
 
-    private boolean estaRepetidoCorreo(String email) {
-        return pacienteRepositorio.findByEmail(email)!= null;
+    private boolean estaRepetidoCorreo(String email, String cedula) {
+        Paciente paciente = pacienteRepositorio.findByEmail(email);
+        return paciente != null && !paciente.getCedula().equals(cedula);
     }
 
     @Override
     public String registrar(CrearPacienteDto crearPacienteDto) throws Exception {
 
-        if (estaRepetidoCorreo(crearPacienteDto.email())){
+        if (estaRepetidoCorreo(crearPacienteDto.email(), crearPacienteDto.cedula())){
             throw new Exception("El correo "+  crearPacienteDto.email()+" ya esta en uso");
         }
         if (estaRepetidoCedula(crearPacienteDto.cedula())){
@@ -104,7 +105,7 @@ public class PacienteServiceImp implements PacienteService {
         buscado.setTipoSangre(actualizarPacienteDto.tipoSangre());
         buscado.setEps(actualizarPacienteDto.eps());
 
-        if (estaRepetidoCorreo(actualizarPacienteDto.email())){
+        if (estaRepetidoCorreo(actualizarPacienteDto.email(), actualizarPacienteDto.cedula())){
             throw new Exception("El correo "+  actualizarPacienteDto.email()+" ya esta en uso");
         }
         pacienteRepositorio.save(buscado);
@@ -132,7 +133,6 @@ public class PacienteServiceImp implements PacienteService {
                 buscado.getTelefono(),
                 buscado.getCiudad(),
                 buscado.getEmail(),
-                buscado.getContrasena(),
                 buscado.getAlergias(),
                 buscado.getTipoSangre(),
                 buscado.getEps(),

@@ -3,6 +3,7 @@ package co.edu.uniquindio.proyectoclinica.model.services.implementacion;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.ImageService;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+@Service
 public class ImageServiceImp implements ImageService {
 
     private final Cloudinary cloudinary;

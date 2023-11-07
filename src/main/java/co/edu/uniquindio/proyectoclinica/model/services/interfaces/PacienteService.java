@@ -5,7 +5,7 @@ import co.edu.uniquindio.proyectoclinica.model.dto.paciente.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-@Service
+
 public interface PacienteService {
 
     String registrar(CrearPacienteDto crearPacienteDto) throws Exception;

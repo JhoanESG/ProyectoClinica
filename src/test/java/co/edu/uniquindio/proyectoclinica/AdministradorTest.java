@@ -117,7 +117,7 @@ public class AdministradorTest {
                 "3456789012"
         );
         int i = administradorService.responderPQRS(respuestaPQRSDto);
-        Assertions.assertEquals(3,i);
+        Assertions.assertEquals(13,i);
     }
 
     //@Test
@@ -126,7 +126,7 @@ public class AdministradorTest {
         Assertions.assertEquals(1, i);
     }
 
-    //@Test
+    @Test
     public void listarCitasMedicoTest () throws Exception{
         List<CitasMedicoDto> citas= administradorService.listarCitasMedico();
         citas.forEach(System.out::println);

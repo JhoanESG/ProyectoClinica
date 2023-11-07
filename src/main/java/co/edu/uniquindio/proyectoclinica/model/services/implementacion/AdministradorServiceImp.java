@@ -36,7 +36,7 @@ public class AdministradorServiceImp implements AdministradorService {
     @Override
     public String crearMedico(MedicoCrearDto medicoDto) throws Exception {
 
-        if ( estaRepetidoCorreo(medicoDto.email()) ){
+        if ( estaRepetidoCorreo(medicoDto.email(), medicoDto.cedula()) ){
             throw new Exception("El correo "+ medicoDto.email() +" ya esta en uso");
         }
 
@@ -75,8 +75,9 @@ public class AdministradorServiceImp implements AdministradorService {
         return usuarioRepositorio.findByCedula(cedula) != null;
     }
 
-    private boolean estaRepetidoCorreo(String email) {
-        return administradorRepositorio.findByEmail(email)!= null;
+    private boolean estaRepetidoCorreo(String email, String cedula) {
+        Medico medico=  medicoRepositorio.findByEmail(email);
+        return medico != null && !medico.getCedula().equals(cedula);
     }
 
 
@@ -104,7 +105,7 @@ public class AdministradorServiceImp implements AdministradorService {
         buscado.setHoraFin(medicoDto.finJornada());
 
         //Buscar que no se repita la cedula y el correo del medico
-        if ( estaRepetidoCorreo(medicoDto.email()) ){
+        if ( estaRepetidoCorreo(medicoDto.email(), medicoDto.cedula()) ){
             throw new Exception("El correo "+ medicoDto.email() +" ya esta en uso");
         }
 

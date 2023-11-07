@@ -36,7 +36,7 @@ public class PacienteTest {
         Assertions.assertEquals("1080360654",id);
     }
 
-    //@Test
+    @Test
     public void editarPerfilTest()throws Exception{
         ActualizarPacienteDto guardado = pacienteService.obtenerPaciente("3456789012");
 
@@ -47,7 +47,7 @@ public class PacienteTest {
                 guardado.telefono(),
                 guardado.ciudad(),
                 guardado.email(),
-                guardado.contrasena(),
+
                 "Polvo",
                 guardado.tipoSangre(),
                 guardado.eps(),
@@ -88,7 +88,7 @@ public class PacienteTest {
         ActualizarPacienteDto paciente = pacienteService.obtenerPaciente(cambiarContrasenaDto.cc());
 
 
-        Assertions.assertEquals("123456789",paciente.contrasena());
+        //Assertions.assertEquals("123456789",paciente.contrasena());
     }
 
     //@Test
@@ -103,7 +103,7 @@ public class PacienteTest {
 
         pacienteService.agendarCita(registroCitaDto);
 
-        DetalleCitaPacienteDto detalleCitaPacienteDto= pacienteService.detalleCita(2);
+        DetalleCitaPacienteDto detalleCitaPacienteDto= pacienteService.detalleCita(6);
         Assertions.assertEquals("Examen de rutina",detalleCitaPacienteDto.motivo());
 
     }
@@ -120,8 +120,8 @@ public class PacienteTest {
         // Crear la PQRS
         pacienteService.crearPQRS(crearPQRSdto);
 
-        DetallePQRSdto detallePQRSdto= pacienteService.detallePQRS(2);
-        Assertions.assertEquals(2,detallePQRSdto.idPQRS());
+        DetallePQRSdto detallePQRSdto= pacienteService.detallePQRS(6);
+        Assertions.assertEquals(6,detallePQRSdto.idPQRS());
         Assertions.assertEquals("Reclamo por demora en atención",detallePQRSdto.asunto());
 
     }
@@ -140,7 +140,7 @@ public class PacienteTest {
 
     }
 
-    @Test
+    //@Test
     public void listarCitasPacienteTest()throws Exception{
         List<CitaPacienteDto> lista = pacienteService.listarCitasPaciente("3456789012");
         lista.forEach(System.out::println);

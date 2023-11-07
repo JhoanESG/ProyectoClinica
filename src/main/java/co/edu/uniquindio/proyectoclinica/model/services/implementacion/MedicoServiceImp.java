@@ -166,7 +166,7 @@ public class MedicoServiceImp implements MedicoService {
     }
 
     @Override
-    public List<DiaLibreDto> listaDiasLibresMedico(String idMedico) throws Exception {
+    public List<DiaLibreDto> listarDiasLibresMedico(String idMedico) throws Exception {
 
         Medico medico = medicoRepositorio.findByCedula(idMedico);
         if (medico== null){
