@@ -31,7 +31,7 @@ public class MedicoTest {
     @Autowired
     private MedicoService medicoService;
 
-    //@Test
+    @Test
     public void verCitasPendientesTest()throws Exception{
 
         List<CitaMedicoDTo> citas = medicoService.verCitasPendientes("2345678901");
@@ -57,19 +57,26 @@ public class MedicoTest {
 
     }
 
-    //@Test
+    @Test
     public void radicarConsultaTest() throws Exception{
 
         List<MedicamentosDto> medicamentos = new ArrayList<>();
 
         medicamentos.add(new MedicamentosDto("Medicamento1", "Posología1"));
 
-        AtenderCitaDto citaDto = new AtenderCitaDto(
+        AtenderCitaDto citaDto1 = new AtenderCitaDto(
+                4,"Dolor de barriga",
+                "Leve infeccion Intestinal","tomar el medicamento",
+                "",medicamentos);
+        AtenderCitaDto citaDto2 = new AtenderCitaDto(
                 5,"Dolor de barriga",
                 "Leve infeccion Intestinal","tomar el medicamento",
                 "",medicamentos);
-        int i= medicoService.radicarConsulta(citaDto);
+
+        int i= medicoService.radicarConsulta(citaDto1);
         Assertions.assertEquals(6,i);
+
+        Assertions.assertThrows(Exception.class, () -> medicoService.radicarConsulta(citaDto2));
     }
 
     //@Test

@@ -5,6 +5,7 @@ import co.edu.uniquindio.proyectoclinica.model.dto.TokenDto;
 import co.edu.uniquindio.proyectoclinica.model.entities.Medico;
 import co.edu.uniquindio.proyectoclinica.model.entities.Paciente;
 import co.edu.uniquindio.proyectoclinica.model.entities.Usuario;
+import co.edu.uniquindio.proyectoclinica.model.enums.EstadoUsuario;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.AuthenticationService;
 import co.edu.uniquindio.proyectoclinica.repositorios.UsuarioRepositorio;
 import co.edu.uniquindio.proyectoclinica.utils.JWTUtils;
@@ -33,6 +34,10 @@ public class AuthenticationServiceImp implements AuthenticationService {
         }
 
         Usuario usuario = usuarioOptional.get();
+
+        if(usuario.getEstado() == EstadoUsuario.INACTIVO){
+
+        }
 
         if( !passwordEncoder.matches(loginDto.contrasena(), usuario.getContrasena()) ){
             throw new Exception("La contraseña ingresada es incorrecta");

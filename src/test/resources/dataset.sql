@@ -32,27 +32,27 @@ VALUES
 -- Inserción de registros en la tabla Paciente
 INSERT INTO Paciente (cedula, apellido, ciudad, foto, nombre, telefono, alergias, eps, fecha_nacimiento, tipo_sangre)
 VALUES
-    ('3456789012', 'Alvarez', 'Calarca', 'paciente1.jpg', 'Emilia', '9876543210', 'Alergia1', 1, '2000-01-01 00:00:00', 1),
-    ('3647856424', 'Soler', 'Armenia', 'paciente1.jpg', 'Jhoan', '3255376464', 'Alergia2', 0, '2000-01-01 00:00:00', 1),
-    ('7823684763', 'Palacio', 'Armenia', 'paciente1.jpg', 'Juana', '3126554756', 'Alergia3', 5, '2000-01-01 00:00:00', 1),
-    ('7623576456', 'Rodriguez', 'Circasia', 'paciente1.jpg', 'Salome', '3008764534', 'Alergia4', 3, '2000-01-01 00:00:00', 1),
-    ('9384838433', 'Ramon', 'Buenavista', 'paciente1.jpg', 'Santiago', '3054679872', 'Alergia5', 3, '2000-01-01 00:00:00', 1);
+    ('3456789012', 'Alvarez', 3, 'paciente1.jpg', 'Emilia', '9876543210', 'Alergia1', 1, '2000-01-01 00:00:00', 1),
+    ('3647856424', 'Soler', 2, 'paciente1.jpg', 'Jhoan', '3255376464', 'Alergia2', 0, '2000-01-01 00:00:00', 1),
+    ('7823684763', 'Palacio', 3, 'paciente1.jpg', 'Juana', '3126554756', 'Alergia3', 5, '2000-01-01 00:00:00', 1),
+    ('7623576456', 'Rodriguez', 1, 'paciente1.jpg', 'Salome', '3008764534', 'Alergia4', 3, '2000-01-01 00:00:00', 1),
+    ('9384838433', 'Ramon', 1, 'paciente1.jpg', 'Santiago', '3054679872', 'Alergia5', 3, '2000-01-01 00:00:00', 1);
 
 -- Inserción de registros en la tabla medico
 INSERT INTO Medico (cedula, apellido, ciudad, foto, nombre, telefono, especialidad, hora_fin, hora_inicio)
 VALUES
-    ('7468763743', 'Garcia', 'Barranquilla', 'medico1.jpg', 'Dr. Aurora', '3045762345', 0, '2023-10-10 18:00:00', '2023-10-10 09:00:00'),
-    ('2345678901', 'Parra', 'Pereira', 'medico2.jpg', 'Dr. Juan', '3099986776', 1, '2023-10-14 18:00:00', '2023-10-14 09:00:00'),
-    ('6748634453', 'Moreno', 'Medellin', 'medico3.jpg', 'Dr. Jose', '3012341178', 3, '2023-10-15 18:00:00', '2023-10-15 09:00:00'),
-    ('4758634653', 'Fernandez', 'Pasto', 'medico4.jpg', 'Dr. Johana', '3004569898', 2, '2023-10-17 18:00:00', '2023-10-17 09:00:00'),
-    ('7623525453', 'Florez', 'Quibdo', 'medico5.jpg', 'Dr. Andres', '3145884631', 5, '2023-10-21 18:00:00', '2023-10-21 09:00:00');
+    ('7468763743', 'Garcia', 2, 'medico1.jpg', 'Dr. Aurora', '3045762345', 0, '2023-10-10 18:00:00', '2023-10-10 09:00:00'),
+    ('2345678901', 'Parra', 0, 'medico2.jpg', 'Dr. Juan', '3099986776', 1, '2023-10-14 18:00:00', '2023-10-14 09:00:00'),
+    ('6748634453', 'Moreno', 0, 'medico3.jpg', 'Dr. Jose', '3012341178', 3, '2023-10-15 18:00:00', '2023-10-15 09:00:00'),
+    ('4758634653', 'Fernandez', 1, 'medico4.jpg', 'Dr. Johana', '3004569898', 2, '2023-10-17 18:00:00', '2023-10-17 09:00:00'),
+    ('7623525453', 'Florez', 1, 'medico5.jpg', 'Dr. Andres', '3145884631', 5, '2023-10-21 18:00:00', '2023-10-21 09:00:00');
 
 INSERT INTO Cita ( estado_cita, fecha_cita, fecha_creacion, motivo, medico_cedula, paciente_cedula)
 VALUES
     (0, '2023-10-22 10:00:00', '2023-10-19 12:00:00', 'Consulta de rutina', '7468763743', '3456789012'),
-    (0, '2023-10-31 10:00:00', '2023-10-19 13:00:00', 'Consulta de rutina', '2345678901', '3647856424'),
+    (0, '2023-11-07 10:00:00', '2023-10-19 13:00:00', 'Consulta de rutina', '2345678901', '3647856424'),
     (0, '2023-10-24 10:00:00', '2023-10-19 14:00:00', 'Consulta de rutina', '6748634453', '7823684763'),
-    (0, '2023-10-27 10:00:00', '2023-10-19 15:00:00', 'Consulta de rutina', '4758634653', '7623576456'),
+    (0, '2023-11-07 10:00:00', '2023-10-19 15:00:00', 'Consulta de rutina', '4758634653', '7623576456'),
     (0, '2023-10-30 10:00:00', '2023-10-19 16:00:00', 'Consulta de rutina', '7623525453', '9384838433');
 
 

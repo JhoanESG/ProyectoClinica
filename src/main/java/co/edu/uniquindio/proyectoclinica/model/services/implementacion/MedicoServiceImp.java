@@ -26,7 +26,10 @@ public class MedicoServiceImp implements MedicoService {
     private final ConsultaRepositorio consultaRepositorio;
     private final DiaLibreRepositorio diaLibreRepositorio;
 
+    //TODO Listar las citas pendientes por fecha
+    // listar citas con estado terminadas para medico.
 
+    //Citas del de hoy
     @Override
     public List<CitaMedicoDTo> verCitasPendientes(String codigoMedico) throws Exception {
         Medico medico = medicoRepositorio.findByCedula(codigoMedico);
@@ -42,13 +45,14 @@ public class MedicoServiceImp implements MedicoService {
         }
         List<CitaMedicoDTo> resultado = citasHoy.stream().map(
                 cita -> new CitaMedicoDTo(
-                        cita.getPaciente().getNombre(), // Puedes obtener el nombre del paciente desde la relación
+                        cita.getPaciente().getNombre(),
                         cita.getEstadoCita(),
                         cita.getFechaCita()
                 )).toList();
         return resultado;
     }
 
+    //Historial de citas
     @Override
     public List<CitasMedicoDto> listarCitasMedico(String codigoMedico) throws Exception {
 
@@ -91,11 +95,20 @@ public class MedicoServiceImp implements MedicoService {
                 cita.getMotivo()
         );
     }
+
     @Override
     public int radicarConsulta (AtenderCitaDto atenderCitaDto) throws Exception {
         Cita cita = citaRepo.findCitaById(atenderCitaDto.idCita());
         if (cita == null){
             throw new Exception("No existe la cita");
+        }
+        LocalDateTime fechaActual = LocalDateTime.now();
+        LocalDateTime fechaCita = cita.getFechaCita();
+
+        if (!fechaCita.toLocalDate().isEqual(fechaActual.toLocalDate())){
+            throw new Exception("La fecha actual no coincide con la fecha de la cita");
+        }else if (!(fechaActual.isAfter(fechaCita))){
+            throw new Exception("La hora actual no es posterior a la hora de la cita");
         }
 
         Consulta consulta = new Consulta();
@@ -107,7 +120,11 @@ public class MedicoServiceImp implements MedicoService {
         consulta.setTratamiento(atenderCitaDto.tratamiento());
         consulta.setNotas(atenderCitaDto.notas());
         //consulta.setConsultaMedicamentos(atenderCitaDto.medicamentos());
+
         consultaRepositorio.save(consulta);
+
+        cita.setEstadoCita(EstadoCita.terminado);
+        citaRepo.save(cita);
 
         return consulta.getId();
     }

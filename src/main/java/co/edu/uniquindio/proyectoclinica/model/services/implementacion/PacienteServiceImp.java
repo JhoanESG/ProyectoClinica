@@ -38,6 +38,9 @@ public class PacienteServiceImp implements PacienteService {
     private final PQRSRepo pqrsRepo;
     private final MensajeRepositorio mensajeRepositorio;
 
+    //TODO Filtrar por fecha y médico.
+    //TODO listar citas con estado terminadas para paciente.
+
     private boolean estaRepetidoCedula(String cedula) {
         return usuarioRepositorio.findByCedula(cedula) != null;
     }
@@ -168,6 +171,7 @@ public class PacienteServiceImp implements PacienteService {
 
     }
 
+    //TODO Hacer que también se encripte el cambio de contraseña.
     @Override
     public void cambiarContrasena(String contrasena,CambiarContrasenaDto cambiarContrasenaDto) throws Exception {
         Optional<Paciente> buscado = pacienteRepositorio.findById(cambiarContrasenaDto.cc());
@@ -179,6 +183,9 @@ public class PacienteServiceImp implements PacienteService {
         pacienteRepositorio.save(paciente);
     }
 
+    //TODO Validar que el paciente tenga solo tres citas activas
+    //TODO Que el médico esté disponible en el horario que el paciente seleccionó,
+    // es decir que tenga el horario en ese rango y que no tenga citas citas asignadas.
     @Override
     public void agendarCita(RegistroCitaDto registroCitaDto) throws Exception {
 
@@ -203,6 +210,7 @@ public class PacienteServiceImp implements PacienteService {
         citaRepo.save(citaNuevo);
     }
 
+    //TODO Validar que solo se tengan 3 pqrs activos.
     @Override
     public void crearPQRS(CrearPQRSdto crearPQRSdto) throws Exception {
         PQRS pqrs = new PQRS();

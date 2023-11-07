@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyectoclinica.model.entities;
 
+import co.edu.uniquindio.proyectoclinica.model.enums.Ciudad;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -26,8 +27,8 @@ public class DetalleUsuario extends Usuario implements Serializable {
     @Column(nullable = false, length = 10)
     private String telefono;
 
-    @Column(nullable = false, length = 20)
-    private String ciudad;
+    @Column(nullable = false)
+    private Ciudad ciudad;
 
     @Column(nullable = false)
     private String foto;
