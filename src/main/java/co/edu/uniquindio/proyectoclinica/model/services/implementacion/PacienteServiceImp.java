@@ -281,6 +281,7 @@ public class PacienteServiceImp implements PacienteService {
 
         List<PQRSpacienteDto> resultado = pqrsList.stream()
                 .map(pqrs -> new PQRSpacienteDto(
+                        pqrs.getId(),
                         pqrs.getAsunto(),
                         pqrs.getFechaCreacion(),
                         pqrs.getEstado()
