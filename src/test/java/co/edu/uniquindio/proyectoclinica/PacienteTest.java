@@ -88,11 +88,11 @@ public class PacienteTest {
         //Assertions.assertEquals("123456789",paciente.contrasena());
     }
 
-    //@Test
+    @Test
     public void agendarCitaTest()throws Exception{
         RegistroCitaDto registroCitaDto = new RegistroCitaDto(
                 Especialidad.CARDIOLOGIA,
-                LocalDateTime.of(2023, 10, 15, 10, 0),
+                LocalDateTime.of(2023, 11, 12, 10, 0),
                 "Examen de rutina",
                 "2345678901", // CC del médico
                 "3456789012"  // CC del paciente

@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface PQRSRepo extends JpaRepository<PQRS,Integer> {
 
-    //Busca PQRS segun un paciente y los estados del pqrs que conincidan
-    List<PQRS> findByConsultaCitaPacienteAndEstadoIn(Paciente paciente, List<EstadoPQRS> estados);
+    List<PQRS> findByConsultaCitaPacienteAndEstado(Paciente paciente, EstadoPQRS estado);
 
 }

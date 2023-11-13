@@ -2,8 +2,10 @@ package co.edu.uniquindio.proyectoclinica.model.services.implementacion;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
 import co.edu.uniquindio.proyectoclinica.model.dto.medico.*;
+import co.edu.uniquindio.proyectoclinica.model.dto.paciente.DetalleConsultaDto;
 import co.edu.uniquindio.proyectoclinica.model.entities.*;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoCita;
+import co.edu.uniquindio.proyectoclinica.model.enums.EstadoDiaLibre;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.MedicoService;
 import co.edu.uniquindio.proyectoclinica.repositorios.*;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +54,7 @@ public class MedicoServiceImp implements MedicoService {
         return resultado;
     }
 
-    //Historial de citas
+    //Citas pendientes
     @Override
     public List<CitasMedicoDto> listarCitasMedico(String codigoMedico) throws Exception {
 
@@ -76,6 +78,8 @@ public class MedicoServiceImp implements MedicoService {
         return resultado;
     }
 
+
+
     @Override
     public DetalleCitaDto obtenerCita(int codigoCita) throws Exception {
 
@@ -93,6 +97,31 @@ public class MedicoServiceImp implements MedicoService {
                 cita.getPaciente().getEps(),
                 cita.getFechaCita(),
                 cita.getMotivo()
+        );
+    }
+
+    @Override
+    public DetalleConsultaMedicoDto detalleConsulta(int codigoCita) throws Exception {
+        Consulta consulta = consultaRepositorio.findConsultaByCitaId(codigoCita);
+        if (consulta== null){
+            throw new Exception("No hay consultas relacionadas con el codigo de la cita "+ codigoCita);
+        }
+        List<MedicamentosDto> prueba = new ArrayList<>();
+        prueba.add(new MedicamentosDto("Prueba","2"));
+
+        return new DetalleConsultaMedicoDto(
+                consulta.getCita().getPaciente().getNombre(),
+                consulta.getCita().getPaciente().getApellido(),
+                consulta.getCita().getPaciente().getCiudad(),
+                consulta.getCita().getPaciente().getTelefono(),
+                consulta.getCita().getPaciente().getTipoSangre(),
+                consulta.getCita().getPaciente().getAlergias(),
+                consulta.getCita().getPaciente().getEps(),
+                consulta.getSintomas(),
+                consulta.getDiagnostico(),
+                consulta.getTratamiento(),
+                consulta.getNotas(),
+                prueba
         );
     }
 
@@ -135,7 +164,7 @@ public class MedicoServiceImp implements MedicoService {
         }
     }
 
-
+    //Historial de citas atendidas
     @Override
     public List<HistorialPacientesAtendidosDto> listarCitasAtendidas(String idMedico) throws Exception {
         Medico medico = medicoRepositorio.findByCedula(idMedico);
@@ -147,7 +176,6 @@ public class MedicoServiceImp implements MedicoService {
         List<HistorialPacientesAtendidosDto> historialPacientesAtendidosDtos= new ArrayList<>();
 
         for (Cita c: citasAtendidas){
-            Consulta consulta = c.getConsulta();
             historialPacientesAtendidosDtos.add(
                     new HistorialPacientesAtendidosDto(
                             c.getPaciente().getNombre(),  // Nombre del paciente
@@ -172,7 +200,10 @@ public class MedicoServiceImp implements MedicoService {
         if (!citasEnDia.isEmpty()) {
             throw new Exception("El médico tiene citas programadas en el día seleccionado. No se puede asignar un día libre.");
         }
-
+        List<DiaLibre> diasLibres= diaLibreRepositorio.findByMedicoAndEstadoDiaLibre(medico, EstadoDiaLibre.ACTIVO);
+        if (diasLibres.size()>=1){
+            throw new Exception("Solo se puede tener un dia libre activo a la vez");
+        }
         DiaLibre diaLibre = new DiaLibre();
         diaLibre.setDia(diaLibreDto.fecha());
         diaLibre.setMedico(medico);
@@ -189,7 +220,7 @@ public class MedicoServiceImp implements MedicoService {
         if (medico== null){
             throw new Exception("No existe un medico con el codigo "+ idMedico);
         }
-        List<DiaLibre> diaLibres= diaLibreRepositorio.findByMedicoAndDiaGreaterThanEqual(medico, LocalDate.now());
+        List<DiaLibre> diaLibres= diaLibreRepositorio.findByMedicoAndEstadoDiaLibre(medico,EstadoDiaLibre.ACTIVO);
 
         List<DiaLibreDto> resultado= diaLibres.stream().map(
                 diaLibre -> new DiaLibreDto(
@@ -198,6 +229,11 @@ public class MedicoServiceImp implements MedicoService {
                 )).toList();
 
         return resultado;
+    }
+
+    @Override
+    public String cambiarEstadoDiaLibre(int diaLibre, EstadoDiaLibre estadoDiaLibre) throws Exception {
+        return null;
     }
 
 

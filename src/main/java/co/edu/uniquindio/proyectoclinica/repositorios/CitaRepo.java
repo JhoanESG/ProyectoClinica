@@ -18,5 +18,5 @@ public interface CitaRepo extends JpaRepository<Cita,Integer> {
     List<Cita> findByMedicoAndEstadoCita(Medico medico, EstadoCita estadoCita);
     List<Cita> findByMedicoAndFechaCitaBetween(Medico medico, LocalDateTime fechaInicio, LocalDateTime fechaFin);
     List<Cita> findByPacienteAndAndEstadoCita(Paciente paciente,EstadoCita estadoCita);
-
-    List<Cita> findByFechaCitaAfterAndEstadoCita(LocalDateTime fecha, EstadoCita estadoCita);}
+    List<Cita> findByFechaCitaAfterAndEstadoCita(LocalDateTime fecha, EstadoCita estadoCita);
+}

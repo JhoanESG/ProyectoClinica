@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyectoclinica.model.entities;
 
+import co.edu.uniquindio.proyectoclinica.model.enums.EstadoDiaLibre;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -25,4 +26,7 @@ public class DiaLibre implements Serializable {
 
     @ManyToOne
     private Medico medico;
+
+    @Column(nullable = false)
+    private EstadoDiaLibre estadoDiaLibre;
 }
