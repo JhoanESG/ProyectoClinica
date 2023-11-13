@@ -2,7 +2,6 @@ package co.edu.uniquindio.proyectoclinica.model.services.implementacion;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
 import co.edu.uniquindio.proyectoclinica.model.dto.medico.*;
-import co.edu.uniquindio.proyectoclinica.model.dto.paciente.DetalleConsultaDto;
 import co.edu.uniquindio.proyectoclinica.model.entities.*;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoCita;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoDiaLibre;
@@ -12,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,8 +104,8 @@ public class MedicoServiceImp implements MedicoService {
         if (consulta== null){
             throw new Exception("No hay consultas relacionadas con el codigo de la cita "+ codigoCita);
         }
-        List<MedicamentosDto> prueba = new ArrayList<>();
-        prueba.add(new MedicamentosDto("Prueba","2"));
+        List<MedicamentoDto> prueba = new ArrayList<>();
+        prueba.add(new MedicamentoDto("Prueba","2"));
 
         return new DetalleConsultaMedicoDto(
                 consulta.getCita().getPaciente().getNombre(),
@@ -158,8 +156,8 @@ public class MedicoServiceImp implements MedicoService {
         return consulta.getId();
     }
 
-    public void asignarMedicamentosCita (Cita cita, List<MedicamentosDto> medicamentos)throws Exception{
-        for (MedicamentosDto m: medicamentos){
+    public void asignarMedicamentosCita (Cita cita, List<MedicamentoDto> medicamentos)throws Exception{
+        for (MedicamentoDto m: medicamentos){
             //Medicamento medicamento= medicamentoRepositorio.findById(MedicamentosDto.)
         }
     }
@@ -232,8 +230,11 @@ public class MedicoServiceImp implements MedicoService {
     }
 
     @Override
-    public String cambiarEstadoDiaLibre(int diaLibre, EstadoDiaLibre estadoDiaLibre) throws Exception {
-        return null;
+    public int cambiarEstadoDiaLibre(int codigoDiaLibre, EstadoDiaLibre estadoDiaLibre) throws Exception {
+        DiaLibre diaLibre= diaLibreRepositorio.findById(codigoDiaLibre);
+        diaLibre.setEstadoDiaLibre(estadoDiaLibre);
+        diaLibreRepositorio.save(diaLibre);
+        return diaLibre.getId();
     }
 
 

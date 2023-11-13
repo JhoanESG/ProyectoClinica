@@ -1,6 +1,6 @@
 package co.edu.uniquindio.proyectoclinica.model.dto;
 
-public record MedicamentosDto(
+public record MedicamentoDto(
         String nombre,
         String posologia
 ) {

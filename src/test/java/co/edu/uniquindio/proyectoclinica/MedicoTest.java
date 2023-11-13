@@ -3,14 +3,12 @@ package co.edu.uniquindio.proyectoclinica;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.AtenderCitaDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.DetalleCitaDto;
-import co.edu.uniquindio.proyectoclinica.model.dto.MedicamentosDto;
+import co.edu.uniquindio.proyectoclinica.model.dto.MedicamentoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.medico.CitaMedicoDTo;
 import co.edu.uniquindio.proyectoclinica.model.dto.medico.CitasMedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.medico.DiaLibreDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.medico.HistorialPacientesAtendidosDto;
-import co.edu.uniquindio.proyectoclinica.model.entities.Consulta;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.MedicoService;
-import co.edu.uniquindio.proyectoclinica.repositorios.ConsultaRepositorio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,9 +57,9 @@ public class MedicoTest {
     @Test
     public void radicarConsultaTest() throws Exception{
 
-        List<MedicamentosDto> medicamentos = new ArrayList<>();
+        List<MedicamentoDto> medicamentos = new ArrayList<>();
 
-        medicamentos.add(new MedicamentosDto("Medicamento1", "Posología1"));
+        medicamentos.add(new MedicamentoDto("Medicamento1", "Posología1"));
 
         AtenderCitaDto citaDto1 = new AtenderCitaDto(
                 4,"Dolor de barriga",

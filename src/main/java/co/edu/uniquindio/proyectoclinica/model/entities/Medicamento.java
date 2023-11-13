@@ -1,9 +1,6 @@
 package co.edu.uniquindio.proyectoclinica.model.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
@@ -17,9 +14,9 @@ import java.util.List;
 public class Medicamento implements Serializable {
 
     @Id
-    @EqualsAndHashCode.Include
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private String id;
+    private int id;
 
     @Column(nullable = false)
     private String nombre;

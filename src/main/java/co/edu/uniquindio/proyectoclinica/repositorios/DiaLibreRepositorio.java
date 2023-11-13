@@ -14,4 +14,5 @@ public interface DiaLibreRepositorio extends JpaRepository<DiaLibre,Integer> {
     List<DiaLibre> findByMedicoAndDiaGreaterThanEqual(Medico medico, LocalDate fecha);
     List<DiaLibre> findByMedicoAndEstadoDiaLibre(Medico medico, EstadoDiaLibre estadoDiaLibre);
     List<DiaLibre> findByMedicoAndEstadoDiaLibreAndDia(Medico medico, EstadoDiaLibre estadoDiaLibre, LocalDate fecha);
+    DiaLibre findById(int dia)throws Exception;
 }

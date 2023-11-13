@@ -1,6 +1,6 @@
 package co.edu.uniquindio.proyectoclinica.model.dto.medico;
 
-import co.edu.uniquindio.proyectoclinica.model.dto.MedicamentosDto;
+import co.edu.uniquindio.proyectoclinica.model.dto.MedicamentoDto;
 import co.edu.uniquindio.proyectoclinica.model.enums.Ciudad;
 import co.edu.uniquindio.proyectoclinica.model.enums.Eps;
 import co.edu.uniquindio.proyectoclinica.model.enums.TipoSangre;
@@ -19,6 +19,6 @@ public record DetalleConsultaMedicoDto(
         String diagnostico,
         String tratamiento,
         String notas,
-        List<MedicamentosDto> medicamentos
+        List<MedicamentoDto> medicamentos
 ) {
 }

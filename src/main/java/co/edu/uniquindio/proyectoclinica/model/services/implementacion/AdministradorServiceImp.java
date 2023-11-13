@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyectoclinica.model.services.implementacion;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
+import co.edu.uniquindio.proyectoclinica.model.dto.admin.ItemMedicamentoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.medico.CitasMedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoCrearDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoDto;
@@ -31,7 +32,7 @@ public class AdministradorServiceImp implements AdministradorService {
     private final UsuarioRepositorio usuarioRepositorio;
     private final MensajeRepositorio mensajeRepositorio;
     private final CitaRepo citaRepo;
-    private final AdministradorRepositorio administradorRepositorio;
+    private final MedicamentoRepositorio medicamentoRepositorio;
 
     @Override
     public String crearMedico(MedicoCrearDto medicoDto) throws Exception {
@@ -285,5 +286,66 @@ public class AdministradorServiceImp implements AdministradorService {
             ));
         }
         return respuesta;
+    }
+
+    @Override
+    public int crearMedicamento(MedicamentoDto medicamentoCrearDto) throws Exception {
+        Medicamento medicamento= new Medicamento();
+        medicamento.setNombre(medicamentoCrearDto.nombre());
+        medicamento.setPosologia(medicamentoCrearDto.posologia());
+        medicamentoRepositorio.save(medicamento);
+
+        return medicamento.getId();
+    }
+
+    @Override
+    public int actualizarMedicamento(ItemMedicamentoDto itemMedicamentoDto) throws Exception {
+        Medicamento buscado = medicamentoRepositorio.findById(itemMedicamentoDto.codigo());
+        if (buscado== null){
+            throw new Exception("No existe un medicamento con el codigo "+itemMedicamentoDto.codigo());
+        }
+
+        buscado.setNombre(itemMedicamentoDto.nombre());
+        buscado.setPosologia(itemMedicamentoDto.posologia());
+
+        return buscado.getId();
+    }
+
+    @Override
+    public int eliminarMedicamento(int codigo) throws Exception {
+        Medicamento buscado = medicamentoRepositorio.findById(codigo);
+        if (buscado== null){
+            throw new Exception("No existe un medicamento con el codigo "+codigo);
+        }
+
+        medicamentoRepositorio.delete(buscado);
+
+        return 0;
+    }
+
+    @Override
+    public MedicamentoDto obtenerMedicamento(int codigo) throws Exception {
+        Medicamento buscado = medicamentoRepositorio.findById(codigo);
+        if (buscado== null){
+            throw new Exception("No existe un medicamento con el codigo "+codigo);
+        }
+
+        return new MedicamentoDto(buscado.getNombre(), buscado.getPosologia());
+    }
+
+    @Override
+    public List<ItemMedicamentoDto> listarMedicamentos() throws Exception {
+        List<Medicamento> medicamentos= medicamentoRepositorio.findAll();
+        if (medicamentos.isEmpty()){
+            throw new Exception("No hay medicamentos");
+        }
+        List<ItemMedicamentoDto> respuesta = medicamentos.stream().map(medicamento -> new ItemMedicamentoDto(
+                medicamento.getId(),
+                medicamento.getNombre(),
+                medicamento.getPosologia()
+        )).toList();
+
+        return respuesta;
+
     }
 }

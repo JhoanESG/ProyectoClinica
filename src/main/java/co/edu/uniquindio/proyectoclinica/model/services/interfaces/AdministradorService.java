@@ -1,13 +1,13 @@
 package co.edu.uniquindio.proyectoclinica.model.services.interfaces;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
+import co.edu.uniquindio.proyectoclinica.model.dto.admin.ItemMedicamentoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.medico.CitasMedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoCrearDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.PQRSAdminDto;
 import co.edu.uniquindio.proyectoclinica.model.entities.Mensaje;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -34,5 +34,15 @@ public interface AdministradorService {
     int cambiarEstadoPqrs(int codigoPqrs, EstadoPQRS estadoPQRS) throws Exception;
 
     List<CitasMedicoDto> listarCitasMedico () throws Exception;
+
+    int crearMedicamento(MedicamentoDto medicamentoCrearDto) throws Exception;
+
+    int actualizarMedicamento( ItemMedicamentoDto itemMedicamentoDto)throws Exception;
+
+    int eliminarMedicamento(int codigo)throws Exception;
+
+    MedicamentoDto obtenerMedicamento(int codigo)throws Exception;
+
+    List<ItemMedicamentoDto> listarMedicamentos()throws Exception;
 
 }
