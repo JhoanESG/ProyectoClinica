@@ -1,9 +1,6 @@
 package co.edu.uniquindio.proyectoclinica.model.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +16,7 @@ import java.io.Serializable;
 public class ConsultaMedicamento implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigo;
 
     @ManyToOne
@@ -27,6 +25,4 @@ public class ConsultaMedicamento implements Serializable {
     @ManyToOne
     private Medicamento medicamento;
 
-    @Column(nullable = false)
-    private int cantidad;
 }

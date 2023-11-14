@@ -1,8 +1,10 @@
 package co.edu.uniquindio.proyectoclinica.model.services.interfaces;
+import co.edu.uniquindio.proyectoclinica.model.dto.admin.ItemMedicamentoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.medico.*;
 import co.edu.uniquindio.proyectoclinica.model.dto.DetalleCitaDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
 import co.edu.uniquindio.proyectoclinica.model.dto.paciente.DetalleConsultaDto;
+import co.edu.uniquindio.proyectoclinica.model.entities.Medicamento;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoDiaLibre;
 import org.springframework.stereotype.Service;
 
@@ -18,5 +20,8 @@ public interface MedicoService {
     int asignarDiaLibre(DiaLibreDto diaLibreDto) throws Exception;
     List<DiaLibreDto> listarDiasLibresMedico(String idMedico) throws Exception;
     int cambiarEstadoDiaLibre(int diaLibre, EstadoDiaLibre estadoDiaLibre)throws Exception;
+    List<ItemMedicamentoDto> listarMedicamentos()throws Exception;
+    ItemMedicamentoDto obtenerMedicamento(int codigo)throws Exception;
+
 
 }

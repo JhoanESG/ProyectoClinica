@@ -5,6 +5,7 @@ import co.edu.uniquindio.proyectoclinica.model.enums.Eps;
 import co.edu.uniquindio.proyectoclinica.model.enums.Especialidad;
 import co.edu.uniquindio.proyectoclinica.model.enums.TipoSangre;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record CrearPacienteDto (
@@ -20,6 +21,6 @@ public record CrearPacienteDto (
         String foto,
         TipoSangre tipoSangre,
         Eps eps,
-        LocalDateTime fechaNacimiento
+        LocalDate fechaNacimiento
 ) {
 }

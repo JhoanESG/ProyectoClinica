@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyectoclinica.model.services.implementacion;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
+import co.edu.uniquindio.proyectoclinica.model.dto.admin.ItemMedicamentoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.medico.*;
 import co.edu.uniquindio.proyectoclinica.model.entities.*;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoCita;
@@ -25,6 +26,7 @@ public class MedicoServiceImp implements MedicoService {
     private final MedicamentoRepositorio medicamentoRepositorio;
     private final ConsultaRepositorio consultaRepositorio;
     private final DiaLibreRepositorio diaLibreRepositorio;
+    private final ConsultaMedicamentoRepositorio consultaMedicamentoRepositorio;
 
     //TODO Listar las citas pendientes por fecha
     // listar citas con estado terminadas para medico.
@@ -140,13 +142,14 @@ public class MedicoServiceImp implements MedicoService {
 
         Consulta consulta = new Consulta();
 
-        List<ConsultaMedicamento> consultaMedicamentos= new ArrayList<>();
         cita.setConsulta(consulta);
         consulta.setSintomas(atenderCitaDto.sintomas());
         consulta.setDiagnostico(atenderCitaDto.diagnostico());
         consulta.setTratamiento(atenderCitaDto.tratamiento());
         consulta.setNotas(atenderCitaDto.notas());
-        //consulta.setConsultaMedicamentos(atenderCitaDto.medicamentos());
+
+        List<ConsultaMedicamento> consultaMedicamentos= asignarMedicamentosAConsulta(consulta,atenderCitaDto.medicamentos());
+        consulta.setConsultaMedicamentos(consultaMedicamentos);
 
         consultaRepositorio.save(consulta);
 
@@ -156,11 +159,6 @@ public class MedicoServiceImp implements MedicoService {
         return consulta.getId();
     }
 
-    public void asignarMedicamentosCita (Cita cita, List<MedicamentoDto> medicamentos)throws Exception{
-        for (MedicamentoDto m: medicamentos){
-            //Medicamento medicamento= medicamentoRepositorio.findById(MedicamentosDto.)
-        }
-    }
 
     //Historial de citas atendidas
     @Override
@@ -235,6 +233,48 @@ public class MedicoServiceImp implements MedicoService {
         diaLibre.setEstadoDiaLibre(estadoDiaLibre);
         diaLibreRepositorio.save(diaLibre);
         return diaLibre.getId();
+    }
+
+    @Override
+    public List<ItemMedicamentoDto> listarMedicamentos() throws Exception {
+        List<Medicamento> medicamentos = medicamentoRepositorio.findAll();
+        if (medicamentos.isEmpty()){
+            throw new Exception("No hay medicamentos registrados");
+        }
+        List<ItemMedicamentoDto> resultado= new ArrayList<>();
+        for(Medicamento m:  medicamentos ){
+            ItemMedicamentoDto medicamentoDto= new ItemMedicamentoDto(m.getId(),m.getNombre(),m.getPosologia());
+
+            resultado.add(medicamentoDto);
+        }
+        return resultado;
+    }
+
+    @Override
+    public ItemMedicamentoDto obtenerMedicamento(int codigo) throws Exception {
+        Medicamento medicamento = medicamentoRepositorio.findById(codigo);
+        if (medicamento==null){
+            throw new Exception("No existe un medicamento con el codigo "+codigo);
+        }
+        return new ItemMedicamentoDto(medicamento.getId(),medicamento.getNombre(),medicamento.getPosologia());
+    }
+
+    private List<ConsultaMedicamento> asignarMedicamentosAConsulta(Consulta consulta, List<ItemMedicamentoDto> medicamentos) throws Exception{
+        List<ConsultaMedicamento> consultaMedicamentos = new ArrayList<>();
+
+        for (ItemMedicamentoDto medicamentoDto : medicamentos) {
+            Medicamento medicamento = medicamentoRepositorio.findById(medicamentoDto.codigo());
+
+            ConsultaMedicamento consultaMedicamento = new ConsultaMedicamento();
+            consultaMedicamento.setMedicamento(medicamento);
+            consultaMedicamento.setConsulta(consulta);
+
+
+            consultaMedicamentos.add(consultaMedicamento);
+        }
+
+        return consultaMedicamentos;
+
     }
 
 

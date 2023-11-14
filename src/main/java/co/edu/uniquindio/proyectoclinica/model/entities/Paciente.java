@@ -9,6 +9,7 @@ import jakarta.persistence.OneToMany;
 import lombok.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class Paciente extends DetalleUsuario implements Serializable {
 
 
     @Column(nullable = false)
-    private LocalDateTime fechaNacimiento;
+    private LocalDate fechaNacimiento;
 
     @Column(nullable = false, length = 50)
     private String alergias;
