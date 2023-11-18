@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,13 +22,13 @@ public class PacienteTest {
     @Autowired
     private PacienteService pacienteService;
 
-    //@Test
+    @Test
     public void registrarTest()throws Exception{
         CrearPacienteDto crearPacienteDto = new CrearPacienteDto(
                 "1080360654","Santiago","Ramon",
                 "32501248", Ciudad.ARMENIA,"santiago@gmail.com",
                 "25365","No","http", TipoSangre.Op,
-                Eps.Cafesalud, LocalDateTime.of(2023,10,2,1,0)
+                Eps.Cafesalud, LocalDate.of(2023,10,2)
         );
         String id= pacienteService.registrar(crearPacienteDto);
         Assertions.assertEquals("1080360654",id);

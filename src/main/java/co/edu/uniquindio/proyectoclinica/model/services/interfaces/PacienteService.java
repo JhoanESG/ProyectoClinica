@@ -13,9 +13,6 @@ import java.util.List;
 
 public interface PacienteService {
 
-    List<Ciudad> obtenerListaCiudades()throws Exception;
-    List<Eps> obtenerListaEps() throws Exception;
-    List<TipoSangre> obtenerListaTipoSangre()throws Exception;
     String registrar(CrearPacienteDto crearPacienteDto) throws Exception;
 
     String editarPerfil(ActualizarPacienteDto actualizarPacienteDto) throws Exception;

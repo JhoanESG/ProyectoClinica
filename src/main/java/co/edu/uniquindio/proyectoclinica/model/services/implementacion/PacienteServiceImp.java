@@ -49,21 +49,6 @@ public class PacienteServiceImp implements PacienteService {
     }
 
     @Override
-    public List<Ciudad> obtenerListaCiudades() throws Exception {
-        return Arrays.asList(Ciudad.values());
-    }
-
-    @Override
-    public List<Eps> obtenerListaEps() throws Exception {
-        return Arrays.asList(Eps.values());
-    }
-
-    @Override
-    public List<TipoSangre> obtenerListaTipoSangre() throws Exception {
-        return Arrays.asList(TipoSangre.values());
-    }
-
-    @Override
     public String registrar(CrearPacienteDto crearPacienteDto) throws Exception {
 
         if (estaRepetidoCorreo(crearPacienteDto.email(), crearPacienteDto.cedula())){
@@ -184,7 +169,6 @@ public class PacienteServiceImp implements PacienteService {
 
     }
 
-    //TODO Hacer que también se encripte el cambio de contraseña.
     @Override
     public void cambiarContrasena(String contrasena,CambiarContrasenaDto cambiarContrasenaDto) throws Exception {
         Optional<Paciente> buscado = pacienteRepositorio.findById(cambiarContrasenaDto.cc());
@@ -346,7 +330,8 @@ public class PacienteServiceImp implements PacienteService {
                 .map(cita -> new CitaPacienteDto(
                         cita.getMedico().getEspecialidad(),
                         cita.getFechaCita(),
-                        cita.getEstadoCita()
+                        cita.getEstadoCita(),
+                        cita.getId()
                 ) ).toList();
 
         return resultado;
