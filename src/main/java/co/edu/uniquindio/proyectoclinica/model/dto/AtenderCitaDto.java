@@ -1,6 +1,6 @@
 package co.edu.uniquindio.proyectoclinica.model.dto;
 
-import co.edu.uniquindio.proyectoclinica.model.enums.TipoSangre;
+import co.edu.uniquindio.proyectoclinica.model.dto.admin.ItemMedicamentoDto;
 
 import java.util.List;
 
@@ -11,6 +11,6 @@ public record AtenderCitaDto(
         String diagnostico,
         String tratamiento,
         String notas,
-        List<MedicamentosDto> medicamentos
+        List<ItemMedicamentoDto> medicamentos
 ) {
 }

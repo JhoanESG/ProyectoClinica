@@ -4,9 +4,7 @@ import co.edu.uniquindio.proyectoclinica.model.dto.*;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.paciente.*;
 import co.edu.uniquindio.proyectoclinica.model.entities.*;
-import co.edu.uniquindio.proyectoclinica.model.enums.EstadoCita;
-import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
-import co.edu.uniquindio.proyectoclinica.model.enums.EstadoUsuario;
+import co.edu.uniquindio.proyectoclinica.model.enums.*;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.EmailService;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.PacienteService;
 import co.edu.uniquindio.proyectoclinica.repositorios.*;
@@ -37,6 +35,9 @@ public class PacienteServiceImp implements PacienteService {
     private final ConsultaRepositorio consultaRepositorio;
     private final PQRSRepo pqrsRepo;
     private final MensajeRepositorio mensajeRepositorio;
+    private final DiaLibreRepositorio diaLibreRepositorio;
+
+    //TODO Filtrar por fecha y médico.
 
     private boolean estaRepetidoCedula(String cedula) {
         return usuarioRepositorio.findByCedula(cedula) != null;
@@ -175,19 +176,16 @@ public class PacienteServiceImp implements PacienteService {
             throw new Exception("No se encontró el usuario");
         }
         Paciente paciente = buscado.get();
-        paciente.setContrasena(contrasena);
+        // Encriptar la nueva contraseña
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String contrasenaEncriptada = passwordEncoder.encode(contrasena);
+        paciente.setContrasena(contrasenaEncriptada);
+
         pacienteRepositorio.save(paciente);
     }
 
     @Override
     public void agendarCita(RegistroCitaDto registroCitaDto) throws Exception {
-
-        Cita citaNuevo = new Cita();
-
-        citaNuevo.setFechaCreacion(LocalDateTime.now());
-        citaNuevo.setFechaCita(registroCitaDto.fechaCita());
-        citaNuevo.setMotivo(registroCitaDto.motivo());
-        citaNuevo.setEstadoCita(EstadoCita.Creada);
 
         Paciente paciente = pacienteRepositorio.findByCedula(registroCitaDto.ccPaciente());
         Medico medico = medicoRepositorio.findByCedula(registroCitaDto.ccMedico());
@@ -198,10 +196,37 @@ public class PacienteServiceImp implements PacienteService {
         if (medico == null) {
             throw new Exception("Médico no encontrado");
         }
+        List<Cita> citasActivas = citaRepo.findByPacienteAndAndEstadoCita(paciente, EstadoCita.Creada);
+
+        if (citasActivas.size() >= 3) {
+            throw new Exception("El paciente ya tiene tres citas activas");
+        }
+
+        // Verifica si el médico tiene citas en ese horario
+        List<Cita> citasMedicoEnHorario = citaRepo.findByMedicoAndFechaCitaBetween(medico,
+                registroCitaDto.fechaCita(), registroCitaDto.fechaCita().plusMinutes(29));
+
+        // Verifica que el médico no tenga citas en ese rango horario
+        if (!citasMedicoEnHorario.isEmpty()) {
+            throw new Exception("El médico ya tiene una cita programada en ese horario");
+        }
+
+        List<DiaLibre> diasLibres= diaLibreRepositorio.findByMedicoAndEstadoDiaLibreAndDia(medico,EstadoDiaLibre.ACTIVO, registroCitaDto.fechaCita().toLocalDate());
+        if (!diasLibres.isEmpty()){
+            throw new Exception("El medico tiene descanso en ese turno");
+        }
+
+        Cita citaNuevo = new Cita();
+
+        citaNuevo.setFechaCreacion(LocalDateTime.now());
+        citaNuevo.setFechaCita(registroCitaDto.fechaCita());
+        citaNuevo.setMotivo(registroCitaDto.motivo());
+        citaNuevo.setEstadoCita(EstadoCita.Creada);
         citaNuevo.setPaciente(paciente);
         citaNuevo.setMedico(medico);
         citaRepo.save(citaNuevo);
     }
+
 
     @Override
     public void crearPQRS(CrearPQRSdto crearPQRSdto) throws Exception {
@@ -212,6 +237,14 @@ public class PacienteServiceImp implements PacienteService {
         if (consulta == null) {
             throw new Exception("consulta no encontrada");
         }
+
+        Paciente paciente = consulta.getCita().getPaciente();
+        List<PQRS> pqrsList = pqrsRepo.findByConsultaCitaPacienteAndEstado(paciente,EstadoPQRS.Activo);
+
+        if (pqrsList.size() >= 3) {
+            throw new Exception("El paciente ya tiene 3 PQRS activos");
+        }
+
         pqrs.setConsulta(consulta);
         pqrs.setFechaCreacion(LocalDateTime.now());
         pqrs.setEstado(EstadoPQRS.Activo);
@@ -269,10 +302,10 @@ public class PacienteServiceImp implements PacienteService {
         if (paciente == null){
             throw new Exception("No existe el paciente");
         }
-        List<PQRS> pqrsList = pqrsRepo.findByConsultaCitaPacienteAndEstadoIn(paciente, Arrays.asList(EstadoPQRS.Activo,EstadoPQRS.Pendiente));
-
+        List<PQRS> pqrsList = pqrsRepo.findByConsultaCitaPacienteAndEstado(paciente, EstadoPQRS.Activo);
         List<PQRSpacienteDto> resultado = pqrsList.stream()
                 .map(pqrs -> new PQRSpacienteDto(
+                        pqrs.getId(),
                         pqrs.getAsunto(),
                         pqrs.getFechaCreacion(),
                         pqrs.getEstado()
@@ -297,12 +330,13 @@ public class PacienteServiceImp implements PacienteService {
                 .map(cita -> new CitaPacienteDto(
                         cita.getMedico().getEspecialidad(),
                         cita.getFechaCita(),
-                        cita.getEstadoCita()
+                        cita.getEstadoCita(),
+                        cita.getId()
                 ) ).toList();
 
         return resultado;
     }
-
+    //Historial de consultas paciente
     @Override
     public List<ConsultaPacienteDto> listarConsultasPaciente(String idPaciente) throws Exception {
 
@@ -327,7 +361,59 @@ public class PacienteServiceImp implements PacienteService {
         return resultado;
     }
 
-    //Arreglar medicamentos
+    @Override
+    public List<ConsultaPacienteDto> filtrarConsultasPorMedico(String idPaciente, String idMedico) throws Exception {
+        Paciente paciente = pacienteRepositorio.findByCedula(idPaciente);
+        if (paciente == null) {
+            throw new Exception("No existe el paciente");
+        }
+
+        Medico medico = medicoRepositorio.findByCedula(idMedico);
+        if (medico == null) {
+            throw new Exception("No existe el médico");
+        }
+        List<Consulta> consultas = consultaRepositorio.findByCitaPacienteAndCitaMedico(paciente,medico);
+        if (consultas== null){
+            throw new Exception("No hay consultas con el medico "+medico.getNombre()+ medico.getApellido());
+        }
+
+        List<ConsultaPacienteDto> resultado = consultas.stream().map(
+                consulta -> new ConsultaPacienteDto(
+                        consulta.getId(),
+                        consulta.getCita().getFechaCita(),
+                        consulta.getCita().getFechaCreacion(),
+                        consulta.getCita().getMedico().getEspecialidad()
+                )
+        ).toList();
+
+        return resultado;
+    }
+
+    @Override
+    public List<ConsultaPacienteDto> filtrarConsultasPorFecha(String idPaciente, LocalDateTime fecha) throws Exception {
+        Paciente paciente = pacienteRepositorio.findByCedula(idPaciente);
+        if (paciente == null) {
+            throw new Exception("No existe el paciente");
+        }
+
+        List<Consulta> consultas = consultaRepositorio.findByCitaPacienteAndCita_FechaCita(paciente,fecha);
+        if (consultas== null){
+            throw new Exception("No hay consultas en la fecha seleccionada");
+        }
+
+        List<ConsultaPacienteDto> resultado = consultas.stream().map(
+                consulta -> new ConsultaPacienteDto(
+                        consulta.getId(),
+                        consulta.getCita().getFechaCita(),
+                        consulta.getCita().getFechaCreacion(),
+                        consulta.getCita().getMedico().getEspecialidad()
+                )
+        ).toList();
+
+        return resultado;
+    }
+
+    //TODO Arreglar medicamentos
     @Override
     public DetalleConsultaDto detalleConsulta(int idConsulta) throws Exception {
 

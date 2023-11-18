@@ -4,5 +4,5 @@ import co.edu.uniquindio.proyectoclinica.model.entities.Medicamento;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MedicamentoRepositorio extends JpaRepository<Medicamento,Integer> {
-    Medicamento findById(String id);
+    Medicamento findById(int id);
 }

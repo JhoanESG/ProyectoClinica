@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyectoclinica.model.dto.admin;
 
+import co.edu.uniquindio.proyectoclinica.model.enums.Ciudad;
 import co.edu.uniquindio.proyectoclinica.model.enums.Especialidad;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -20,8 +21,8 @@ public record MedicoCrearDto(
         @NotNull @Length(max = 10)
         String telefono,
 
-        @NotNull @Length(max = 20)
-        String ciudad,
+        @NotNull
+        Ciudad ciudad,
         @NotNull @Email
         String email,
         @NotNull

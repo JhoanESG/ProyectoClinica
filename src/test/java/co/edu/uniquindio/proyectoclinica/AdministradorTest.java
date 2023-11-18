@@ -5,6 +5,7 @@ import co.edu.uniquindio.proyectoclinica.model.dto.medico.CitasMedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoCrearDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.MedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.admin.PQRSAdminDto;
+import co.edu.uniquindio.proyectoclinica.model.enums.Ciudad;
 import co.edu.uniquindio.proyectoclinica.model.enums.EstadoPQRS;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.AdministradorService;
 import jakarta.transaction.Transactional;
@@ -29,7 +30,7 @@ public class AdministradorTest {
     public void crearMedicoTest () throws Exception{
 
         MedicoCrearDto medicoDTo = new MedicoCrearDto("12344","Juan", "Suarez", "36548534",
-                "Calarca", "jhoan@gmail.com", "123456", 0,
+                Ciudad.ARMENIA, "jhoan@gmail.com", "123456", 0,
                 "hunijmhuinj", LocalDateTime.of(2023,10,2,10,34),
                 LocalDateTime.of(2023,10,2,10,34));
 

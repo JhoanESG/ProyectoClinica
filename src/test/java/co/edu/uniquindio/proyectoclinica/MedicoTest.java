@@ -3,14 +3,12 @@ package co.edu.uniquindio.proyectoclinica;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.AtenderCitaDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.DetalleCitaDto;
-import co.edu.uniquindio.proyectoclinica.model.dto.MedicamentosDto;
+import co.edu.uniquindio.proyectoclinica.model.dto.MedicamentoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.medico.CitaMedicoDTo;
 import co.edu.uniquindio.proyectoclinica.model.dto.medico.CitasMedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.medico.DiaLibreDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.medico.HistorialPacientesAtendidosDto;
-import co.edu.uniquindio.proyectoclinica.model.entities.Consulta;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.MedicoService;
-import co.edu.uniquindio.proyectoclinica.repositorios.ConsultaRepositorio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +17,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +28,7 @@ public class MedicoTest {
     @Autowired
     private MedicoService medicoService;
 
-    //@Test
+    @Test
     public void verCitasPendientesTest()throws Exception{
 
         List<CitaMedicoDTo> citas = medicoService.verCitasPendientes("2345678901");
@@ -57,19 +54,28 @@ public class MedicoTest {
 
     }
 
-    //@Test
+    @Test
     public void radicarConsultaTest() throws Exception{
+        /*
+        List<MedicamentoDto> medicamentos = new ArrayList<>();
 
-        List<MedicamentosDto> medicamentos = new ArrayList<>();
+        medicamentos.add(new MedicamentoDto("Medicamento1", "Posología1"));
 
-        medicamentos.add(new MedicamentosDto("Medicamento1", "Posología1"));
-
-        AtenderCitaDto citaDto = new AtenderCitaDto(
+        AtenderCitaDto citaDto1 = new AtenderCitaDto(
+                4,"Dolor de barriga",
+                "Leve infeccion Intestinal","tomar el medicamento",
+                "",medicamentos);
+        AtenderCitaDto citaDto2 = new AtenderCitaDto(
                 5,"Dolor de barriga",
                 "Leve infeccion Intestinal","tomar el medicamento",
                 "",medicamentos);
-        int i= medicoService.radicarConsulta(citaDto);
+
+        int i= medicoService.radicarConsulta(citaDto1);
         Assertions.assertEquals(6,i);
+
+        Assertions.assertThrows(Exception.class, () -> medicoService.radicarConsulta(citaDto2));
+
+         */
     }
 
     //@Test

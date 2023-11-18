@@ -2,10 +2,7 @@ package co.edu.uniquindio.proyectoclinica;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.CambiarContrasenaDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.paciente.*;
-import co.edu.uniquindio.proyectoclinica.model.enums.Eps;
-import co.edu.uniquindio.proyectoclinica.model.enums.Especialidad;
-import co.edu.uniquindio.proyectoclinica.model.enums.TipoPQRS;
-import co.edu.uniquindio.proyectoclinica.model.enums.TipoSangre;
+import co.edu.uniquindio.proyectoclinica.model.enums.*;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.PacienteService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -14,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,13 +22,13 @@ public class PacienteTest {
     @Autowired
     private PacienteService pacienteService;
 
-    //@Test
+    @Test
     public void registrarTest()throws Exception{
         CrearPacienteDto crearPacienteDto = new CrearPacienteDto(
                 "1080360654","Santiago","Ramon",
-                "32501248","Armenia","santiago@gmail.com",
+                "32501248", Ciudad.ARMENIA,"santiago@gmail.com",
                 "25365","No","http", TipoSangre.Op,
-                Eps.Cafesalud, LocalDateTime.of(2023,10,2,1,0)
+                Eps.Cafesalud, LocalDate.of(2023,10,2)
         );
         String id= pacienteService.registrar(crearPacienteDto);
         Assertions.assertEquals("1080360654",id);
@@ -91,11 +89,11 @@ public class PacienteTest {
         //Assertions.assertEquals("123456789",paciente.contrasena());
     }
 
-    //@Test
+    @Test
     public void agendarCitaTest()throws Exception{
         RegistroCitaDto registroCitaDto = new RegistroCitaDto(
                 Especialidad.CARDIOLOGIA,
-                LocalDateTime.of(2023, 10, 15, 10, 0),
+                LocalDateTime.of(2023, 11, 12, 10, 0),
                 "Examen de rutina",
                 "2345678901", // CC del médico
                 "3456789012"  // CC del paciente

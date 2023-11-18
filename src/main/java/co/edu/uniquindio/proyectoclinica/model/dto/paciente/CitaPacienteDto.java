@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 public record CitaPacienteDto(
         Especialidad especialidad,
         LocalDateTime fecha,
-        EstadoCita estadoCita
+        EstadoCita estadoCita,
+        int codigo
 ) {
 }
