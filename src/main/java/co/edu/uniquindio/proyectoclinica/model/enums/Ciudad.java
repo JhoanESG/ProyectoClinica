@@ -1,10 +1,10 @@
 package co.edu.uniquindio.proyectoclinica.model.enums;
 
 public enum Ciudad {
-    PEREIRA("Pereira"),
-    ARMENIA("Armenia"),
-    MANIZALES("Manizales"),
-    CALARCA("Calarca");
+    PEREIRA("PEREIRA"),
+    ARMENIA("ARMENIA"),
+    MANIZALES("MANIZALES"),
+    CALARCA("CALARCA");
 
     private final String nombre;
 
