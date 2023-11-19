@@ -40,7 +40,7 @@ public class ClinicaServiceImp implements ClinicaService {
     public List<String> obtenerListaTipoSangre() throws Exception {
         List<String> listTipoSangre = new ArrayList<>();
         for(TipoSangre tipoSangre: TipoSangre.values()){
-            listTipoSangre.add(tipoSangre.getNombre());
+            listTipoSangre.add(tipoSangre.toString());
         }
         return listTipoSangre;
     }
