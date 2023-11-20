@@ -24,8 +24,9 @@ public class PacienteController {
    }
 
     @PutMapping("/editar-perfil")
-    public String  editarPerfil(@Valid @RequestBody ActualizarPacienteDto actualizarPacienteDto)throws Exception{
-        return pacienteService.editarPerfil(actualizarPacienteDto);
+    public ResponseEntity<MensajeDto>  editarPerfil(@Valid @RequestBody ActualizarPacienteDto actualizarPacienteDto)throws Exception{
+        pacienteService.editarPerfil(actualizarPacienteDto);
+        return ResponseEntity.ok().body(new MensajeDto<>(false,"Paciente actualizado con exito"));
     }
 
     @DeleteMapping("/eliminar/{codigo}")
