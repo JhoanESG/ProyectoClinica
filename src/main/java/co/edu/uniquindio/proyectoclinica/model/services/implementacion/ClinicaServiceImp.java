@@ -1,11 +1,15 @@
 package co.edu.uniquindio.proyectoclinica.model.services.implementacion;
 
+import co.edu.uniquindio.proyectoclinica.model.dto.ItemMedicoDto;
+import co.edu.uniquindio.proyectoclinica.model.entities.Medico;
 import co.edu.uniquindio.proyectoclinica.model.enums.Ciudad;
 import co.edu.uniquindio.proyectoclinica.model.enums.Eps;
 import co.edu.uniquindio.proyectoclinica.model.enums.Especialidad;
 import co.edu.uniquindio.proyectoclinica.model.enums.TipoSangre;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.ClinicaService;
+import co.edu.uniquindio.proyectoclinica.repositorios.MedicoRepositorio;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +21,9 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class ClinicaServiceImp implements ClinicaService {
+
+    private final MedicoRepositorio medicoRepositorio;
+
     public List<String> obtenerListaCiudades() throws Exception {
         List<String> ciudadesComoStrings = new ArrayList<>();
 
@@ -52,5 +59,20 @@ public class ClinicaServiceImp implements ClinicaService {
             listEspecialidades.add(especialidad.toString());
         }
         return listEspecialidades;
+    }
+
+    @Override
+    public List<ItemMedicoDto> obtenerMedicosEspecialidad(Especialidad especialidad) throws Exception {
+        List<Medico> medicos = medicoRepositorio.findByEspecialidad(especialidad);
+
+        if (medicos.isEmpty()){
+            throw new Exception("No hay medicos registrados");
+        }
+        List<ItemMedicoDto> respuesta = medicos.stream().map(medico -> new ItemMedicoDto(
+                medico.getNombre()+" "+medico.getApellido(),
+                medico.getCedula()
+        )).toList();
+
+        return respuesta;
     }
 }

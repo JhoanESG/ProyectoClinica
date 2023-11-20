@@ -62,7 +62,7 @@ public class AdministradorServiceImp implements AdministradorService {
         medicoNuevo.setCiudad(medicoDto.ciudad());
         medicoNuevo.setFoto(medicoDto.foto());
 
-        medicoNuevo.setEspecialidad(Especialidad.values()[medicoDto.especialidad()]);
+        medicoNuevo.setEspecialidad(medicoDto.especialidad());
         medicoNuevo.setHoraInicio(medicoDto.horaInicio());
         medicoNuevo.setHoraFin(medicoDto.horaFin());
 

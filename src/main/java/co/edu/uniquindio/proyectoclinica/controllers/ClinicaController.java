@@ -1,11 +1,14 @@
 package co.edu.uniquindio.proyectoclinica.controllers;
 
+import co.edu.uniquindio.proyectoclinica.model.dto.ItemMedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.MensajeDto;
 import co.edu.uniquindio.proyectoclinica.model.enums.Ciudad;
+import co.edu.uniquindio.proyectoclinica.model.enums.Especialidad;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.ClinicaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,5 +40,11 @@ public class ClinicaController {
     @GetMapping("/lista-especialidades")
     public ResponseEntity<MensajeDto<List<String>>> listarEspecialidades() throws Exception{
         return ResponseEntity.ok().body(new MensajeDto<>(false,clinicaService.obtenerListaEspecialidades()));
+    }
+
+    @GetMapping("/listar-medicos/{especialidad}")
+    public ResponseEntity<MensajeDto<List<ItemMedicoDto>>> listarMedicos(@PathVariable String especialidad)throws Exception{
+        Especialidad especialidad1 = Especialidad.valueOf(especialidad);
+        return ResponseEntity.ok().body(new MensajeDto<>(false, clinicaService.obtenerMedicosEspecialidad(especialidad1)));
     }
 }

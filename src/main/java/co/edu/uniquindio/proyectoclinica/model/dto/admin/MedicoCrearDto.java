@@ -27,8 +27,8 @@ public record MedicoCrearDto(
         String email,
         @NotNull
         String contrasena,
-        @NotNull @Length(min = 0) @Length(max = 3)
-        int especialidad,
+        @NotNull
+        Especialidad especialidad,
         @NotNull
         String foto,
         @NotNull

@@ -1,5 +1,7 @@
 package co.edu.uniquindio.proyectoclinica.model.services.interfaces;
 
+import co.edu.uniquindio.proyectoclinica.model.dto.ItemMedicoDto;
+import co.edu.uniquindio.proyectoclinica.model.dto.MedicoListarDto;
 import co.edu.uniquindio.proyectoclinica.model.enums.Ciudad;
 import co.edu.uniquindio.proyectoclinica.model.enums.Eps;
 import co.edu.uniquindio.proyectoclinica.model.enums.Especialidad;
@@ -13,4 +15,5 @@ public interface ClinicaService {
     List<String> obtenerListaEps() throws Exception;
     List<String> obtenerListaTipoSangre()throws Exception;
     List<String> obtenerListaEspecialidades()throws Exception;
+    List<ItemMedicoDto> obtenerMedicosEspecialidad(Especialidad especialidad) throws Exception;
 }
