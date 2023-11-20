@@ -2,11 +2,6 @@ package co.edu.uniquindio.proyectoclinica.model.services.interfaces;
 
 import co.edu.uniquindio.proyectoclinica.model.dto.*;
 import co.edu.uniquindio.proyectoclinica.model.dto.paciente.*;
-import co.edu.uniquindio.proyectoclinica.model.entities.Medico;
-import co.edu.uniquindio.proyectoclinica.model.enums.Ciudad;
-import co.edu.uniquindio.proyectoclinica.model.enums.Eps;
-import co.edu.uniquindio.proyectoclinica.model.enums.TipoSangre;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,6 +31,10 @@ public interface PacienteService {
     List<PQRSpacienteDto> listarPQRSpaciente(String idPaciente) throws Exception;
 
     List<CitaPacienteDto> listarCitasPaciente(String idPaciente) throws Exception;
+
+    List<VistaPreviaDto> listarCitasPacienteVistaPrevia(String idPaciente)throws Exception;
+
+    List<VistaPreviaDto> listarPQRSpacienteVistaPrevia(String idPaciente)throws Exception;
 
     List<ConsultaPacienteDto> listarConsultasPaciente(String idPaciente)throws Exception;
 

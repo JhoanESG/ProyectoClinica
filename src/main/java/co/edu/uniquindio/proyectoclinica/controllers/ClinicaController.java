@@ -1,8 +1,8 @@
 package co.edu.uniquindio.proyectoclinica.controllers;
 
+import co.edu.uniquindio.proyectoclinica.model.dto.ItemListasDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.ItemMedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.MensajeDto;
-import co.edu.uniquindio.proyectoclinica.model.enums.Ciudad;
 import co.edu.uniquindio.proyectoclinica.model.enums.Especialidad;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.ClinicaService;
 import lombok.RequiredArgsConstructor;
@@ -22,23 +22,23 @@ public class ClinicaController {
     private final ClinicaService clinicaService;
 
     @GetMapping("/lista-ciudades")
-    public ResponseEntity<MensajeDto<List<String>>> listarCiudades()throws Exception{
+    public ResponseEntity<MensajeDto<List<ItemListasDto>>> listarCiudades()throws Exception{
         return ResponseEntity.ok().body(new MensajeDto<>(false,clinicaService.obtenerListaCiudades()));
     }
 
     @GetMapping("/lista-EPS")
-    public ResponseEntity<MensajeDto<List<String>>> listarEPS() throws Exception{
+    public ResponseEntity<MensajeDto<List<ItemListasDto>>> listarEPS() throws Exception{
         return ResponseEntity.ok().body(new MensajeDto<>(false,clinicaService.obtenerListaEps()));
     }
 
 
     @GetMapping("/lista-tipo-sangre")
-    public ResponseEntity<MensajeDto<List<String>>> listarTipoSangre() throws Exception{
+    public ResponseEntity<MensajeDto<List<ItemListasDto>>> listarTipoSangre() throws Exception{
         return ResponseEntity.ok().body(new MensajeDto<>(false,clinicaService.obtenerListaTipoSangre()));
     }
 
     @GetMapping("/lista-especialidades")
-    public ResponseEntity<MensajeDto<List<String>>> listarEspecialidades() throws Exception{
+    public ResponseEntity<MensajeDto<List<ItemListasDto>>> listarEspecialidades() throws Exception{
         return ResponseEntity.ok().body(new MensajeDto<>(false,clinicaService.obtenerListaEspecialidades()));
     }
 
@@ -46,5 +46,10 @@ public class ClinicaController {
     public ResponseEntity<MensajeDto<List<ItemMedicoDto>>> listarMedicos(@PathVariable String especialidad)throws Exception{
         Especialidad especialidad1 = Especialidad.valueOf(especialidad);
         return ResponseEntity.ok().body(new MensajeDto<>(false, clinicaService.obtenerMedicosEspecialidad(especialidad1)));
+    }
+
+    @GetMapping("/listar-tipoPQRS")
+    public ResponseEntity<MensajeDto<List<ItemListasDto>>> listarTipoPQRS() throws Exception{
+        return ResponseEntity.ok().body(new MensajeDto<>(false, clinicaService.obtenerTipoPQRS()));
     }
 }

@@ -1,11 +1,9 @@
 package co.edu.uniquindio.proyectoclinica.model.services.implementacion;
 
+import co.edu.uniquindio.proyectoclinica.model.dto.ItemListasDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.ItemMedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.entities.Medico;
-import co.edu.uniquindio.proyectoclinica.model.enums.Ciudad;
-import co.edu.uniquindio.proyectoclinica.model.enums.Eps;
-import co.edu.uniquindio.proyectoclinica.model.enums.Especialidad;
-import co.edu.uniquindio.proyectoclinica.model.enums.TipoSangre;
+import co.edu.uniquindio.proyectoclinica.model.enums.*;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.ClinicaService;
 import co.edu.uniquindio.proyectoclinica.repositorios.MedicoRepositorio;
 import lombok.RequiredArgsConstructor;
@@ -24,39 +22,39 @@ public class ClinicaServiceImp implements ClinicaService {
 
     private final MedicoRepositorio medicoRepositorio;
 
-    public List<String> obtenerListaCiudades() throws Exception {
-        List<String> ciudadesComoStrings = new ArrayList<>();
+    public List<ItemListasDto> obtenerListaCiudades() throws Exception {
+        List<ItemListasDto> ciudadesComoStrings = new ArrayList<>();
 
         for (Ciudad ciudad : Ciudad.values()) {
-            ciudadesComoStrings.add(ciudad.toString());
+            ciudadesComoStrings.add(new ItemListasDto(ciudad.toString()));
         }
 
         return ciudadesComoStrings;
     }
 
     @Override
-    public List<String> obtenerListaEps() throws Exception {
-        List<String> listEps= new ArrayList<>();
+    public List<ItemListasDto> obtenerListaEps() throws Exception {
+        List<ItemListasDto> listEps= new ArrayList<>();
         for (Eps eps1: Eps.values()){
-            listEps.add(eps1.toString());
+            listEps.add(new ItemListasDto(eps1.toString()));
         }
         return listEps;
     }
 
     @Override
-    public List<String> obtenerListaTipoSangre() throws Exception {
-        List<String> listTipoSangre = new ArrayList<>();
+    public List<ItemListasDto> obtenerListaTipoSangre() throws Exception {
+        List<ItemListasDto> listTipoSangre = new ArrayList<>();
         for(TipoSangre tipoSangre: TipoSangre.values()){
-            listTipoSangre.add(tipoSangre.toString());
+            listTipoSangre.add(new ItemListasDto(tipoSangre.toString()));
         }
         return listTipoSangre;
     }
 
     @Override
-    public List<String> obtenerListaEspecialidades() throws Exception {
-        List<String> listEspecialidades= new ArrayList<>();
+    public List<ItemListasDto> obtenerListaEspecialidades() throws Exception {
+        List<ItemListasDto> listEspecialidades= new ArrayList<>();
         for (Especialidad especialidad: Especialidad.values()){
-            listEspecialidades.add(especialidad.toString());
+            listEspecialidades.add(new ItemListasDto( especialidad.toString()));
         }
         return listEspecialidades;
     }
@@ -74,5 +72,14 @@ public class ClinicaServiceImp implements ClinicaService {
         )).toList();
 
         return respuesta;
+    }
+
+    @Override
+    public List<ItemListasDto> obtenerTipoPQRS() throws Exception {
+        List<ItemListasDto> listPQRS= new ArrayList<>();
+        for (TipoPQRS pqrs: TipoPQRS.values()){
+            listPQRS.add(new ItemListasDto( pqrs.toString()));
+        }
+        return listPQRS;
     }
 }

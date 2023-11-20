@@ -336,6 +336,43 @@ public class PacienteServiceImp implements PacienteService {
 
         return resultado;
     }
+
+    @Override
+    public List<VistaPreviaDto> listarCitasPacienteVistaPrevia(String idPaciente) throws Exception {
+        Paciente paciente = pacienteRepositorio.findByCedula(idPaciente);
+        if (paciente == null) {
+            throw new Exception("No existe el paciente");
+        }
+
+        List<Cita> citasHoy = citaRepo.findByPacienteAndAndEstadoCita(paciente, EstadoCita.Creada);
+        if (citasHoy.isEmpty()) {
+            throw new Exception("No hay citas");
+        }
+
+        List<VistaPreviaDto> resultado = citasHoy.stream()
+                .map(cita -> new VistaPreviaDto(
+                        cita.getMotivo(),
+                        cita.getFechaCita()
+                )).toList();
+
+        return resultado;
+    }
+
+    @Override
+    public List<VistaPreviaDto> listarPQRSpacienteVistaPrevia(String idPaciente) throws Exception {
+        Paciente paciente =pacienteRepositorio.findByCedula(idPaciente);
+        if (paciente == null){
+            throw new Exception("No existe el paciente");
+        }
+        List<PQRS> pqrsList = pqrsRepo.findByConsultaCitaPacienteAndEstado(paciente, EstadoPQRS.Activo);
+        List<VistaPreviaDto> resultado = pqrsList.stream()
+                .map(pqrs -> new VistaPreviaDto(
+                        pqrs.getAsunto(),
+                        pqrs.getFechaCreacion()
+                )).toList();
+        return resultado;
+    }
+
     //Historial de consultas paciente
     @Override
     public List<ConsultaPacienteDto> listarConsultasPaciente(String idPaciente) throws Exception {

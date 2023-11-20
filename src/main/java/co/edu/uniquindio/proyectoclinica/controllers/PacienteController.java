@@ -61,9 +61,20 @@ public class PacienteController {
        return ResponseEntity.ok().body(new MensajeDto<>(false,pacienteService.listarPQRSpaciente(codigo)));
     }
 
+    @GetMapping("/listar-PQRS-previas/{codigo}")
+    public ResponseEntity<MensajeDto<List<VistaPreviaDto>>> listarPQRSprevias(@PathVariable String codigo) throws Exception{
+        return ResponseEntity.ok().body(new MensajeDto<>(false,pacienteService.listarPQRSpacienteVistaPrevia(codigo)));
+    }
+
+
     @GetMapping("/listar-citas/{codigo}")
     public ResponseEntity<MensajeDto<List<CitaPacienteDto>>> listarCitas(@PathVariable String codigo) throws Exception{
        return ResponseEntity.ok().body(new MensajeDto<>(false,pacienteService.listarCitasPaciente(codigo)));
+    }
+
+    @GetMapping("/listar-citas-previas/{codigo}")
+    public ResponseEntity<MensajeDto<List<VistaPreviaDto>>> listarCitasPrevias(@PathVariable String codigo) throws Exception{
+       return  ResponseEntity.ok().body(new MensajeDto<>(false,pacienteService.listarCitasPacienteVistaPrevia(codigo)));
     }
 
     @GetMapping("/listar-consultas/{codigo}")
