@@ -8,4 +8,6 @@ public interface ImageService {
     Map subirImagen(MultipartFile imagen) throws Exception;
     Map eliminarImagen(String idImagen) throws Exception;
 
+
+
 }

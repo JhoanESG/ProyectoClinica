@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyectoclinica.model.services.interfaces;
 
+import co.edu.uniquindio.proyectoclinica.model.dto.ItemListasDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.ItemMedicoDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.MedicoListarDto;
 import co.edu.uniquindio.proyectoclinica.model.enums.Ciudad;
@@ -11,9 +12,10 @@ import java.util.List;
 
 public interface ClinicaService {
 
-    List<String> obtenerListaCiudades()throws Exception;
-    List<String> obtenerListaEps() throws Exception;
-    List<String> obtenerListaTipoSangre()throws Exception;
-    List<String> obtenerListaEspecialidades()throws Exception;
+    List<ItemListasDto> obtenerListaCiudades()throws Exception;
+    List<ItemListasDto> obtenerListaEps() throws Exception;
+    List<ItemListasDto> obtenerListaTipoSangre()throws Exception;
+    List<ItemListasDto> obtenerListaEspecialidades()throws Exception;
     List<ItemMedicoDto> obtenerMedicosEspecialidad(Especialidad especialidad) throws Exception;
+    List<ItemListasDto> obtenerTipoPQRS()throws Exception;
 }
