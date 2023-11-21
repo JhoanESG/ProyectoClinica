@@ -92,7 +92,7 @@ public class MedicoServiceImp implements MedicoService {
         return new DetalleCitaDto(
                 cita.getPaciente().getNombre(),
                 cita.getPaciente().getApellido(),
-                cita.getPaciente().getApellido(),
+                cita.getPaciente().getCiudad(),
                 cita.getPaciente().getAlergias(),
                 cita.getPaciente().getTipoSangre(),
                 cita.getPaciente().getEps(),

@@ -51,17 +51,17 @@ public class ClinicaServiceImp implements ClinicaService {
     }
 
     @Override
-    public List<ItemListasDto> obtenerListaEspecialidades() throws Exception {
-        List<ItemListasDto> listEspecialidades= new ArrayList<>();
+    public List<String> obtenerListaEspecialidades() throws Exception {
+        List<String> listEspecialidades= new ArrayList<>();
         for (Especialidad especialidad: Especialidad.values()){
-            listEspecialidades.add(new ItemListasDto( especialidad.toString()));
+            listEspecialidades.add( especialidad.toString());
         }
         return listEspecialidades;
     }
 
     @Override
-    public List<ItemMedicoDto> obtenerMedicosEspecialidad(Especialidad especialidad) throws Exception {
-        List<Medico> medicos = medicoRepositorio.findByEspecialidad(especialidad);
+    public List<ItemMedicoDto> obtenerMedicosEspecialidad(String especialidad) throws Exception {
+        List<Medico> medicos = medicoRepositorio.findByEspecialidad(Especialidad.valueOf(especialidad));
 
         if (medicos.isEmpty()){
             throw new Exception("No hay medicos registrados");

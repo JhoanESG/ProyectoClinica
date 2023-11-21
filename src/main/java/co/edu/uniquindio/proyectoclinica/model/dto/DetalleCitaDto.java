@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public record DetalleCitaDto(
         String nombre,
         String apellido,
-        String ciudad,
+        co.edu.uniquindio.proyectoclinica.model.enums.Ciudad ciudad,
         String alergias,
         TipoSangre tipoSangre,
         Eps eps,
