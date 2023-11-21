@@ -3,10 +3,7 @@ package co.edu.uniquindio.proyectoclinica.controllers;
 import co.edu.uniquindio.proyectoclinica.model.dto.AtenderCitaDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.DetalleCitaDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.MensajeDto;
-import co.edu.uniquindio.proyectoclinica.model.dto.medico.CitaMedicoDTo;
-import co.edu.uniquindio.proyectoclinica.model.dto.medico.CitasMedicoDto;
-import co.edu.uniquindio.proyectoclinica.model.dto.medico.DiaLibreDto;
-import co.edu.uniquindio.proyectoclinica.model.dto.medico.HistorialPacientesAtendidosDto;
+import co.edu.uniquindio.proyectoclinica.model.dto.medico.*;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.MedicoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -48,14 +45,14 @@ public class MedicoController {
         return ResponseEntity.ok().body(new MensajeDto<>(false, medicoService.listarCitasAtendidas(idMedico)));
     }
 
-    @PostMapping("/registrar-dia-libre")
+    @PostMapping("/asignarDiaLibre")
     public ResponseEntity<MensajeDto<String>> asignarDiaLibre(@Valid @RequestBody DiaLibreDto diaLibreDto) throws Exception{
         medicoService.asignarDiaLibre(diaLibreDto);
         return ResponseEntity.ok().body(new MensajeDto<>(false,"Se asigno el dia libre correctamente"));
     }
 
-    @GetMapping("/ver-dias-libres/{idMedico}")
-    public ResponseEntity<MensajeDto<List<DiaLibreDto>>> listarDiasLibres (@PathVariable String idMedico) throws Exception{
+    @GetMapping("/verDiasLibres/{idMedico}")
+    public ResponseEntity<MensajeDto<List<ItemDiaLibre>>> listarDiasLibres (@PathVariable String idMedico) throws Exception{
         return ResponseEntity.ok().body(new MensajeDto<>(false,medicoService.listarDiasLibresMedico(idMedico)));
     }
 

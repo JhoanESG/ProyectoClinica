@@ -13,6 +13,8 @@ import java.util.List;
 public interface DiaLibreRepositorio extends JpaRepository<DiaLibre,Integer> {
     List<DiaLibre> findByMedicoAndDiaGreaterThanEqual(Medico medico, LocalDate fecha);
     List<DiaLibre> findByMedicoAndEstadoDiaLibre(Medico medico, EstadoDiaLibre estadoDiaLibre);
-    List<DiaLibre> findByMedicoAndEstadoDiaLibreAndDia(Medico medico, EstadoDiaLibre estadoDiaLibre, LocalDate fecha);
+    List<DiaLibre> findByMedicoAndEstadoDiaLibreAndDia(Medico medico, EstadoDiaLibre estadoDiaLibre, LocalDate fecha) throws Exception;
     DiaLibre findById(int dia)throws Exception;
+    List<DiaLibre> findByMedicoAndEstadoDiaLibreAndDiaBefore(Medico medico, EstadoDiaLibre estado, LocalDate fecha) throws Exception;
+
 }

@@ -18,7 +18,7 @@ public interface MedicoService {
     int radicarConsulta(AtenderCitaDto atenderCitaDto) throws Exception;
     List<HistorialPacientesAtendidosDto> listarCitasAtendidas (String idMedico) throws Exception;
     int asignarDiaLibre(DiaLibreDto diaLibreDto) throws Exception;
-    List<DiaLibreDto> listarDiasLibresMedico(String idMedico) throws Exception;
+    List<ItemDiaLibre> listarDiasLibresMedico(String idMedico) throws Exception;
     int cambiarEstadoDiaLibre(int diaLibre, EstadoDiaLibre estadoDiaLibre)throws Exception;
     List<ItemMedicamentoDto> listarMedicamentos()throws Exception;
     ItemMedicamentoDto obtenerMedicamento(int codigo)throws Exception;
