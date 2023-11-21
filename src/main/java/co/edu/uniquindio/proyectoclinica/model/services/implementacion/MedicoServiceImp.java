@@ -146,6 +146,7 @@ public class MedicoServiceImp implements MedicoService {
 
 
         consulta.setCita(cita);
+        cita.setConsulta(consulta);
         consulta.setSintomas(atenderCitaDto.sintomas());
         consulta.setDiagnostico(atenderCitaDto.diagnostico());
         consulta.setTratamiento(atenderCitaDto.tratamiento());
