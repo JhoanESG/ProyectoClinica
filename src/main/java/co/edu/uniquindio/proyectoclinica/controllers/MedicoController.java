@@ -56,6 +56,13 @@ public class MedicoController {
         return ResponseEntity.ok().body(new MensajeDto<>(false,medicoService.listarDiasLibresMedico(idMedico)));
     }
 
+    @PostMapping("/cambiarEstado/{codigo}/{estado}")
+    public ResponseEntity<MensajeDto<String>> cambiarEstado( @PathVariable int diaLibre,@PathVariable String estado)throws Exception{
+        medicoService.cambiarEstadoDiaLibre(diaLibre,estado);
+        return ResponseEntity.ok().body(new MensajeDto<>(false,"Dia estado cambiado con exito"));
+
+    }
+
 
 
 }

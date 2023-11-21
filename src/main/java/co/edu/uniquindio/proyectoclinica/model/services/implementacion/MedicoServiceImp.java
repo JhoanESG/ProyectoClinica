@@ -242,9 +242,9 @@ public class MedicoServiceImp implements MedicoService {
     }
 
     @Override
-    public int cambiarEstadoDiaLibre(int codigoDiaLibre, EstadoDiaLibre estadoDiaLibre) throws Exception {
+    public int cambiarEstadoDiaLibre(int codigoDiaLibre, String estadoDiaLibre) throws Exception {
         DiaLibre diaLibre= diaLibreRepositorio.findById(codigoDiaLibre);
-        diaLibre.setEstadoDiaLibre(estadoDiaLibre);
+        diaLibre.setEstadoDiaLibre(EstadoDiaLibre.valueOf(estadoDiaLibre));
         diaLibreRepositorio.save(diaLibre);
         return diaLibre.getId();
     }

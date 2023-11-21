@@ -51,4 +51,10 @@ public class ClinicaController {
     public ResponseEntity<MensajeDto<List<String>>> listarTipoPQRS() throws Exception{
         return ResponseEntity.ok().body(new MensajeDto<>(false, clinicaService.obtenerTipoPQRS()));
     }
+
+    @GetMapping("/listar-estadoDia")
+    public ResponseEntity<MensajeDto<List<String>>> listarEstadoDia() throws Exception{
+        return ResponseEntity.ok().body(new MensajeDto<>(false, clinicaService.obtenerEstadoDia()));
+    }
+
 }

@@ -19,7 +19,7 @@ public interface MedicoService {
     List<HistorialPacientesAtendidosDto> listarCitasAtendidas (String idMedico) throws Exception;
     int asignarDiaLibre(DiaLibreDto diaLibreDto) throws Exception;
     List<ItemDiaLibre> listarDiasLibresMedico(String idMedico) throws Exception;
-    int cambiarEstadoDiaLibre(int diaLibre, EstadoDiaLibre estadoDiaLibre)throws Exception;
+    int cambiarEstadoDiaLibre(int diaLibre, String estadoDiaLibre)throws Exception;
     List<ItemMedicamentoDto> listarMedicamentos()throws Exception;
     ItemMedicamentoDto obtenerMedicamento(int codigo)throws Exception;
 

@@ -82,4 +82,13 @@ public class ClinicaServiceImp implements ClinicaService {
         }
         return listPQRS;
     }
+
+    @Override
+    public List<String> obtenerEstadoDia() throws Exception {
+        List<String> list= new ArrayList<>();
+        for (EstadoDiaLibre estadoDiaLibre: EstadoDiaLibre.values()){
+            list.add(estadoDiaLibre.toString());
+        }
+        return list;
+    }
 }
