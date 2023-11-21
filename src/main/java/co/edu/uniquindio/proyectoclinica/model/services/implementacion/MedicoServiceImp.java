@@ -144,7 +144,8 @@ public class MedicoServiceImp implements MedicoService {
 
         Consulta consulta = new Consulta();
 
-        cita.setConsulta(consulta);
+
+        consulta.setCita(cita);
         consulta.setSintomas(atenderCitaDto.sintomas());
         consulta.setDiagnostico(atenderCitaDto.diagnostico());
         consulta.setTratamiento(atenderCitaDto.tratamiento());
@@ -242,9 +243,9 @@ public class MedicoServiceImp implements MedicoService {
     }
 
     @Override
-    public int cambiarEstadoDiaLibre(int codigoDiaLibre, EstadoDiaLibre estadoDiaLibre) throws Exception {
+    public int cambiarEstadoDiaLibre(int codigoDiaLibre, String estadoDiaLibre) throws Exception {
         DiaLibre diaLibre= diaLibreRepositorio.findById(codigoDiaLibre);
-        diaLibre.setEstadoDiaLibre(estadoDiaLibre);
+        diaLibre.setEstadoDiaLibre(EstadoDiaLibre.valueOf(estadoDiaLibre));
         diaLibreRepositorio.save(diaLibre);
         return diaLibre.getId();
     }
