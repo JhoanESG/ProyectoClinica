@@ -178,7 +178,8 @@ public class MedicoServiceImp implements MedicoService {
                             c.getPaciente().getNombre(),  // Nombre del paciente
                             c.getPaciente().getCedula(),  // ID del paciente
                             c.getFechaCita(),            // Fecha y hora de la cita
-                            c.getMotivo()                // Motivo de la cita
+                            c.getMotivo(),
+                            c.getId()
                     ));
         }
 

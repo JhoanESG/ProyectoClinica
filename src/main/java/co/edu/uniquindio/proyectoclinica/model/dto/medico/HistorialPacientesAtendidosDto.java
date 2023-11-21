@@ -6,7 +6,7 @@ public record HistorialPacientesAtendidosDto(
         String nombrePaciente,
         String idPaciente,
         LocalDateTime fecha,
-
-        String motivo
+        String motivo,
+        int codigoConsulta
 ) {
 }
