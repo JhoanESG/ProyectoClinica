@@ -38,14 +38,13 @@ public class ClinicaController {
     }
 
     @GetMapping("/lista-especialidades")
-    public ResponseEntity<MensajeDto<List<ItemListasDto>>> listarEspecialidades() throws Exception{
+    public ResponseEntity<MensajeDto<List<String>>> listarEspecialidades() throws Exception{
         return ResponseEntity.ok().body(new MensajeDto<>(false,clinicaService.obtenerListaEspecialidades()));
     }
 
     @GetMapping("/listar-medicos/{especialidad}")
     public ResponseEntity<MensajeDto<List<ItemMedicoDto>>> listarMedicos(@PathVariable String especialidad)throws Exception{
-        Especialidad especialidad1 = Especialidad.valueOf(especialidad);
-        return ResponseEntity.ok().body(new MensajeDto<>(false, clinicaService.obtenerMedicosEspecialidad(especialidad1)));
+        return ResponseEntity.ok().body(new MensajeDto<>(false, clinicaService.obtenerMedicosEspecialidad(especialidad)));
     }
 
     @GetMapping("/listar-tipoPQRS")
