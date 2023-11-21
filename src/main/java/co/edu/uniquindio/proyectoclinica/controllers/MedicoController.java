@@ -48,13 +48,13 @@ public class MedicoController {
         return ResponseEntity.ok().body(new MensajeDto<>(false, medicoService.listarCitasAtendidas(idMedico)));
     }
 
-    @PostMapping("/registrar-dia-libre")
+    @PostMapping("/asignarDiaLibre")
     public ResponseEntity<MensajeDto<String>> asignarDiaLibre(@Valid @RequestBody DiaLibreDto diaLibreDto) throws Exception{
         medicoService.asignarDiaLibre(diaLibreDto);
         return ResponseEntity.ok().body(new MensajeDto<>(false,"Se asigno el dia libre correctamente"));
     }
 
-    @GetMapping("/ver-dias-libres/{idMedico}")
+    @GetMapping("/verDiasLibres/{idMedico}")
     public ResponseEntity<MensajeDto<List<DiaLibreDto>>> listarDiasLibres (@PathVariable String idMedico) throws Exception{
         return ResponseEntity.ok().body(new MensajeDto<>(false,medicoService.listarDiasLibresMedico(idMedico)));
     }

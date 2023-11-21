@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -198,13 +199,22 @@ public class MedicoServiceImp implements MedicoService {
         if (!citasEnDia.isEmpty()) {
             throw new Exception("El médico tiene citas programadas en el día seleccionado. No se puede asignar un día libre.");
         }
+
+        List<DiaLibre> diasLibresPasados = diaLibreRepositorio.findByMedicoAndEstadoDiaLibreAndDiaBefore(medico, EstadoDiaLibre.ACTIVO, LocalDate.now());
+        for (DiaLibre diaLibrePasado : diasLibresPasados) {
+            diaLibrePasado.setEstadoDiaLibre(EstadoDiaLibre.INACTIVO);
+            diaLibreRepositorio.save(diaLibrePasado);
+        }
+
         List<DiaLibre> diasLibres= diaLibreRepositorio.findByMedicoAndEstadoDiaLibre(medico, EstadoDiaLibre.ACTIVO);
         if (diasLibres.size()>=1){
+
             throw new Exception("Solo se puede tener un dia libre activo a la vez");
         }
         DiaLibre diaLibre = new DiaLibre();
         diaLibre.setDia(diaLibreDto.fecha());
         diaLibre.setMedico(medico);
+        diaLibre.setEstadoDiaLibre(EstadoDiaLibre.ACTIVO);
 
         // Guardar el día libre en la entidad DiaLibre
         diaLibreRepositorio.save(diaLibre);
