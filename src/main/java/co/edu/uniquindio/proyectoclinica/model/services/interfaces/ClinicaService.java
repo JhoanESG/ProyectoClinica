@@ -17,5 +17,5 @@ public interface ClinicaService {
     List<ItemListasDto> obtenerListaTipoSangre()throws Exception;
     List<String> obtenerListaEspecialidades()throws Exception;
     List<ItemMedicoDto> obtenerMedicosEspecialidad(String especialidad) throws Exception;
-    List<ItemListasDto> obtenerTipoPQRS()throws Exception;
+    List<String> obtenerTipoPQRS()throws Exception;
 }

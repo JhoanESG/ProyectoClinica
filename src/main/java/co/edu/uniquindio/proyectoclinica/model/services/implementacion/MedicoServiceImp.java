@@ -222,7 +222,7 @@ public class MedicoServiceImp implements MedicoService {
     }
 
     @Override
-    public List<DiaLibreDto> listarDiasLibresMedico(String idMedico) throws Exception {
+    public List<ItemDiaLibre> listarDiasLibresMedico(String idMedico) throws Exception {
 
         Medico medico = medicoRepositorio.findByCedula(idMedico);
         if (medico== null){
@@ -230,9 +230,11 @@ public class MedicoServiceImp implements MedicoService {
         }
         List<DiaLibre> diaLibres= diaLibreRepositorio.findByMedicoAndEstadoDiaLibre(medico,EstadoDiaLibre.ACTIVO);
 
-        List<DiaLibreDto> resultado= diaLibres.stream().map(
-                diaLibre -> new DiaLibreDto(
+        List<ItemDiaLibre> resultado= diaLibres.stream().map(
+                diaLibre -> new ItemDiaLibre(
+                        diaLibre.getId(),
                         diaLibre.getDia(),
+                        diaLibre.getEstadoDiaLibre().toString(),
                         diaLibre.getMedico().getCedula()
                 )).toList();
 

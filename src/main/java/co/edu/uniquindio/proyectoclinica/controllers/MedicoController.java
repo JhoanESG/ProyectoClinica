@@ -3,10 +3,7 @@ package co.edu.uniquindio.proyectoclinica.controllers;
 import co.edu.uniquindio.proyectoclinica.model.dto.AtenderCitaDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.DetalleCitaDto;
 import co.edu.uniquindio.proyectoclinica.model.dto.MensajeDto;
-import co.edu.uniquindio.proyectoclinica.model.dto.medico.CitaMedicoDTo;
-import co.edu.uniquindio.proyectoclinica.model.dto.medico.CitasMedicoDto;
-import co.edu.uniquindio.proyectoclinica.model.dto.medico.DiaLibreDto;
-import co.edu.uniquindio.proyectoclinica.model.dto.medico.HistorialPacientesAtendidosDto;
+import co.edu.uniquindio.proyectoclinica.model.dto.medico.*;
 import co.edu.uniquindio.proyectoclinica.model.services.interfaces.MedicoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -55,7 +52,7 @@ public class MedicoController {
     }
 
     @GetMapping("/verDiasLibres/{idMedico}")
-    public ResponseEntity<MensajeDto<List<DiaLibreDto>>> listarDiasLibres (@PathVariable String idMedico) throws Exception{
+    public ResponseEntity<MensajeDto<List<ItemDiaLibre>>> listarDiasLibres (@PathVariable String idMedico) throws Exception{
         return ResponseEntity.ok().body(new MensajeDto<>(false,medicoService.listarDiasLibresMedico(idMedico)));
     }
 

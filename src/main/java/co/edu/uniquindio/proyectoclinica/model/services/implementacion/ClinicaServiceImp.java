@@ -75,10 +75,10 @@ public class ClinicaServiceImp implements ClinicaService {
     }
 
     @Override
-    public List<ItemListasDto> obtenerTipoPQRS() throws Exception {
-        List<ItemListasDto> listPQRS= new ArrayList<>();
+    public List<String> obtenerTipoPQRS() throws Exception {
+        List<String> listPQRS= new ArrayList<>();
         for (TipoPQRS pqrs: TipoPQRS.values()){
-            listPQRS.add(new ItemListasDto( pqrs.toString()));
+            listPQRS.add(pqrs.toString());
         }
         return listPQRS;
     }
