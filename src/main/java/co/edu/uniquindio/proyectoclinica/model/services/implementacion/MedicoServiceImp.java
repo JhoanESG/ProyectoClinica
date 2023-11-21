@@ -69,6 +69,7 @@ public class MedicoServiceImp implements MedicoService {
 
         List<CitasMedicoDto> resultado = citasHoy.stream().map(
                 cita -> new CitasMedicoDto(
+                        cita.getId(),
                         cita.getPaciente().getNombre(),
                         cita.getPaciente().getCedula(),
                         cita.getFechaCita(),
