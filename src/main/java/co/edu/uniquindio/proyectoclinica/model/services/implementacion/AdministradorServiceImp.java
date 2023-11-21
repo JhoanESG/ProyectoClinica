@@ -279,6 +279,7 @@ public class AdministradorServiceImp implements AdministradorService {
 
         for(Cita c : citas){
             respuesta.add(new CitasMedicoDto(
+                    c.getId(),
                     c.getPaciente().getNombre(),
                     c.getPaciente().getCedula(),
                     c.getFechaCita(),

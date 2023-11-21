@@ -25,7 +25,6 @@ public class MedicoController {
     @GetMapping("/citas-pendientes/{codigo}")
     public ResponseEntity<MensajeDto<List<CitaMedicoDTo>>> verCitasPendientes(@PathVariable String codigo)throws Exception{
         return ResponseEntity.ok().body(new MensajeDto<>(false,medicoService.verCitasPendientes(codigo)));
-
     }
 
     @GetMapping("/listar-citas/{codigo}")
