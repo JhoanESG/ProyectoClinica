@@ -22,18 +22,18 @@ public class ClinicaController {
     private final ClinicaService clinicaService;
 
     @GetMapping("/lista-ciudades")
-    public ResponseEntity<MensajeDto<List<ItemListasDto>>> listarCiudades()throws Exception{
+    public ResponseEntity<MensajeDto<List<String>>> listarCiudades()throws Exception{
         return ResponseEntity.ok().body(new MensajeDto<>(false,clinicaService.obtenerListaCiudades()));
     }
 
     @GetMapping("/lista-EPS")
-    public ResponseEntity<MensajeDto<List<ItemListasDto>>> listarEPS() throws Exception{
+    public ResponseEntity<MensajeDto<List<String>>> listarEPS() throws Exception{
         return ResponseEntity.ok().body(new MensajeDto<>(false,clinicaService.obtenerListaEps()));
     }
 
 
     @GetMapping("/lista-tipo-sangre")
-    public ResponseEntity<MensajeDto<List<ItemListasDto>>> listarTipoSangre() throws Exception{
+    public ResponseEntity<MensajeDto<List<String>>> listarTipoSangre() throws Exception{
         return ResponseEntity.ok().body(new MensajeDto<>(false,clinicaService.obtenerListaTipoSangre()));
     }
 

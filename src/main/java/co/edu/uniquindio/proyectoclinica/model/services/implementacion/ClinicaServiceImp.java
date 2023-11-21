@@ -22,30 +22,30 @@ public class ClinicaServiceImp implements ClinicaService {
 
     private final MedicoRepositorio medicoRepositorio;
 
-    public List<ItemListasDto> obtenerListaCiudades() throws Exception {
-        List<ItemListasDto> ciudadesComoStrings = new ArrayList<>();
+    public List<String> obtenerListaCiudades() throws Exception {
+        List<String> ciudadesComoStrings = new ArrayList<>();
 
         for (Ciudad ciudad : Ciudad.values()) {
-            ciudadesComoStrings.add(new ItemListasDto(ciudad.toString()));
+            ciudadesComoStrings.add(ciudad.toString());
         }
 
         return ciudadesComoStrings;
     }
 
     @Override
-    public List<ItemListasDto> obtenerListaEps() throws Exception {
-        List<ItemListasDto> listEps= new ArrayList<>();
+    public List<String> obtenerListaEps() throws Exception {
+        List<String> listEps= new ArrayList<>();
         for (Eps eps1: Eps.values()){
-            listEps.add(new ItemListasDto(eps1.toString()));
+            listEps.add(eps1.toString());
         }
         return listEps;
     }
 
     @Override
-    public List<ItemListasDto> obtenerListaTipoSangre() throws Exception {
-        List<ItemListasDto> listTipoSangre = new ArrayList<>();
+    public List<String> obtenerListaTipoSangre() throws Exception {
+        List<String> listTipoSangre = new ArrayList<>();
         for(TipoSangre tipoSangre: TipoSangre.values()){
-            listTipoSangre.add(new ItemListasDto(tipoSangre.toString()));
+            listTipoSangre.add(tipoSangre.toString());
         }
         return listTipoSangre;
     }
